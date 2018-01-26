@@ -17,7 +17,7 @@
     "require": {
         "php": "^7.0.0",
         "yiisoft/yii2": "~2.0.5",
-        "Bacon/BaconQrCode": "~1.0.3",
+        "bacon/bacon-qr-code": "~1.0.3",
         "chillerlan/php-authenticator": "^2.0.0"
     },
     "require-dev": {
