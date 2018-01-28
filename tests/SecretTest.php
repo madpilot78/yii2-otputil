@@ -42,7 +42,7 @@ class SecretTest extends TestCase
         $secret = random_bytes(20);
         $secret_coded = $this->base32->toString($secret_coded);
 
-        $newsid = $this->s->setSecret();
+        $newsid = $this->s->setSecret($secret_coded);
         $this->assertInternalType('int', $newsid);
         $this->assertNotEquals($sid, $newsid);
     }
@@ -52,7 +52,7 @@ class SecretTest extends TestCase
         $secret = random_bytes(20);
         $secret_coded = $this->base32->toString($secret_coded);
 
-        $sid = $this->s->setSecret();
+        $sid = $this->s->setSecret($secret_coded);
         $this->assertInternalType('int', $sid);
         $this->assertNotEquals(0, $sid);
 
