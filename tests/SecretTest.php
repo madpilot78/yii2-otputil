@@ -33,6 +33,22 @@ class SecretTest extends TestCase
         $this->assertNotEmpty($secret);
     }
 
+    /**
+     * @expectedException     OTPUtilException
+     * @expectedExceptionCode 1
+     */
+    public function testGetSetSecretFails()
+    {
+        $sid = $this->s->genSecret();
+        $this->assertInternalType('int', $sid);
+        $this->assertNotEquals(0, $sid);
+
+        $secret = random_bytes(20);
+        $secret_coded = $this->base32->toString($secret_coded);
+
+        $sid = $this->s->setSecret();
+    }
+
     public function testSetGetSecret()
     {
         $secret = random_bytes(20);
