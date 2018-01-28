@@ -13,7 +13,7 @@ class SecretTest extends TestCase
     protected function setUp()
     {
         $this->mockApplication();
-        $this->base32 = new Base32;
+        $this->base32 = new Base32();
         $this->s = new Secret();
     }
 
