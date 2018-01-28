@@ -37,7 +37,7 @@ class SecretTest extends TestCase
      * @expectedException     OTPUtilException
      * @expectedExceptionCode 1
      */
-    public function testGetSetSecretFails()
+    public function testGenSetSecretFails()
     {
         $sid = $this->s->genSecret();
         $this->assertInternalType('int', $sid);
