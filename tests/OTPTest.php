@@ -3,8 +3,8 @@
 namespace yii2-otputil\test\OTP;
 
 use chillerlan\Authenticator\Base32;
-use mad\yii2-otputil\OTP;
-use mad\yii2-otputil\Secret;
+use mad\otputil\OTP;
+use mad\otputil\Secret;
 
 class SecretTest extends TestCase
 {
