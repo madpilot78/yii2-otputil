@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "mad\\yii2-otputil\\": "src/"
+            "mad\\otputil\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "mad\\yii2-otputil\\Tests\\": "tests/"
+            "mad\\otputil\\Tests\\": "tests/"
         }
     },
     "extra": {
