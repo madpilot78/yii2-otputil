@@ -1,9 +1,9 @@
 <?php
 
-namespace yii2-otputil\test\secret;
+namespace otputil\test\secret;
 
 use chillerlan\Authenticator\Base32;
-use mad\yii2-otputil\Secret;
+use mad\otputil\Secret;
 
 class SecretTest extends TestCase
 {
