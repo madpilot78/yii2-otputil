@@ -28,7 +28,7 @@ class SecretTest extends TestCase
         $secret_encoded = $this->s->getSecret($sid);
         $this->assertRegExp('/[A-Z2-7=]*/', $secret_encoded);
 
-        $secret = $this->base32->fromString($secret);
+        $secret = $this->base32->fromString($secret_encoded);
         $this->assertInternalType('string', $secret);
         $this->assertNotEmpty($secret);
     }
@@ -40,7 +40,7 @@ class SecretTest extends TestCase
         $this->assertNotEquals(0, $sid);
 
         $secret = random_bytes(20);
-        $secret_encoded = $this->base32->toString($secret_encoded);
+        $secret_encoded = $this->base32->toString($secret);
 
         $newsid = $this->s->setSecret($secret_encoded);
         $this->assertInternalType('int', $newsid);
@@ -50,7 +50,7 @@ class SecretTest extends TestCase
     public function testSetGetSecret()
     {
         $secret = random_bytes(20);
-        $secret_encoded = $this->base32->toString($secret_encoded);
+        $secret_encoded = $this->base32->toString($secret);
 
         $sid = $this->s->setSecret($secret_encoded);
         $this->assertInternalType('int', $sid);
@@ -59,7 +59,7 @@ class SecretTest extends TestCase
         $secret_encoded = $this->s->getSecret($sid);
         $this->assertRegExp('/[A-Z2-7=]*/', $secret_encoded);
 
-        $gotsecret = $this->base32->fromString($gotsecret);
+        $gotsecret = $this->base32->fromString($secret_encoded);
         $this->assertInternalType('string', $gotsecret);
         $this->assertNotEmpty($gotsecret);
         $this->assertEquals($secret, $gotsecret);
@@ -72,7 +72,7 @@ class SecretTest extends TestCase
         $this->assertNotEquals(0, $sid);
 
         $this->s->delSecret($sid);
-        $chksid = $secret_encoded = $this->s->getSecret($sid);
+        $chksid = $this->s->getSecret($sid);
         $this->assertNull($chksid);
         $this->assertNotEquals($sid, $chksid);
     }
