@@ -12,7 +12,7 @@ class SecretTest extends TestCase
     protected $auth;
     protected $base32;
     protected $s;
-    protected $p;
+    protected $o;
 
     protected function setUp()
     {
@@ -20,7 +20,7 @@ class SecretTest extends TestCase
         $this->auth = new Authenticator();
         $this->base32 = new Base32();
         $this->s = new Secret();
-        $this->p = new OTP();
+        $this->otp = new OTP();
     }
 
     // Tests:
@@ -30,7 +30,7 @@ class SecretTest extends TestCase
         $sid = $this->s->genSecret();
         $secret = $this->s->getSecret($sid);
 
-        $totp = $this->p->getTOTP($sid);
+        $totp = $this->otp->getTOTP($sid);
         $this->assertEquals(6, strlen($totp));
         $this->assertStringMatchesFormat('%d', $totp);
 
@@ -48,11 +48,11 @@ class SecretTest extends TestCase
         $secret = $this->auth->getSecret();
         $totp = $this->auth->code();
         $sid = $this->s->setSecret($secret);
-        $chk = $this->p->checkTOTP($sid, $totp);
+        $chk = $this->otp->checkTOTP($sid, $totp);
         $this->assertTrue($chk);
 
         $totp = '012345';
-        $chk = $this->p->checkTOTP($totp);
+        $chk = $this->otp->checkTOTP($totp);
         $this->assertNotTrue($chk);
     }
 }
