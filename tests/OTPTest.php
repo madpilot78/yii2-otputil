@@ -51,7 +51,7 @@ class SecretTest extends TestCase
         $chk = $this->p->checkTOTP($sid, $totp);
         $this->assertTrue($chk);
 
-        $totp += 100;
+        $totp = '012345';
         $chk = $this->p->checkTOTP($totp);
         $this->assertNotTrue($chk);
     }
