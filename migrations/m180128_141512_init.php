@@ -15,11 +15,6 @@ class m180128_141512_init extends Migration
      */
     public function safeUp()
     {
-        /*
-         * updated_at will coincide with confirmation time.
-         * Plan is to only update record at confirmation, it
-         * will be deleted for any other modification
-         */
         $this->createTable('{{%otputil_secrets}}', [
             'id' => $this->primaryKey(),
             'secret' => $this->string()->null(),
