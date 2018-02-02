@@ -19,6 +19,33 @@ class SecretTest extends TestCase
 
     // Tests:
 
+    public function testCreatingSecret()
+    {
+    }
+
+    public function testCreatingWithDefinedSecret()
+    {
+    }
+
+    public function testCantCreateConfirmedSecret()
+    {
+    }
+
+    public function testSetGetSecret()
+    {
+    }
+
+    public function testConfirmSecret()
+    {
+    }
+
+    
+
+    public function testDeletingSecret()
+    {
+    }
+
+
 /*
  * Keeping commented for reference, undergoing refactoring
 
