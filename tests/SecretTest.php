@@ -8,19 +8,35 @@ use mad\otputil\Secret;
 class SecretTest extends TestCase
 {
     protected $base32;
-    protected $faker;
 
     protected function setUp()
     {
         parent::setUp();
         $this->base32 = new Base32();
-        $this->faker = \Faker\Factory::create();
+    }
+
+    protected function imagineSecret()
+    {
+        $faker = \Faker\Factory::create();
+
+        $digitsValidator = function($digit) {
+            return in_array($digit, [6, 8]);
+        };
+
+        return [
+            'secret' => $this->base32->fromString(random_bytes(20)),
+            'digits' => $faker->valid($digitValidator)->boolean(),
+            'mode' => $faker->randomElement('totp', 'hotp'),
+            'algo' => $faker->randomElement('SHA1', 'SHA256', 'SHA512'),
+            'period' => $faker->numberBetween($min = 15, $max = 60)
+        ];
     }
 
     // Tests:
 
     public function testCreatingSecret()
     {
+        $s = new Secret();
     }
 
     public function testCreatingWithDefinedSecret()
@@ -38,8 +54,6 @@ class SecretTest extends TestCase
     public function testConfirmSecret()
     {
     }
-
-    
 
     public function testDeletingSecret()
     {
