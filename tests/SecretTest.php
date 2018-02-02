@@ -68,16 +68,16 @@ class SecretTest extends TestCase
 
     public function testCreatingSecret()
     {
-        $s = createRandomSecret();
+        $s = $this->createRandomSecret();
 
         $ss = Secret::findOne($s->id);
         $this->assertNotNull($ss);
-        assertEqualSecrets($s, $ss);
+        $this->assertEqualSecrets($s, $ss);
     }
 
     public function testCannotModifySecret()
     {
-        $s = createRandomSecret();
+        $s = $this->createRandomSecret();
 
         $ndata = $this->imagineSecret();
         $this->populateSecret($s, $ndata);
@@ -87,7 +87,7 @@ class SecretTest extends TestCase
         $ss = Secret::findOne($s->id);
         $this->assertNotNull($ss);
         $data['id'] = $s->id;
-        assertSecretEqualsData($data, $s);
+        $this->assertSecretEqualsData($data, $s);
     }
 
     public function testCantCreateConfirmedSecret()
@@ -102,7 +102,7 @@ class SecretTest extends TestCase
 
     public function testConfirmSecret()
     {
-        $s = createRandomSecret();
+        $s = $this->createRandomSecret();
 
         $this->assertNotTrue($s->isconfimed());
         $this->assertTrue($s->confirm());
@@ -207,7 +207,7 @@ class SecretTest extends TestCase
 
     public function testDeletingSecret()
     {
-        $s = createRandomSecret();
+        $s = $this->createRandomSecret();
         $this->assertTrue($s->delete());
         $this->assertNull(Secret::findOne($s->id));
     }
