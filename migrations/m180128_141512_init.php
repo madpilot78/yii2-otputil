@@ -18,7 +18,11 @@ class m180128_141512_init extends Migration
         $this->createTable('{{%otputil_secrets}}', [
             'id' => $this->primaryKey(),
             'secret' => $this->string()->null(),
-            'counter' => $this->integer()->notNull()->defaultValue(1),
+            'digits' => $this->integer()->notNull(),
+            'mode' => $this->string()->notNull(),
+            'algo' => $this->string()->notNull(),
+            'period' => $this->integer()->notNull(),
+            'counter' => $this->integer()->notNull(),
             'confirmed' => $this->boolean()->defaultValue(false),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull()
