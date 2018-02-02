@@ -16,6 +16,16 @@ use Yii;
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Common setup code
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->mockApplication();
+        $this->migrateTestDb();
+    }
+
+    /**
      * Clean up after test.
      * By default the application created with [[mockApplication]] will be destroyed.
      */
@@ -37,6 +47,12 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             'id' => 'testapp',
             'basePath' => __DIR__,
             'vendorPath' => dirname(__DIR__) . '/vendor',
+            'components' => [
+                'db' => [
+                    'class' => 'yii\db\Connection',
+                    'dsn' => 'sqlite::memory:',
+                ],
+            ]
         ], $config));
     }
 
@@ -47,6 +63,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             'basePath' => __DIR__,
             'vendorPath' => dirname(__DIR__) . '/vendor',
             'components' => [
+                'db' => [
+                    'class' => 'yii\db\Connection',
+                    'dsn' => 'sqlite::memory:',
+                ],
                 'request' => [
                     'cookieValidationKey' => 'wefJDF8sfdsfSDefwqdxj9oq',
                     'scriptFile' => __DIR__ .'/index.php',
@@ -54,6 +74,14 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
                 ],
             ]
         ], $config));
+    }
+
+    /**
+     * Setup database for tests
+     */
+    protected function migrateTestDb()
+    {
+        Yii::$app->runAction('migrate/up', ['interactive' => false]);
     }
 
     /**

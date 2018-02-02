@@ -16,7 +16,7 @@ class SecretTest extends TestCase
 
     protected function setUp()
     {
-        $this->mockApplication();
+        parent::setUp();
         $this->auth = new Authenticator();
         $this->base32 = new Base32();
         $this->s = new Secret();
