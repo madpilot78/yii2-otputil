@@ -1,6 +1,6 @@
 <?php
 
-namespace otputil\test\secret;
+namespace mad\otputil\tests;
 
 use chillerlan\Authenticator\Base32;
 use mad\otputil\models\Secret;

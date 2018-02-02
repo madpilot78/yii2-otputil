@@ -31,7 +31,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "mad\\otputil\\Tests\\": "tests/"
+            "mad\\otputil\\tests\\": "tests/"
         }
     },
     "extra": {

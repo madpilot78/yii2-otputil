@@ -4,7 +4,7 @@
  * Taken from yiisoft/yii2-httpclient
  */
 
-namespace yiiunit\extensions\httpclient;
+namespace mad\otputil\tests;
 
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
