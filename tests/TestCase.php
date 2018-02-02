@@ -22,7 +22,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
         $this->mockApplication();
-        $this->migrateTestDb();
+        $this->runMigrations();
     }
 
     /**
@@ -79,7 +79,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Setup database for tests
      */
-    protected function migrateTestDb()
+    protected function runMigrations()
     {
         Yii::$app->runAction('migrate/up', ['interactive' => false]);
     }
