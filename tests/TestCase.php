@@ -45,7 +45,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         new $appClass(ArrayHelper::merge([
             'id' => 'testapp',
-            'basePath' => __DIR__,
+            'basePath' => dirname(__DIR__),
             'vendorPath' => dirname(__DIR__) . '/vendor',
             'components' => [
                 'db' => [
