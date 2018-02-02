@@ -81,7 +81,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function runMigrations()
     {
-        Yii::$app->runAction('migrate/up', ['interactive' => false]);
+        Yii::$app->runAction('migrate/up', ['interactive' => false, 'migrationPath' => __DIR__ . '/../migrations']);
     }
 
     /**
