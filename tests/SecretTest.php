@@ -7,24 +7,17 @@ use mad\otputil\models\Secret;
 
 class SecretTest extends TestCase
 {
-    protected $base32;
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->base32 = new Base32();
-    }
-
     protected function imagineSecret()
     {
         $faker = \Faker\Factory::create();
+        $base32 = new Base32();
 
         $digitsValidator = function($digit) {
             return in_array($digit, [6, 8]);
         };
 
         return [
-            'secret' => $this->base32->fromString(random_bytes(20)),
+            'secret' => $base32->fromString(random_bytes(20)),
             'digits' => $faker->valid($digitValidator)->boolean(),
             'mode' => $faker->randomElement('totp', 'hotp'),
             'algo' => $faker->randomElement('SHA1', 'SHA256', 'SHA512'),
