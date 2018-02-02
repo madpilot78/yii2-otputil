@@ -8,11 +8,13 @@ use mad\otputil\Secret;
 class SecretTest extends TestCase
 {
     protected $base32;
+    protected $faker;
 
     protected function setUp()
     {
         parent::setUp();
         $this->base32 = new Base32();
+        $this->faker = \Faker\Factory::create();
     }
 
     // Tests:
