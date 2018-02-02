@@ -56,26 +56,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         ], $config));
     }
 
-    protected function mockWebApplication($config = [], $appClass = '\yii\web\Application')
-    {
-        new $appClass(ArrayHelper::merge([
-            'id' => 'testapp',
-            'basePath' => __DIR__,
-            'vendorPath' => dirname(__DIR__) . '/vendor',
-            'components' => [
-                'db' => [
-                    'class' => 'yii\db\Connection',
-                    'dsn' => 'sqlite::memory:',
-                ],
-                'request' => [
-                    'cookieValidationKey' => 'wefJDF8sfdsfSDefwqdxj9oq',
-                    'scriptFile' => __DIR__ . '/index.php',
-                    'scriptUrl' => '/index.php',
-                ],
-            ]
-        ], $config));
-    }
-
     /**
      * Setup database for tests
      */
