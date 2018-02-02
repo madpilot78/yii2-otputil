@@ -21,7 +21,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
         $this->mockApplication();
-        $this->runMigrations();
+        $this->createTestDb();
     }
 
     /**
@@ -58,9 +58,12 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Setup database for tests
      */
-    protected function runMigrations()
+    protected function createTestDb()
     {
-        Yii::$app->runAction('migrate/up', ['interactive' => false]);
+        /*
+         * migration can't be used because sqlite does not support addForeignKey.
+         * Create special DB here
+         */
     }
 
     /**
