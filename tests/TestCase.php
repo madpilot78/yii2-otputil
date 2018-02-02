@@ -6,7 +6,6 @@
 
 namespace mad\otputil\tests;
 
-use yii\di\Container;
 use yii\helpers\ArrayHelper;
 use Yii;
 
