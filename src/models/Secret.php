@@ -3,6 +3,8 @@
 namespace mad\otputil\models\mail;
 
 use Yii;
+use yii\db\Connection;
+use yii\di\Instance;
 
 /**
  * Model class for OTP secrets.
@@ -26,6 +28,16 @@ class Secret extends \yii\db\ActiveRecord
     private $db = 'db';
 
     /**
+     * Initializes the application component.
+     * This method overrides the parent implementation by establishing the database connection.
+     */
+    public function init()
+    {
+        parent::init();
+        $this->db = Instance::ensure($this->db, Connection::className());
+    }
+
+    /**
      * @inheritdoc
      */
     public static function tableName()
@@ -38,7 +50,7 @@ class Secret extends \yii\db\ActiveRecord
      */
     public static function getDb()
     {
-        return Yii::$app->get($this->db);
+        return $this->db;
     }
 
     /**
