@@ -7,6 +7,7 @@
 namespace mad\otputil\tests;
 
 use yii\helpers\ArrayHelper;
+use yii\console\controllers\MigrateController;
 use Yii;
 
 /**
@@ -60,7 +61,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function runMigrations()
     {
-        Yii::$app->runAction('migrate/up', ['interactive' => false]);
+        $migration = new MigrateController('migrate', Yii::$app);
+        $migration->run('up', ['interactive' => false, 'migrationPath' => dirname(__DIR__) . '/migrations']);
     }
 
     /**
