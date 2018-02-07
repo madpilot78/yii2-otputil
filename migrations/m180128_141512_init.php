@@ -37,14 +37,16 @@ class m180128_141512_init extends Migration
             'secret_id'
         );
 
-        $this->addForeignKey(
-            'fk-otputil_scodes-secret_id',
-            '{{%otputil_scodes}}',
-            'secret_id',
-            '{{%otputil_secrets}}',
-            'id',
-            'CASCADE'
-        );
+        if ($this->db->driverName !== 'sqlite') {
+            $this->addForeignKey(
+                'fk-otputil_scodes-secret_id',
+                '{{%otputil_scodes}}',
+                'secret_id',
+                '{{%otputil_secrets}}',
+                'id',
+                'CASCADE'
+            );
+        }
     }
 
     /**
@@ -52,10 +54,12 @@ class m180128_141512_init extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey(
-            'fk-otputil_scodes-secret_id',
-            '{{%otputil_scodes}}'
-        );
+        if ($this->db->driverName !== 'sqlite') {
+            $this->dropForeignKey(
+                'fk-otputil_scodes-secret_id',
+                '{{%otputil_scodes}}'
+            );
+        }
 
         $this->dropIndex(
             'idx-otputil_scodes-secret_id',
