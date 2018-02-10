@@ -23,11 +23,6 @@ use chillerlan\Authenticator\Base32;
 class Secret extends \yii\db\ActiveRecord
 {
     /**
-     * @const SCENARIO_CREATE Default scenario
-     */
-    const SCENARIO_CREATE = 'create';
-
-    /**
      * @const DEFAULT_DIGITS Default number of digits per OTP
      */
     const DEFAULT_DIGITS = 6;
@@ -116,18 +111,18 @@ class Secret extends \yii\db\ActiveRecord
 
                 return $base32->fromString(random_bytes(20));
             }],
-            ['secret', 'string', 'min' => 3, 'max' => 128, 'on' => ['create']],
-            ['secret', 'match', 'pattern' => '/^[A-Z2-7]*$/i', 'on' => ['create']],
-            ['digits', 'default', 'value' => self::DEFAULT_DIGITS, 'on' => ['create']],
-            ['digits', 'in', 'range' => self::ALLOWED_DIGITS, 'on' => ['create']],
-            ['mode', 'default', 'value' => self::DEFAULT_MODE, 'on' => ['create']],
-            ['mode', 'in', 'range' => self::ALLOWED_MODES, 'on' => ['create']],
-            ['algo', 'default', 'value' => self::DEFAULT_ALGO, 'on' => ['create']],
-            ['algo', 'in', 'range' => self::ALLOWED_ALGOS, 'on' => ['create']],
-            ['period', 'default', 'value' => self::DEFAULT_PERIOD, 'on' => ['create']],
-            ['period', 'integer', 'min' => self::ALLOWED_PERIODS[0], 'max' => self::ALLOWED_PERIODS[1], 'on' => ['create']],
-            ['confirmed', 'default', 'value' => false, 'on' => ['create']],
-            ['confirmed', 'validateConfirmed', 'on' => ['create']],
+            ['secret', 'string', 'min' => 3, 'max' => 128],
+            ['secret', 'match', 'pattern' => '/^[A-Z2-7]*$/i'],
+            ['digits', 'default', 'value' => self::DEFAULT_DIGITS],
+            ['digits', 'in', 'range' => self::ALLOWED_DIGITS],
+            ['mode', 'default', 'value' => self::DEFAULT_MODE],
+            ['mode', 'in', 'range' => self::ALLOWED_MODES],
+            ['algo', 'default', 'value' => self::DEFAULT_ALGO],
+            ['algo', 'in', 'range' => self::ALLOWED_ALGOS],
+            ['period', 'default', 'value' => self::DEFAULT_PERIOD],
+            ['period', 'integer', 'min' => self::ALLOWED_PERIODS[0], 'max' => self::ALLOWED_PERIODS[1]],
+            ['confirmed', 'default', 'value' => false],
+            ['confirmed', 'validateConfirmed'],
         ];
     }
 

@@ -32,7 +32,7 @@ class SecretTest extends TestCase
 
     protected function createRandomSecret()
     {
-        $s = new Secret(['scenario' => Secret::SCENARIO_CREATE]);
+        $s = new Secret();
         $data = $this->imagineSecret();
         $this->populateSecret($s, $data);
         $r = $s->validate();
@@ -76,7 +76,7 @@ class SecretTest extends TestCase
 
     public function testCreateDefaultSecret()
     {
-        $s = new Secret(['scenario' => Secret::SCENARIO_CREATE]);
+        $s = new Secret();
         $this->assertTrue($s->validate());
         $this->assertTrue($s->save());
         $ss = Secret::findOne($s->id);
@@ -104,7 +104,7 @@ class SecretTest extends TestCase
 
     public function testCantCreateConfirmedSecret()
     {
-        $s = new Secret(['scenario' => Secret::SCENARIO_CREATE]);
+        $s = new Secret();
         $data = $this->imagineSecret();
         $this->populateSecret($s, $data);
         $s->confirmed = true;
@@ -125,7 +125,7 @@ class SecretTest extends TestCase
 
     public function testSecretIncrementCounter()
     {
-        $s = new Secret(['scenario' => Secret::SCENARIO_CREATE]);
+        $s = new Secret();
         $data = $this->imagineSecret();
         $data['mode'] = 'hotp';
         $this->populateSecret($s, $data);
@@ -149,7 +149,7 @@ class SecretTest extends TestCase
 
     public function testSecretUpdateCounter()
     {
-        $s = new Secret(['scenario' => Secret::SCENARIO_CREATE]);
+        $s = new Secret();
         $data = $this->imagineSecret();
         $data['mode'] = 'hotp';
         $this->populateSecret($s, $data);
@@ -173,7 +173,7 @@ class SecretTest extends TestCase
 
     public function testCantIncrementCounterTOTP()
     {
-        $s = new Secret(['scenario' => Secret::SCENARIO_CREATE]);
+        $s = new Secret();
         $data = $this->imagineSecret();
         $data['mode'] = 'totp';
         $this->populateSecret($s, $data);
@@ -196,7 +196,7 @@ class SecretTest extends TestCase
 
     public function testCantUpdateCounterTOTP()
     {
-        $s = new Secret(['scenario' => Secret::SCENARIO_CREATE]);
+        $s = new Secret();
         $data = $this->imagineSecret();
         $data['mode'] = 'totp';
         $this->populateSecret($s, $data);
