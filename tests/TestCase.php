@@ -12,6 +12,19 @@ use yii\console\controllers\MigrateController;
 use Yii;
 
 /**
+ * Filter to silence yii2 migration
+ */
+class discard_filter extends \php_user_filter {
+    public function filter($in, $out, &$consumed, $closing)
+    {
+        while ($bucket = stream_bucket_make_writeable($in)) {
+            $consumed += $bucket->datalen;
+        }
+        return PSFS_PASS_ON;
+    }
+}
+
+/**
  * This is the base class for all yii framework unit tests.
  */
 abstract class TestCase extends \PHPUnit\Framework\TestCase
@@ -62,11 +75,16 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function runMigrations()
     {
+        stream_filter_register('discard', '\mad\otputil\tests\discard_filter');
+        $f = stream_filter_append(\STDOUT, "discard");
+
         $migration = new MigrateController('migrate', Yii::$app);
         $migration->interactive = false;
         $migration->compact = true;
         $migration->migrationPath = dirname(__DIR__) . '/migrations';
         $migration->run('up');
+
+        stream_filter_remove($f);
     }
 
     /**
