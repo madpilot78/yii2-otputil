@@ -136,7 +136,10 @@ class Secret extends \yii\db\ActiveRecord
         }
 
         if (!$insert) {
-            return false;
+            $forbidden = ['secret', 'digits', 'mode', 'algo', 'period'];
+            if (count(array_diff(array_intersect(array_keys($this->getDirtyAttributes()), $forbidden), $forbidden)) == 0) {
+                return false;
+            }
         }
 
         if ($insert && $this->confirmed) {
