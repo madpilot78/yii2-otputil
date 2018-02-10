@@ -14,10 +14,10 @@ class SecretTest extends TestCase
 
         return [
             'secret' => $base32->fromString(random_bytes(20)),
-            'digits' => $faker->randomElement([6, 8]),
-            'mode' => $faker->randomElement(['totp', 'hotp']),
-            'algo' => $faker->randomElement(['SHA1', 'SHA256', 'SHA512']),
-            'period' => $faker->numberBetween($min = 15, $max = 60)
+            'digits' => $faker->randomElement(Secret::ALLOWED_DIGITS),
+            'mode' => $faker->randomElement(Secret::ALLOWED_MODES),
+            'algo' => $faker->randomElement(Secret::ALLOWED_ALGOS),
+            'period' => $faker->numberBetween($min = Secret::ALLOWED_PERIODS[0], $max = Secret::ALLOWED_PERIODS[1])
         ];
     }
 
