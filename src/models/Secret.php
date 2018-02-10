@@ -19,6 +19,8 @@ use chillerlan\Authenticator\Base32;
  * @property integer $period
  * @property integer $counter
  * @property boolean $confirmed
+ * @property integer created_at
+ * @property integer updated_at
  */
 class Secret extends \yii\db\ActiveRecord
 {
