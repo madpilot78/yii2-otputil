@@ -1,6 +1,6 @@
 <?php
 
-namespace mad\otputil\models\mail;
+namespace mad\otputil\models;
 
 use Yii;
 use yii\db\Connection;
