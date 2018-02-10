@@ -30,15 +30,20 @@ class SecretTest extends TestCase
         $s->period = $data["period"];
     }
 
+    protected function assertValidate($s)
+    {
+        $r = $s->validate();
+        if ($s->HasErrors())
+            var_dump($s->getErrors());
+        $this->assertTrue($r);
+    }
+
     protected function createRandomSecret()
     {
         $s = new Secret();
         $data = $this->imagineSecret();
         $this->populateSecret($s, $data);
-        $r = $s->validate();
-        if (!$r)
-            var_dump($s->getErrors());
-        $this->assertTrue($r);
+        $this->assertValidate($s);
         $this->assertTrue($s->save());
         return $s;
     }
@@ -77,7 +82,7 @@ class SecretTest extends TestCase
     public function testCreateDefaultSecret()
     {
         $s = new Secret();
-        $this->assertTrue($s->validate());
+        $this->assertValidate($s);
         $this->assertTrue($s->save());
         $ss = Secret::findOne($s->id);
         $this->assertNotNull($ss);
@@ -93,7 +98,7 @@ class SecretTest extends TestCase
 
         $ndata = $this->imagineSecret();
         $this->populateSecret($s, $ndata);
-        $this->assertNotTrue($s->validate());
+        $this->assertValidate($s);
         $this->assertNotTrue($s->save());
 
         $ss = Secret::findOne($s->id);
@@ -108,7 +113,7 @@ class SecretTest extends TestCase
         $data = $this->imagineSecret();
         $this->populateSecret($s, $data);
         $s->confirmed = true;
-        $this->assertNotTrue($s->validate());
+        $this->assertValidate($s);
         $this->assertNotTrue($s->save());
     }
 
