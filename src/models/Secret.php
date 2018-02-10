@@ -139,6 +139,10 @@ class Secret extends \yii\db\ActiveRecord
             return false;
         }
 
+        if ($insert && $this->confirmed) {
+            return false;
+        }
+
         return true;
     }
 
