@@ -121,7 +121,7 @@ class SecretTest extends TestCase
         $this->assertValidate($s);
         $this->assertNotTrue($s->save());
 
-        $ss = Secret::findOne($s->id);
+        $ss = Secret::findOne($data['id']);
         $this->assertNotNull($ss);
         $this->assertSecretEqualsData($data, $s);
     }
