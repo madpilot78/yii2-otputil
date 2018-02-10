@@ -75,6 +75,19 @@ class SecretTest extends TestCase
         $this->assertEqualSecrets($s, $ss);
     }
 
+    public function testCreateDefaultSecret()
+    {
+        $s = new Secret(['scenario' => Secret::SCENARIO_CREATE]);
+        $this->assertTrue($s->validate());
+        $this->assertTrue($s->save());
+        $ss = Secret::findOne($s->id);
+        $this->assertNotNull($ss);
+        $this->assertEquals($ss->digits, 6);
+        $this->assertEquals($ss->mode, 'totp');
+        $this->assertEquals($ss->algo, 'SHA1');
+        $this->assertEquals($ss->period, 30);
+    }
+
     public function testCannotModifySecret()
     {
         $s = $this->createRandomSecret();
