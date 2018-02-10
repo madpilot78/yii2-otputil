@@ -127,6 +127,22 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
+     * Forbid modifying records
+     */
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if (!$insert) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Marks a secret as confirmed
      */
     public function confirm()
