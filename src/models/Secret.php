@@ -93,6 +93,16 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
+     * Validate confirmed, which is forced to be false
+     */
+    public function validateConfirmed($attribute, $params, $validator)
+    {
+        if($attribute) {
+            $this->addError($attribute, 'Creating already confirmed secrets is not allowed');
+        }
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -113,6 +123,8 @@ class Secret extends \yii\db\ActiveRecord
             ['algo', 'in', 'range' => self::ALLOWED_ALGOS, 'on' => ['create']],
             ['period', 'default', 'value' => self::DEFAULT_PERIOD, 'on' => ['create']],
             ['period', 'integer', 'min' => self::ALLOWED_PERIODS[0], 'max' => self::ALLOWED_PERIODS[1], 'on' => ['create']],
+            ['confirmed', 'default', 'value' => false],
+            ['confirmed', 'validateConfirmed'],
         ];
     }
 }
