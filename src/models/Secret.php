@@ -173,4 +173,19 @@ class Secret extends \yii\db\ActiveRecord
 
         return $this->counter;
     }
+
+    /**
+     * Increments counter for HOTPs
+     */
+    public function updateCounter(int $v)
+    {
+        if ($this->mode !== 'hotp')
+            return false;
+
+        $this->counter = $v;
+        if (!$this->save())
+            return false;
+
+        return $this->counter;
+    }
 }
