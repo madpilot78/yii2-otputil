@@ -35,7 +35,10 @@ class SecretTest extends TestCase
         $s = new Secret(['scenario' => Secret::SCENARIO_CREATE]);
         $data = $this->imagineSecret();
         $this->populateSecret($s, $data);
-        $this->assertTrue($s->validate());
+        $r = $s->validate();
+        if (!$r)
+            var_dump($s->getErrors());
+        $this->assertTrue($r);
         $this->assertTrue($s->save());
         return $s;
     }
