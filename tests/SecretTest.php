@@ -248,7 +248,7 @@ class SecretTest extends TestCase
     public function testDeletingSecret()
     {
         $s = $this->createRandomSecret();
-        $this->assertTrue($s->delete());
+        $this->assertEquals(1, $s->delete());
         $this->assertNull(Secret::findOne($s->id));
     }
 }
