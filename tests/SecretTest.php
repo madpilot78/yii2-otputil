@@ -30,6 +30,16 @@ class SecretTest extends TestCase
         $s->period = $data["period"];
     }
 
+    protected function getSecretData(Secret $s, Array &$data)
+    {
+        $data["id"] = $s->id;
+        $data["secret"] = $s->secret;
+        $data["digits"] = $s->digits;
+        $data["mode"] = $s->mode;
+        $data["algo"] = $s->algo;
+        $data["period"] = $s->period;
+    }
+
     protected function assertValidate($s)
     {
         $r = $s->validate();
@@ -103,6 +113,8 @@ class SecretTest extends TestCase
     public function testCannotModifySecret()
     {
         $s = $this->createRandomSecret();
+        $data = [];
+        $this->getSecretData($s, $data);
 
         $ndata = $this->imagineSecret();
         $this->populateSecret($s, $ndata);
@@ -111,7 +123,6 @@ class SecretTest extends TestCase
 
         $ss = Secret::findOne($s->id);
         $this->assertNotNull($ss);
-        $data['id'] = $s->id;
         $this->assertSecretEqualsData($data, $s);
     }
 
