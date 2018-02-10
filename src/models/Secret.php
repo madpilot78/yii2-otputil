@@ -81,7 +81,7 @@ class Secret extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'otputil_secrets';
+        return '{{%otputil_secrets}}';
     }
 
     /**
