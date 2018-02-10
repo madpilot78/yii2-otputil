@@ -6,6 +6,7 @@
 
 namespace mad\otputil\tests;
 
+use yii\di\Container;
 use yii\helpers\ArrayHelper;
 use yii\console\controllers\MigrateController;
 use Yii;
