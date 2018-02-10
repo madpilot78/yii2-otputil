@@ -38,6 +38,14 @@ class SecretTest extends TestCase
         $this->assertTrue($r);
     }
 
+    protected function assertNotValidate($s)
+    {
+        $r = $s->validate();
+        if ($s->HasErrors())
+            var_dump($s->getErrors());
+        $this->assertNotTrue($r);
+    }
+
     protected function createRandomSecret()
     {
         $s = new Secret();
@@ -113,7 +121,7 @@ class SecretTest extends TestCase
         $data = $this->imagineSecret();
         $this->populateSecret($s, $data);
         $s->confirmed = true;
-        $this->assertValidate($s);
+        $this->assertNotValidate($s);
         $this->assertNotTrue($s->save());
     }
 
