@@ -123,7 +123,7 @@ class SecretTest extends TestCase
 
         $ss = Secret::findOne($data['id']);
         $this->assertNotNull($ss);
-        $this->assertSecretEqualsData($data, $s);
+        $this->assertSecretEqualsData($data, $ss);
     }
 
     public function testCantCreateConfirmedSecret()
