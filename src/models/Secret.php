@@ -159,6 +159,9 @@ class Secret extends \yii\db\ActiveRecord
         if ($this->mode !== 'hotp')
             return false;
 
-        return $this->updateCounters(['counter' => 1]);
+        if (!$this->updateCounters(['counter' => 1]))
+            return false;
+
+        return $this->counter;
     }
 }
