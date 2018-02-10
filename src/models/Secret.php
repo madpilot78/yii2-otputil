@@ -115,13 +115,4 @@ class Secret extends \yii\db\ActiveRecord
             ['period', 'integer', 'min' => self::ALLOWED_PERIODS[0], 'max' => self::ALLOWED_PERIODS[1], 'on' => ['create']],
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-        ];
-    }
 }
