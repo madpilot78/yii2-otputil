@@ -154,6 +154,7 @@ class SecretTest extends TestCase
         $data['mode'] = 'hotp';
         $this->populateSecret($s, $data);
         $this->assertTrue($s->save());
+        $this->assertTrue($s->refresh());
 
         $cnt = $s->counter;
 
@@ -178,6 +179,7 @@ class SecretTest extends TestCase
         $data['mode'] = 'hotp';
         $this->populateSecret($s, $data);
         $this->assertTrue($s->save());
+        $this->assertTrue($s->refresh());
 
         $cnt = $s->counter;
 
@@ -202,6 +204,7 @@ class SecretTest extends TestCase
         $data['mode'] = 'totp';
         $this->populateSecret($s, $data);
         $this->assertTrue($s->save());
+        $this->assertTrue($s->refresh());
 
         $cnt = $s->counter;
 
@@ -225,6 +228,7 @@ class SecretTest extends TestCase
         $data['mode'] = 'totp';
         $this->populateSecret($s, $data);
         $this->assertTrue($s->save());
+        $this->assertTrue($s->refresh());
 
         $cnt = $s->counter;
 
