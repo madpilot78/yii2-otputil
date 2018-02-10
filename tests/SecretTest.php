@@ -12,13 +12,9 @@ class SecretTest extends TestCase
         $faker = \Faker\Factory::create();
         $base32 = new Base32();
 
-        $digitsValidator = function($digit) {
-            return in_array($digit, [6, 8]);
-        };
-
         return [
             'secret' => $base32->fromString(random_bytes(20)),
-            'digits' => $faker->valid($digitsValidator)->boolean(),
+            'digits' => $faker->randomElement(6, 8),
             'mode' => $faker->randomElement('totp', 'hotp'),
             'algo' => $faker->randomElement('SHA1', 'SHA256', 'SHA512'),
             'period' => $faker->numberBetween($min = 15, $max = 60)
