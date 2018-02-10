@@ -127,4 +127,35 @@ class Secret extends \yii\db\ActiveRecord
             ['confirmed', 'validateConfirmed'],
         ];
     }
+
+    /**
+     * Marks a secret as confirmed
+     */
+    public function confirm()
+    {
+        $this->confirmed = true;
+        return $this->save();
+    }
+
+    /**
+     * Returns confirmation status
+     */
+    public function isconfimed()
+    {
+        if ($this->confirmed)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Increments counter for HOTPs
+     */
+    public function incrementCounter()
+    {
+        if ($this->mode !== 'hotp')
+            return false;
+
+        return $this->updateCounters(['counter' => 1]);
+    }
 }
