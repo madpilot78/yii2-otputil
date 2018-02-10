@@ -91,16 +91,6 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
-     * Validate confirmed, which is forced to be false
-     */
-    public function validateConfirmed($attribute, $params, $validator)
-    {
-        if($this->$attribute) {
-            $this->addError($attribute, 'Creating already confirmed secrets is not allowed');
-        }
-    }
-
-    /**
      * @inheritdoc
      */
     public function rules()
