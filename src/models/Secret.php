@@ -14,11 +14,11 @@ use chillerlan\Authenticator\Base32;
  * @property integer $id
  * @property string $secret
  * @property integer $digits
- * @property string mode
- * @property string algo
- * @property integer period
- * @property integer counter
- * @property boolean confirmed
+ * @property string $mode
+ * @property string $algo
+ * @property integer $period
+ * @property integer $counter
+ * @property boolean $confirmed
  */
 class Secret extends \yii\db\ActiveRecord
 {
