@@ -19,7 +19,7 @@ class m180128_141512_init extends Migration
             'mode' => $this->string()->notNull(),
             'algo' => $this->string()->notNull(),
             'period' => $this->integer()->notNull(),
-            'counter' => $this->integer()->notNull(),
+            'counter' => $this->integer()->notNull()->defaultValue(1),
             'confirmed' => $this->boolean()->defaultValue(false),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull()
