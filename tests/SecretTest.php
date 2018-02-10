@@ -132,7 +132,7 @@ class SecretTest extends TestCase
         $data = $this->imagineSecret();
         $this->populateSecret($s, $data);
         $s->confirmed = true;
-        $this->assertNotValidate($s);
+        $this->assertValidate($s);
         $this->assertNotTrue($s->save());
     }
 

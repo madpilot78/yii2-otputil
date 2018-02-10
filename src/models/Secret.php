@@ -121,8 +121,7 @@ class Secret extends \yii\db\ActiveRecord
             ['algo', 'in', 'range' => self::ALLOWED_ALGOS],
             ['period', 'default', 'value' => self::DEFAULT_PERIOD],
             ['period', 'integer', 'min' => self::ALLOWED_PERIODS[0], 'max' => self::ALLOWED_PERIODS[1]],
-            ['confirmed', 'default', 'value' => false],
-            ['confirmed', 'validateConfirmed'],
+            ['confirmed', 'default', 'value' => false]
         ];
     }
 
