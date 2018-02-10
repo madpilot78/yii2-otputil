@@ -186,7 +186,7 @@ class SecretTest extends TestCase
         $this->assertInternalType('int', $cnt);
         $this->assertEquals(1, $cnt);
 
-        $ncnt = $s->updateCounter(42);
+        $ncnt = $s->incrementCounter(42);
 
         $this->assertInternalType('int', $ncnt);
         $this->assertEquals(42, $ncnt);
@@ -235,7 +235,7 @@ class SecretTest extends TestCase
         $this->assertInternalType('int', $cnt);
         $this->assertEquals(1, $cnt);
 
-        $ncnt = $s->updateCounter(42);
+        $ncnt = $s->incrementCounter(42);
 
         $this->assertNotTrue($ncnt);
 
