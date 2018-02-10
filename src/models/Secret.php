@@ -85,6 +85,16 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
      * @return \yii\db\Connection the database connection used by this AR class.
      */
     public static function getDb()
