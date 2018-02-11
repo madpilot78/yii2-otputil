@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2-otputil\test\OTP;
+namespace mad\otputil\tests;
 
 use chillerlan\Authenticator\Authenticator;
 use chillerlan\Authenticator\Base32;
