@@ -81,7 +81,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $migration = new MigrateController('migrate', Yii::$app);
         $migration->interactive = false;
         $migration->compact = true;
-        $migration->migrationPath = dirname(__DIR__) . 'src/migrations';
+        $migration->migrationPath = dirname(__DIR__) . '/src/migrations';
         $migration->run('up');
 
         stream_filter_remove($f);
