@@ -127,6 +127,24 @@ class ScratchTest extends TestCase
             $this->assertNotEqual($codes[$n], $c->code);
     }
 
+    public function testVerifyScratchCodeAndDeleteonInstance()
+    {
+        $faker = \Faker\Factory::create();
+
+        $n = $faker->numberBetween($min = 0, $max = Scratch::DEFAULT_CODES - 1);
+        $s = $this->createRandomSecret();
+        $codes = Scratch::createScratches($s->id);
+
+        $c = $codes[$faker->numberBetween($min = 0, $max = Scratch::DEFAULT_CODES - 1)];
+        $this->assertTrue($c->verifyCode($codes[$n]->code));
+
+        $chk = Scratch::findBySecretID($s->id);
+        $this->assertCount(Scratch::DEFAULT_CODES - 1, $chk);
+
+        foreach($chk as $c)
+            $this->assertNotEqual($codes[$n], $c->code);
+    }
+
     public function testVerifyScratchCodeNotDelete()
     {
         $faker = \Faker\Factory::create();
