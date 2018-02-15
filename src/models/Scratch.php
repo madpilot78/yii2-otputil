@@ -39,7 +39,6 @@ class Scratch extends \yii\db\ActiveRecord
     public function __construct(int $secret_id)
     {
         parent::__construct();
-        // $secret_id must be checked
         $this->secret_id = $secret_id;
     }
 
@@ -64,6 +63,8 @@ class Scratch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['code', 'string', 'length' => self::SCRATCH_LENGTH],
+            ['secret_id', 'exist', 'targetClass' => '\mad\otputil\models\Secret', 'targetAttribute' => 'id']
         ];
     }
 
