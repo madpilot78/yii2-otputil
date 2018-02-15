@@ -100,6 +100,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * Use faker to create a secret for testing
+     *
+     * @return array Random data to be put in a Secret object
      */
     protected function imagineSecret()
     {
@@ -117,6 +119,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * Populate a new secret AR
+     *
+     * @param Secret &$s The secret to be populated/overwritten
+     * @param Array $data The array containing the data to populate the Secret 
      */
     protected function populateSecret(Secret &$s, Array $data)
     {
@@ -129,6 +134,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * Extract $data array froma retrived or created secret
+     *
+     * @param Secret $s The secret to be read
+     * @param Array &$data The array to contain the data gotten from the secret
      */
     protected function getSecretData(Secret $s, Array &$data)
     {
@@ -143,6 +151,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Assert that data validation on a secret suceeds reporting errors,
      * if any, for analysis
+     *
+     * @param Secret $s The secret to be validated
      */
     protected function assertValidateSecret(Secret $s)
     {
@@ -154,6 +164,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * Assert validation on secret failed and report errors
+     *
+     * @param Secret $s The secret to be validated
      */
     protected function assertNotValidateSecret(Secret $s)
     {
@@ -175,6 +187,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * Asserts that two secret objects are the same
+     *
+     * @param mad\otputil\models\Secret expected Secret
+     * @param mad\otputil\models\Secret Secret object to be checked
      */
     protected function assertEqualSecrets(Secret $exp, Secret $act)
     {
@@ -188,6 +203,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * Asserts that data inside a secret is the same as the provided array
+     *
+     * @param array $data expected content
+     * @param mad\otputil\models\Secret The Secret object to be checked
      */
     protected function assertSecretEqualsData(Array $data, Secret $act)
     {
