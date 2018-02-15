@@ -107,7 +107,7 @@ class ScratchTest extends TestCase
         $s = $this->createRandomSecret();
         $c = $this->createScratchForID($s->id);
 
-        $this->assertNotTrue(Scratch::validateCode($s->id, '12345678'));
+        $this->assertNotTrue(Scratch::verifyCode('12345678', $s->id));
     }
 
     public function testVerifyScratchCodeAndDelete()
@@ -118,7 +118,7 @@ class ScratchTest extends TestCase
         $s = $this->createRandomSecret();
         $codes = Scratch::createScratches($s->id);
 
-        $this->assertTrue(Scratch::validateCode($s->id, $codes[$n]->code));
+        $this->assertTrue(Scratch::verifyCode($codes[$n]->code, $s->id));
 
         $chk = Scratch::findBySecretID($s->id);
         $this->assertCount(Scratch::DEFAULT_CODES - 1, $chk);
@@ -135,7 +135,7 @@ class ScratchTest extends TestCase
         $s = $this->createRandomSecret();
         $codes = Scratch::createScratches($s->id);
 
-        $this->assertTrue(Scratch::validateCode($s->id, $codes[$n]->code, false));
+        $this->assertTrue(Scratch::verifyCode($codes[$n]->code, $s->id, false));
 
         $chk = Scratch::findBySecretID($s->id);
         $this->assertCount(Scratch::DEFAULT_CODES, $chk);
