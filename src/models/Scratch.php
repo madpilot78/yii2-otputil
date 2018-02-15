@@ -20,6 +20,11 @@ class Scratch extends \yii\db\ActiveRecord
     const DEFAULT_CODES = 5;
 
     /**
+     * @const SCRATCH_LENGTH Digits in a scratch code
+     */
+    const SCRATCH_LENGTH = 8;
+
+    /**
      * @var string the name of the DB connection to be used by this class
      *
      * NOTE: make configurable
