@@ -27,6 +27,18 @@ class Scratch extends \yii\db\ActiveRecord
     private $db = 'db';
 
     /**
+     * Requires a Secret id to link Scratch codes to
+     *
+     * @param int $secret_id
+     */
+    public function __construct(int $secret_id)
+    {
+        parent::__construct();
+        // $secret_id mist be checked
+        $this->secret_id = $secret_id;
+    }
+
+    /**
      * Initializes the application component.
      * This method overrides the parent implementation by establishing the database connection.
      */
