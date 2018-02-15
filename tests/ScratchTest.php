@@ -10,6 +10,8 @@ class ScratchTest extends TestCase
     /**
      * Assert validation succeeds for a scratch code and report errors,
      * if any, for debugging
+     *
+     * @param Scratch $c Scratch code to be validated
      */
     protected function assertValidateScratch(Scratch $c)
     {
@@ -21,6 +23,9 @@ class ScratchTest extends TestCase
 
     /**
      * Create a single scratch code for an ID using native AR methods
+     *
+     * @param int $id Secret ID to which to bind the generated Scratch code
+     * @return Scratch Generated AR object
      */
     protected function createScratchForID(int $id)
     {
