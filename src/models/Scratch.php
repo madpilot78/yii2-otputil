@@ -116,7 +116,7 @@ class Scratch extends \yii\db\ActiveRecord
     {
         $validator = new yii\validators\ExistValidator();
         $validator->targetClass = '\mad\otputil\models\Secret';
-        $validator->targetAttribute = '\mad\otputil\models\Secret';
+        $validator->targetAttribute = 'id';
 
         return $validator->validate($sid, $error);
     }
