@@ -174,6 +174,32 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Asserts that two secret objects are the same
+     */
+    protected function assertEqualSecrets(Secret $exp, Secret $act)
+    {
+        $this->assertEquals($exp->id, $act->id);
+        $this->assertEquals($exp->secret, $act->secret);
+        $this->assertEquals($exp->digits, $act->digits);
+        $this->assertEquals($exp->mode, $act->mode);
+        $this->assertEquals($exp->algo, $act->algo);
+        $this->assertEquals($exp->period, $act->period);
+    }
+
+    /**
+     * Asserts that data inside a secret is the same as the provided array
+     */
+    protected function assertSecretEqualsData(Array $data, Secret $act)
+    {
+        $this->assertEquals($data['id'], $act->id);
+        $this->assertEquals($data['secret'], $act->secret);
+        $this->assertEquals($data['digits'], $act->digits);
+        $this->assertEquals($data['mode'], $act->mode);
+        $this->assertEquals($data['algo'], $act->algo);
+        $this->assertEquals($data['period'], $act->period);
+    }
+
+    /**
      * Asserting two strings equality ignoring line endings
      *
      * @param string $expected
