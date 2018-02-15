@@ -144,7 +144,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * Assert that data validation on a secret suceeds reporting errors,
      * if any, for analysis
      */
-    protected function assertValidate(Secret $s)
+    protected function assertValidateSecret(Secret $s)
     {
         $r = $s->validate();
         if ($s->HasErrors())
@@ -155,7 +155,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Assert validation on secret failed and report errors
      */
-    protected function assertNotValidate(Secret $s)
+    protected function assertNotValidateSecret(Secret $s)
     {
         $r = $s->validate();
         if ($s->HasErrors())
@@ -168,7 +168,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $s = new Secret();
         $data = $this->imagineSecret();
         $this->populateSecret($s, $data);
-        $this->assertValidate($s);
+        $this->assertValidateSecret($s);
         $this->assertTrue($s->save());
         return $s;
     }

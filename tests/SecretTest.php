@@ -41,7 +41,7 @@ class SecretTest extends TestCase
     public function testCreateDefaultSecret()
     {
         $s = new Secret();
-        $this->assertValidate($s);
+        $this->assertValidateSecret($s);
         $this->assertTrue($s->save());
         $ss = Secret::findOne($s->id);
         $this->assertNotNull($ss);
@@ -59,7 +59,7 @@ class SecretTest extends TestCase
 
         $ndata = $this->imagineSecret();
         $this->populateSecret($s, $ndata);
-        $this->assertValidate($s);
+        $this->assertValidateSecret($s);
         $this->assertNotTrue($s->save());
 
         $ss = Secret::findOne($data['id']);
@@ -73,7 +73,7 @@ class SecretTest extends TestCase
         $data = $this->imagineSecret();
         $this->populateSecret($s, $data);
         $s->confirmed = true;
-        $this->assertValidate($s);
+        $this->assertValidateSecret($s);
         $this->assertNotTrue($s->save());
     }
 
