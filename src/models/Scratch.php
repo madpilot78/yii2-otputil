@@ -99,7 +99,7 @@ class Scratch extends \yii\db\ActiveRecord
     {
         $code = '';
 
-        for ($i = 1; $i < self::SCRATCH_LENGTH; $i++)
+        for ($i = 1; $i <= self::SCRATCH_LENGTH; $i++)
             $code .= (string)random_int(0, 9);
 
         return $code;
