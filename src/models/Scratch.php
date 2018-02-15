@@ -38,10 +38,11 @@ class Scratch extends \yii\db\ActiveRecord
      *
      * @param int $secret_id
      */
-    public function __construct(int $secret_id)
+    public function __construct(int $secret_id = null)
     {
         parent::__construct();
-        $this->secret_id = $secret_id;
+        if(!is_null($secret_id))
+            $this->secret_id = $secret_id;
     }
 
     /**
