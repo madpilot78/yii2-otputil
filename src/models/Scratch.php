@@ -3,6 +3,8 @@
 namespace mad\otputil\models;
 
 use Yii;
+use yii\db\Connection;
+use yii\di\Instance;
 use mad\otputil\models\Secret;
 
 /**
