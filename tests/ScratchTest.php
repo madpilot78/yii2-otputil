@@ -19,6 +19,9 @@ class ScratchTest extends TestCase
         $this->assertTrue($r);
     }
 
+    /**
+     * Create a single scratch code for an ID using native AR methods
+     */
     protected function createScratchForID(int $id)
     {
         $c = new Scratch($id);
