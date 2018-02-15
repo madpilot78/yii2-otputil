@@ -91,6 +91,11 @@ class Scratch extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function getSecret()
+    {
+        return $this->hasOne(Secret::className(), ['secret_id' => 'id']);
+    }
+
     /**
      * Generates a scratch code
      *

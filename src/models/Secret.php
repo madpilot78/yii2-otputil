@@ -142,6 +142,11 @@ class Secret extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function getScratches()
+    {
+        return $this->hasMany(Scratch::className(), ['id' => 'scratch_id']);
+    }
+
     /**
      * Marks a secret as confirmed
      */
