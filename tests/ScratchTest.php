@@ -143,7 +143,7 @@ class ScratchTest extends TestCase
         $codes = Scratch::createScratches($s->id);
 
         $c = $codes[$faker->numberBetween($min = 0, $max = Scratch::DEFAULT_CODES - 1)];
-        $this->assertTrue($c->verifyCode($codes[$n]->code));
+        $this->assertTrue($c->verify($codes[$n]->code));
 
         $chk = Scratch::findBySecretID($s->id);
         $this->assertCount(Scratch::DEFAULT_CODES - 1, $chk);
