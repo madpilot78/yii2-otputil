@@ -10,6 +10,8 @@ use yii\di\Container;
 use yii\helpers\ArrayHelper;
 use yii\console\controllers\MigrateController;
 use Yii;
+use chillerlan\Authenticator\Base32;
+use mad\otputil\models\Secret;
 
 /**
  * Filter to silence yii2 migration
@@ -94,6 +96,81 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         Yii::$app = null;
         Yii::$container = new Container();
+    }
+
+    /**
+     * Use faker to create a secret for testing
+     */
+    protected function imagineSecret()
+    {
+        $faker = \Faker\Factory::create();
+        $base32 = new Base32();
+
+        return [
+            'secret' => $base32->fromString(random_bytes(20)),
+            'digits' => $faker->randomElement(Secret::ALLOWED_DIGITS),
+            'mode' => $faker->randomElement(Secret::ALLOWED_MODES),
+            'algo' => $faker->randomElement(Secret::ALLOWED_ALGOS),
+            'period' => $faker->numberBetween($min = Secret::ALLOWED_PERIODS[0], $max = Secret::ALLOWED_PERIODS[1])
+        ];
+    }
+
+    /**
+     * Populate a new secret AR
+     */
+    protected function populateSecret(Secret &$s, Array $data)
+    {
+        $s->secret = $data["secret"];
+        $s->digits = $data["digits"];
+        $s->mode = $data["mode"];
+        $s->algo = $data["algo"];
+        $s->period = $data["period"];
+    }
+
+    /**
+     * Extract $data array froma retrived or created secret
+     */
+    protected function getSecretData(Secret $s, Array &$data)
+    {
+        $data["id"] = $s->id;
+        $data["secret"] = $s->secret;
+        $data["digits"] = $s->digits;
+        $data["mode"] = $s->mode;
+        $data["algo"] = $s->algo;
+        $data["period"] = $s->period;
+    }
+
+    /**
+     * Assert that data validation on a secret suceeds reporting errors,
+     * if any, for analysis
+     */
+    protected function assertValidate(Secret $s)
+    {
+        $r = $s->validate();
+        if ($s->HasErrors())
+            var_dump($s->getErrors());
+        $this->assertTrue($r);
+    }
+
+    /**
+     * Assert validation on secret failed and report errors
+     */
+    protected function assertNotValidate(Secret $s)
+    {
+        $r = $s->validate();
+        if ($s->HasErrors())
+            var_dump($s->getErrors());
+        $this->assertNotTrue($r);
+    }
+
+    protected function createRandomSecret()
+    {
+        $s = new Secret();
+        $data = $this->imagineSecret();
+        $this->populateSecret($s, $data);
+        $this->assertValidate($s);
+        $this->assertTrue($s->save());
+        return $s;
     }
 
     /**
