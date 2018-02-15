@@ -103,7 +103,7 @@ class Secret extends \yii\db\ActiveRecord
 
                 return $base32->fromString(random_bytes(20));
             }],
-            ['secret', 'string', 'min' => 3, 'max' => 128],
+            ['secret', 'string', 'length' => [3, 128]],
             ['secret', 'match', 'pattern' => '/^[A-Z2-7]*$/i'],
             ['digits', 'default', 'value' => self::DEFAULT_DIGITS],
             ['digits', 'in', 'range' => self::ALLOWED_DIGITS],
