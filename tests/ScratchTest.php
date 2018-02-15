@@ -8,6 +8,20 @@ use mad\otputil\models\Scratch;
 class ScratchTest extends TestCase
 {
     /**
+     * Extracts code from an array of Scratch objects
+     *
+     * @param Array $cc array of scratch objects
+     * @return Array Array of codes
+     */
+    protected function flattenScratchCodes(Array $cc)
+    {
+        $codes = [];
+        foreach ($cc as $c)
+            $codes[] = $c->code;
+
+        return $codes;
+    }
+    /**
      * Assert validation succeeds for a scratch code and report errors,
      * if any, for debugging
      *
