@@ -21,6 +21,7 @@ class ScratchTest extends TestCase
 
         return $codes;
     }
+
     /**
      * Assert validation succeeds for a scratch code and report errors,
      * if any, for debugging
