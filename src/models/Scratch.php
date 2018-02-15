@@ -114,7 +114,7 @@ class Scratch extends \yii\db\ActiveRecord
      */
     protected static function validateSID(int $sid)
     {
-        $validator = new yii\validators\ExistsValidator();
+        $validator = new yii\validators\ExistValidator();
         $validator->targetClass = '\mad\otputil\models\Secret';
         $validator->targetAttribute = '\mad\otputil\models\Secret';
 
