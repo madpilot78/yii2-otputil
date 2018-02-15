@@ -83,6 +83,12 @@ class ScratchTest extends TestCase
         $this->assertCount($n, $codes);
     }
 
+    public function testCreateScratchesWrongFails()
+    {
+        $codes = Scratch::createScratches(42);
+        $this->assertNotTrue($codes);
+    }
+
     public function testScratchFindBySecretID()
     {
         $s = $this->createRandomSecret();
