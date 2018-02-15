@@ -45,10 +45,10 @@ class SecretTest extends TestCase
         $this->assertTrue($s->save());
         $ss = Secret::findOne($s->id);
         $this->assertNotNull($ss);
-        $this->assertEquals($ss->digits, Secret::DEFAULT_DIGITS);
-        $this->assertEquals($ss->mode, Secret::DEFAULT_MODE);
-        $this->assertEquals($ss->algo, Secret::DEFAULT_ALGO);
-        $this->assertEquals($ss->period, Secret::DEFAULT_PERIOD);
+        $this->assertEquals(Secret::DEFAULT_DIGITS, $ss->digits);
+        $this->assertEquals(Secret::DEFAULT_MODE, $ss->mode);
+        $this->assertEquals(Secret::DEFAULT_ALGO, $ss->algo);
+        $this->assertEquals(Secret::DEFAULT_PERIOD, $ss->period);
     }
 
     public function testCannotModifySecret()
