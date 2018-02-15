@@ -34,7 +34,7 @@ class Scratch extends \yii\db\ActiveRecord
     public function __construct(int $secret_id)
     {
         parent::__construct();
-        // $secret_id mist be checked
+        // $secret_id must be checked
         $this->secret_id = $secret_id;
     }
 
