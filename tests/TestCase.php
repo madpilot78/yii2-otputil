@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Taken from yiisoft/yii2-httpclient
+ * Originally taken from yiisoft/yii2-httpclient
  */
 
 namespace mad\otputil\tests;
