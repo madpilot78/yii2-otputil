@@ -60,6 +60,9 @@ class Scratch extends \yii\db\ActiveRecord
         return '{{%otputil_scodes}}';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
