@@ -122,6 +122,21 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
+     * Return Scratches bound to specified Secret
+     *
+     * @param int ID of Secret
+     * @return array of Secret AR objects
+     */
+    public static function findBySecretID(int $sid)
+    {
+        if (!self::validateSID($sid)) {
+            return [];
+        }
+
+        return self::findAll(['secret_id' => $sid]);
+    }
+
+    /**
      * Creates $num scratch codes
      *
      * @param int $sid ID to assign the codes to
@@ -155,12 +170,8 @@ class Scratch extends \yii\db\ActiveRecord
      */
     public static function verifyCode(string $code, int $sid, bool $del = true)
     {
-        if (!self::validateSID($sid)) {
-            return false;
-        }
-
         $ret = false;
-        $valid_codes = self::findAll(['secret_id' => $sid]);
+        $valid_codes = self::findBySecretID($sid);
 
         foreach ($valid_codes as $c) {
             if ($c->code === $code)
@@ -198,11 +209,7 @@ class Scratch extends \yii\db\ActiveRecord
      */
     public static function remove(int $sid)
     {
-        if (!self::validateSID($sid)) {
-            return false;
-        }
-
-        $codes = self::findAll(['secret_id' => $sid]);
+        $codes = self::findBySecretID($sid);
         foreach ($codes as $c)
             $c->delete();
 
