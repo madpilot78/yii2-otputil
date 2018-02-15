@@ -50,6 +50,7 @@ class Scratch extends \yii\db\ActiveRecord
     {
         parent::init();
         $this->db = Instance::ensure($this->db, Connection::className());
+        $this->code = generateCode();
     }
 
     /**
@@ -85,5 +86,20 @@ class Scratch extends \yii\db\ActiveRecord
         }
 
         return true;
+    }
+
+    /**
+     * Generates a scratch code
+     *
+     * @return string The scratch code generated
+     */
+    protected function generateCode()
+    {
+        $code = '';
+
+        for ($i = 1; $i < self::SCRATCH_LENGTH; $i++)
+            $code .= (string)random_int(0, 9);
+
+        return $code;
     }
 }
