@@ -90,8 +90,10 @@ class ScratchTest extends TestCase
         $chk = Scratch::findBySecretID($s->id);
         $this->assertCount(Scratch::DEFAULT_CODES, $chk);
 
-        // Should check for the arrays to contain same codes
-        // but database could reorder them, for now I will skip this check
+        $ccodes = $this->flattenScratchCodes($codes);
+        $cchk = $this->flattenScratchCodes($chk);
+
+        $this->assertCount(0, array_diff($ccodes, $cchk));
     }
 
     public function testVerifyAbsentScratchCode()
