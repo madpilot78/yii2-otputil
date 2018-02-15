@@ -69,7 +69,7 @@ class ScratchTest extends TestCase
         $codes = Scratch::createScratches($s->id);
 
         $chk = Scratch::findBySecretID($s->id);
-        $this->assertCount(Scratch::DEFAULT_CODES, $codes);
+        $this->assertCount(Scratch::DEFAULT_CODES, $chk);
 
         // Should check for the arrays to contain same codes
         // but database could reorder them, for now I will skip this check
@@ -100,7 +100,7 @@ class ScratchTest extends TestCase
         $this->assertTrue(Scratch::validateCode($s->id, $codes[$n]->code));
 
         $chk = Scratch::findBySecretID($s->id);
-        $this->assertCount(Scratch::DEFAULT_CODES - 1, $codes);
+        $this->assertCount(Scratch::DEFAULT_CODES - 1, $chk);
     }
 
     public function testVerifyScratchCodeNotDelete()
