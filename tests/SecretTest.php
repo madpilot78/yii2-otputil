@@ -4,6 +4,7 @@ namespace mad\otputil\tests;
 
 use chillerlan\Authenticator\Base32;
 use mad\otputil\models\Secret;
+use mad\otputil\models\Scratch;
 
 class SecretTest extends TestCase
 {
@@ -171,5 +172,14 @@ class SecretTest extends TestCase
         $s = $this->createRandomSecret();
         $this->assertEquals(1, $s->delete());
         $this->assertNull(Secret::findOne($s->id));
+    }
+
+    public function testGetScratches()
+    {
+        $s = $this->createRandomSecret();
+        $codes = Scratch::createScratches($s->id);
+
+        $codes = $s->getScratches();
+        $this->assertCount(Scratch::DEFAULT_CODES, $codes);
     }
 }

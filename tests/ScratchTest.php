@@ -135,4 +135,14 @@ class ScratchTest extends TestCase
         $chk = Scratch::findBySecretID($s->id);
         $this->assertCount(0, $chk);
     }
+
+    public function testGetSecret()
+    {
+        $s = $this->createRandomSecret();
+        $c = $this->createScratchForID($s->id);
+
+        $ss = $c->getSecret();
+
+        $this->assertEqualSecrets($s, $ss);
+    }
 }
