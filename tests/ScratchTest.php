@@ -131,7 +131,7 @@ class ScratchTest extends TestCase
         $this->assertCount(Scratch::DEFAULT_CODES - 1, $chk);
 
         foreach($chk as $c)
-            $this->assertNotEqual($codes[$n], $c->code);
+            $this->assertNotEquals($codes[$n], $c->code);
     }
 
     public function testVerifyScratchCodeAndDeleteonInstance()
@@ -149,7 +149,7 @@ class ScratchTest extends TestCase
         $this->assertCount(Scratch::DEFAULT_CODES - 1, $chk);
 
         foreach($chk as $c)
-            $this->assertNotEqual($codes[$n], $c->code);
+            $this->assertNotEquals($codes[$n], $c->code);
     }
 
     public function testVerifyScratchCodeNotDelete()
