@@ -6,10 +6,10 @@
 
 namespace mad\otputil\tests;
 
+use Yii;
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
 use yii\console\controllers\MigrateController;
-use Yii;
 use chillerlan\Authenticator\Base32;
 use mad\otputil\models\Secret;
 
