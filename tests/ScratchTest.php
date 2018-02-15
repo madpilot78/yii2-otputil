@@ -86,6 +86,7 @@ class ScratchTest extends TestCase
     public function testCreateScratchesWrongFails()
     {
         $codes = Scratch::createScratches(42);
+        $this->assertInternalType('boolean', $codes);
         $this->assertNotTrue($codes);
     }
 
