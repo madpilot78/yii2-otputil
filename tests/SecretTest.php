@@ -179,7 +179,8 @@ class SecretTest extends TestCase
         $s = $this->createRandomSecret();
         $codes = Scratch::createScratches($s->id);
 
-        $codes = $s->getScratches();
-        $this->assertCount(Scratch::DEFAULT_CODES, $codes);
+        $q = $s->getScratches();
+
+        $this->assertEquals(Scratch::DEFAULT_CODES, $q->count());
     }
 }

@@ -187,8 +187,8 @@ class ScratchTest extends TestCase
         $s = $this->createRandomSecret();
         $c = $this->createScratchForID($s->id);
 
-        $ss = $c->getSecret();
+        $q = $c->getSecret();
 
-        $this->assertEqualSecrets($s, $ss);
+        $this->assertEqualSecrets($s, $q->one());
     }
 }
