@@ -80,7 +80,6 @@ class ScratchTest extends TestCase
         // but database could reorder them, for now I will skip this check
     }
 
-
     public function testVerifyAbsentScratchCode()
     {
         $this->assertNotTrue(Scratch::validateCode(99, '12345678'));
