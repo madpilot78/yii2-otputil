@@ -106,7 +106,7 @@ class ScratchTest extends TestCase
 
     public function testVerifyAbsentScratchCode()
     {
-        $this->assertNotTrue(Scratch::validateCode(99, '12345678'));
+        $this->assertNotTrue(Scratch::verifyCode(99, '12345678'));
     }
 
     public function testVerifyWrongScratchCode()
