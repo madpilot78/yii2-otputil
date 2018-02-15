@@ -144,7 +144,7 @@ class Secret extends \yii\db\ActiveRecord
 
     public function getScratches()
     {
-        return $this->hasMany(Scratch::className(), ['id' => 'scratch_id']);
+        return $this->hasMany(Scratch::className(), ['secret_id' => 'id']);
     }
 
     /**

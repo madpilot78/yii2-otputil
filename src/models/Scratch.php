@@ -93,7 +93,7 @@ class Scratch extends \yii\db\ActiveRecord
 
     public function getSecret()
     {
-        return $this->hasOne(Secret::className(), ['secret_id' => 'id']);
+        return $this->hasOne(Secret::className(), ['id' => 'secret_id']);
     }
 
     /**
