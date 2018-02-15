@@ -187,7 +187,7 @@ class Scratch extends \yii\db\ActiveRecord
         if (!self::validateSID($this->secret_id))
             return false;
 
-        return self::verifyCode($code, $this->sid, $del);
+        return self::verifyCode($code, $this->secret_id, $del);
     }
 
     /**
