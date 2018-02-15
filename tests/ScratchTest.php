@@ -119,6 +119,9 @@ class ScratchTest extends TestCase
 
         $chk = Scratch::findBySecretID($s->id);
         $this->assertCount(Scratch::DEFAULT_CODES - 1, $chk);
+
+        foreach($chk as $c)
+            $this->assertNotEqual($codes[$n], $c->code);
     }
 
     public function testVerifyScratchCodeNotDelete()
