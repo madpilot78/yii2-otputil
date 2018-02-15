@@ -52,7 +52,7 @@ class Scratch extends \yii\db\ActiveRecord
     {
         parent::init();
         $this->db = Instance::ensure($this->db, Connection::className());
-        $this->code = generateCode();
+        $this->code = $this->generateCode();
     }
 
     /**
