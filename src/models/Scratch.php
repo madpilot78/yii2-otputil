@@ -3,8 +3,6 @@
 namespace mad\otputil\models;
 
 use Yii;
-use yii\db\Connection;
-use yii\di\Instance;
 use mad\otputil\models\Secret;
 
 /**
@@ -40,7 +38,6 @@ class Scratch extends \yii\db\ActiveRecord
 
     /**
      * Initializes the application component.
-     * This method overrides the parent implementation by establishing the database connection.
      */
     public function init()
     {

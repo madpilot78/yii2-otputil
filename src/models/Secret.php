@@ -4,8 +4,6 @@ namespace mad\otputil\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\Connection;
-use yii\di\Instance;
 use chillerlan\Authenticator\Base32;
 
 /**
