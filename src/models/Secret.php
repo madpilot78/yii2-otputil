@@ -182,7 +182,7 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
-     * Increments counter for HOTPs
+     * Updates counter for HOTPs
      */
     public function updateCounter(int $v)
     {
