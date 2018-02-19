@@ -58,23 +58,6 @@ class Secret extends \yii\db\ActiveRecord
     const ALLOWED_PERIODS = [15, 60];
 
     /**
-     * @var string the name of the DB connection to be used by this class
-     *
-     * NOTE: make configurable
-     */
-    private $db = 'db';
-
-    /**
-     * Initializes the application component.
-     * This method overrides the parent implementation by establishing the database connection.
-     */
-    public function init()
-    {
-        parent::init();
-        $this->db = Instance::ensure($this->db, Connection::class);
-    }
-
-    /**
      * @inheritdoc
      */
     public static function tableName()

@@ -27,20 +27,13 @@ class Scratch extends \yii\db\ActiveRecord
     const SCRATCH_LENGTH = 8;
 
     /**
-     * @var string the name of the DB connection to be used by this class
-     *
-     * NOTE: make configurable
-     */
-    private $db = 'db';
-
-    /**
      * Requires a Secret id to link Scratch codes to
      *
      * @param int $secret_id
      */
-    public function __construct(int $secret_id = null)
+    public function __construct(int $secret_id = null, $config = [])
     {
-        parent::__construct();
+        parent::__construct($config);
         if(!is_null($secret_id))
             $this->secret_id = $secret_id;
     }
@@ -52,7 +45,6 @@ class Scratch extends \yii\db\ActiveRecord
     public function init()
     {
         parent::init();
-        $this->db = Instance::ensure($this->db, Connection::class);
         $this->code = $this->generateCode();
     }
 
