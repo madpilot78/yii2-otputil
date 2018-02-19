@@ -91,6 +91,9 @@ class Scratch extends \yii\db\ActiveRecord
         return true;
     }
 
+    /**
+     * Relation method to Secret model
+     */
     public function getSecret()
     {
         return $this->hasOne(Secret::class, ['id' => 'secret_id']);
