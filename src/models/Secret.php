@@ -71,7 +71,7 @@ class Secret extends \yii\db\ActiveRecord
     public function init()
     {
         parent::init();
-        $this->db = Instance::ensure($this->db, Connection::className());
+        $this->db = Instance::ensure($this->db, Connection::class);
     }
 
     /**
@@ -88,7 +88,7 @@ class Secret extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -144,7 +144,7 @@ class Secret extends \yii\db\ActiveRecord
 
     public function getScratches()
     {
-        return $this->hasMany(Scratch::className(), ['secret_id' => 'id']);
+        return $this->hasMany(Scratch::class, ['secret_id' => 'id']);
     }
 
     /**

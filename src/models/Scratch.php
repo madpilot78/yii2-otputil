@@ -52,7 +52,7 @@ class Scratch extends \yii\db\ActiveRecord
     public function init()
     {
         parent::init();
-        $this->db = Instance::ensure($this->db, Connection::className());
+        $this->db = Instance::ensure($this->db, Connection::class);
         $this->code = $this->generateCode();
     }
 
@@ -93,7 +93,7 @@ class Scratch extends \yii\db\ActiveRecord
 
     public function getSecret()
     {
-        return $this->hasOne(Secret::className(), ['id' => 'secret_id']);
+        return $this->hasOne(Secret::class, ['id' => 'secret_id']);
     }
 
     /**
