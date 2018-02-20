@@ -191,4 +191,11 @@ class OTP extends Component
     public function forget()
     {
     }
+
+    /**
+     * Remove unconfirmed secrets older than $unconfirmedTimeout
+     */
+    public function cleanupUnconfirmed()
+    {
+    }
 }
