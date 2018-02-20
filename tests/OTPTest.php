@@ -188,6 +188,7 @@ class OTPTest extends TestCase
     public function testCleanupUnconfirmed()
     {
         $otp = Yii::$app->otp;
+        $auth = new Authenticator;
         $sid = [];
 
         $ts = time() - (60 * 30);
