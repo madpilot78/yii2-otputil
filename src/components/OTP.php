@@ -50,7 +50,7 @@ class OTP extends Component
     public $slip = self::DEFAULT_SLIP;
 
     /**
-     * @var Secret The Secret AR object we are using
+     * @var secret The Secret AR object we are using
      */
     protected $secret;
 
