@@ -86,11 +86,10 @@ class OTP extends Component
     }
 
     /**
-     * Factory method returning an OTP object populated with Secret $sid
-     * and relates Scratch codes
+     * Make the object fetch and use the Secret with ID $sid
      *
      * @param int $sid the Secret ID we are going to use
-     * @return bool if the requeste Secret was found
+     * @return bool if the requested Secret was found
      */
     public function get(int $sid)
     {
