@@ -184,4 +184,40 @@ class OTPTest extends TestCase
 
         $this->assertNotTrue($otp->getSID($sid));
     }
+
+    public function testCleanupUnconfirmed()
+    {
+        $otp = Yii::$app->otp;
+        $sid = [];
+
+        $ts = time() - (60 * 30);
+
+        $otp->create();
+        $sid[] = $otp->getSID();
+        $secret = $otp->getSecret();
+        $this->assertInternalType('string', $secret);
+        $auth->setSecret($secret);
+        $this->assertTrue($otp->confirm($auth->code()));
+
+        $otp->create();
+        $sid[] = $otp->getSID();
+
+        $otp->create();
+        $sid[] = $otp->getSID();
+
+        // Hack, modify times in the DB to test various conditions
+        Yii::$app->db->createCommand()->update('otputil_secrets', ['created_at' => $ts, 'updated_at' => $ts],
+            'id = :sida or id = :sidb', [':sida' => $sid[0], ':sidb' => $sid[1]])->execute();
+
+        $otp->cleanupUnconfirmed();
+
+        $chk = $otp->get($sid[0]);
+        $this->assertEquals($sid[0], $chk);
+
+        $chk = $otp->get($sid[1]);
+        $this->assertNotTrue($chk);
+
+        $chk = $otp->get($sid[2]);
+        $this->assertEquals($sid[2], $chk);
+    }
 }
