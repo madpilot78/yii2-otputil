@@ -206,9 +206,15 @@ class Scratch extends \yii\db\ActiveRecord
      */
     public static function remove(int $sid)
     {
-        $codes = self::findBySecretID($sid);
-        foreach ($codes as $c)
-            $c->delete();
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $codes = self::findBySecretID($sid);
+            foreach ($codes as $c)
+                $c->delete();
+        } catch(\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
 
         return true;
     }
