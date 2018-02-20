@@ -47,6 +47,19 @@ class OTPTest extends TestCase
         $this->assertNotTrue($otp->confirm($auth->code()));
     }
 
+    public function textNoConfirmScratch()
+    {
+        $otp = OTP::newOTP();
+        $this->assertInstanceOf(OTP::class, $otp);
+        $this->assertNotTrue($otp->isConfirmed());
+
+        $scratches = $otp->getScratches();
+        $s = $scratches[rand(0, $otp->scratchnum - 1)];
+        $this->assertNotTrue($otp->confirm($s));
+        $scratches = $otp->getScratches();
+        $this->assertCount($otp->scratchnum, $scratches);
+    }
+
     public function testGetOTP()
     {
         $auth = new Authenticator;
@@ -63,7 +76,7 @@ class OTPTest extends TestCase
         $this->assertTrue($gototp->confirm($auth->code()));        
     }
 
-    public function testVerify()
+    public function testVerifyOTP()
     {
         $auth = new Authenticator;
 
@@ -74,6 +87,25 @@ class OTPTest extends TestCase
 
         $this->assertNotTrue($otp->verify('000000'));
         $this->assertTrue($otp->verify($auth->code()));
+    }
+
+    public function testVerifyScratch()
+    {
+        $auth = new Authenticator;
+
+        $otp = OTP::newOTP();
+        $this->assertInstanceOf(OTP::class, $otp);
+        $auth->setSecret($otp->getSecret());
+        $this->assertTrue($otp->confirm($auth->code()));
+
+        $scratches = $otp->getScratches();
+        $code = $scratches[rand(0, $otp->scratchnum - 1)];
+        $this->assertTrue($otp->verify($code));
+
+        $chk = $otp->getScratches();
+        $this->assertCount($otp->scratchnum - 1, $chk);
+        foreach ($chk as $s)
+            $this->assertNotEquals($code, $s);
     }
 
     public function testGenerate()
