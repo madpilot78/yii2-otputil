@@ -183,5 +183,7 @@ class SecretTest extends TestCase
         $q = $s->getScratches();
 
         $this->assertEquals(Scratch::DEFAULT_CODES, $q->count());
+        $scratches = $q->all();
+        $this->assertInstanceOf(Scratch::class, $scratches[0]);
     }
 }
