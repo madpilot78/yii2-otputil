@@ -62,7 +62,27 @@ class OTP extends Component
     /**
      * @var secret The Secret AR object we are using
      */
-    protected $secret;
+    protected $secret = null;
+
+    /**
+     * Creates a correctly configured Authenticator object
+     *
+     * @return Authenticator|null The Authenticator object configured as required
+     */
+    protected function getAuth()
+    {
+        if (is_null($this->secret))
+            return null;
+
+        $auth = new Authenticator;
+        $auth->setDigits($this->digits);
+        $auth->setMode($this->mode);
+        $auth->setAlgorithm($this->algo);
+        $auth->setPeriod($this->period);
+        $auth->setSecret($this->secret->secret);
+
+        return $auth;
+    }
 
     /**
      * Actually perform the check, allows disabling scratch codes usage
@@ -73,6 +93,25 @@ class OTP extends Component
      */
     protected function doverifycode(string $code, $acceptScratch = true)
     {
+        if (is_null($this->secret))
+            return false;
+
+        if (strlen($code) < Secret::ALLOWED_DIGITS[0])
+            return false;
+
+        $auth = $this->getAuth();
+
+        if ($auth->verify($code, $this->mode == 'totp' ? time() : $this->counter, $this->slip)) {
+            if ($this->mode == 'hotp')
+                $this->secret->incrementCounter();
+
+            return true;
+        }
+
+        if ($acceptScratch && Scratch::verifyCode($code, $this->secret->id))
+            return true;
+
+        return false;
     }
 
     /**
@@ -83,6 +122,29 @@ class OTP extends Component
      */
     public function create()
     {
+        $base32 = new Base32();
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $s = new Secret();
+            $s->secret = $base32->fromString(random_bytes(20));
+            $s->digits = $this->digits;
+            $s->mode = $this->mode;
+            $s->algo = $this->algo;
+            $s->period = $this->period;
+            $s->save();
+
+            Scratch::createScratches($s->id);
+
+            $transaction->commit();
+        } catch(\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+
+        $this->secret = $s;
+
+        return $s->id;
     }
 
     /**
@@ -94,15 +156,22 @@ class OTP extends Component
      */
     public function get(int $sid)
     {
+        $this->secret = Secret::findOne($sid);
+
+        return !is_null($this->secret);
     }
 
     /**
      * Returns ID os Secret object we are using
      *
-     * @return int ID of Secret AR object
+     * @return int|null ID of Secret AR object, null if not set
      */
     public function getSID()
     {
+        if (is_null($this->secret))
+            return null;
+
+        return $this->secret->id;
     }
 
     /**
@@ -112,15 +181,30 @@ class OTP extends Component
      */
     public function getScratches()
     {
+        if (is_null($this->secret))
+            return null;
+
+        $q = $this->secret->getScratches();
+        $scratches = $q->all();
+
+        $codes = [];
+        foreach ($scratches as $s)
+            $codes[] = $s->code;
+
+        return $codes;
     }
 
     /**
      * Returns the Base32 encoded secret
      *
-     * @return string Base32 encoded secret
+     * @return string|null Base32 encoded secret
      */
     public function getSecret()
     {
+        if (is_null($this->secret))
+            return null;
+
+        return $this->secret->secret;
     }
 
     /**
@@ -130,6 +214,10 @@ class OTP extends Component
      */
     public function isConfirmed()
     {
+        if (is_null($this->secret))
+            return null;
+
+        return $this->secret->isconfimed();
     }
 
     /**
@@ -142,6 +230,13 @@ class OTP extends Component
      */
     public function confirm(string $code)
     {
+        if (is_null($this->secret))
+            return false;
+
+        if ($this->doverifycode($code, false))
+            return $this->secret->confirm();
+
+        return false;
     }
 
     /**
@@ -154,15 +249,24 @@ class OTP extends Component
      */
     public function verify(string $code)
     {
+        if (is_null($this->secret))
+            return false;
+
+        return $this->doverifycode($code, true);
     }
 
     /**
      * Generates an OTP for the curent object, based on bound Secret
      *
-     * @return string current OTP
+     * @return string|null current OTP
      */
     public function generate()
     {
+        if (is_null($this->secret))
+            return null;
+
+        $auth = $this->getAuth();
+        return $auth->code();
     }
 
     /**
@@ -172,6 +276,10 @@ class OTP extends Component
      */
     public function invalidateScratches()
     {
+        if (is_null($this->secret))
+            return false;
+
+        return Scratch::remove($this->secret->id);
     }
 
     /**
@@ -181,6 +289,15 @@ class OTP extends Component
      */
     public function regenerateScrathes()
     {
+        if (is_null($this->secret))
+            return false;
+
+        if(!$this->invalidateScratches())
+            return false;
+
+        Scratch::createScratches($this->secret->id);
+
+        return true;
     }
 
     /**
@@ -190,6 +307,21 @@ class OTP extends Component
      */
     public function forget()
     {
+        if (is_null($this->secret))
+            return false;
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            if (!Scratch::remove($this->secret->id)) throw new Exception("Failed to remove scratch codes");
+            $this->secret->delete();
+        } catch(\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+
+        $this->secret = null;
+
+        return true;
     }
 
     /**
@@ -197,5 +329,19 @@ class OTP extends Component
      */
     public function cleanupUnconfirmed()
     {
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $secrets = Secret::find()
+                ->where(['confirmed' => false])
+                ->andWhere(['<', 'updated_at', time() - $this->unconfirmedTimeout])
+                ->all();
+            foreach ($secrets as $s) {
+                if (!Scratch::remove($s->id)) throw new Exception("Failed to remove scratch codes");
+                $s->delete();
+            }
+        } catch(\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
     }
 }
