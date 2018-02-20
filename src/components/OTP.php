@@ -20,6 +20,11 @@ class OTP extends Component
     const DEFAULT_SLIP = 2;
 
     /**
+     * @const DEFAULT_TIMEOUT Default timeout for unconfirmed secrets
+     */
+    const DEFAULT_TIMEOUT = 900;
+
+    /**
      * @var int digits length of OTPs
      */
     public $digits = Secret::DEFAULT_DIGITS;
@@ -48,6 +53,11 @@ class OTP extends Component
      * @var int slip allowed, odd numbers get in the past
      */
     public $slip = self::DEFAULT_SLIP;
+
+    /**
+     * @var int timout for unconfirmed secrets, seconds
+     */
+    public $unconfirmedTimeout = self::DEFAULT_TIMEOUT;
 
     /**
      * @var secret The Secret AR object we are using
