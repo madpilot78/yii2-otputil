@@ -184,7 +184,7 @@ class OTP extends Component
     }
 
     /**
-     * Removes the bound Secrfet and Scratch codes from the DB
+     * Removes the bound Secret and Scratch codes from the DB
      *
      * @return boolean if operation was successful
      */
