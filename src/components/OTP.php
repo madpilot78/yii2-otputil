@@ -76,8 +76,7 @@ class OTP extends Component
     }
 
     /**
-     * Factory function to generate a new OTP object populating Secret
-     * and Scratch codes
+     * Creates a new Secret and sets as active one.
      *
      * @return int ID of the created Secret AR object
      */
