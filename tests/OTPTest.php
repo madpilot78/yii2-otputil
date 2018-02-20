@@ -118,7 +118,7 @@ class OTPTest extends TestCase
         $this->assertTrue($otp->confirm($auth->code()));
         $code = $otp->generate();
         $this->assertInternalType('string', $code);
-        $this->assertEquals($otp->bigits, strlen($code));
+        $this->assertEquals($otp->digits, strlen($code));
         $this->assertTrue($auth->verify($code));
     }
 
