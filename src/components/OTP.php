@@ -76,7 +76,8 @@ class OTP extends Component
     }
 
     /**
-     * Creates a new Secret and sets as active one.
+     * Creates a new Secret and sets as active one. Also performs expiration
+     * of unconfirmed Secrets
      *
      * @return int ID of the created Secret AR object
      */
@@ -85,7 +86,8 @@ class OTP extends Component
     }
 
     /**
-     * Make the object fetch and use the Secret with ID $sid
+     * Make the object fetch and use the Secret with ID $sid. Also performs
+     * expiration of unconfirmed Secrets.
      *
      * @param int $sid the Secret ID we are going to use
      * @return bool if the requested Secret was found
