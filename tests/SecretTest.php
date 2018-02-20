@@ -67,6 +67,7 @@ class SecretTest extends TestCase
         $ss = Secret::findOne($s->id);
         $this->assertNotNull($ss);
         $this->assertTrue($ss->isconfimed());
+        $this->assertNotTrue($ss->confirm());
     }
 
     public function testSecretIncrementCounter()

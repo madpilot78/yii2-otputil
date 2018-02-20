@@ -136,6 +136,9 @@ class Secret extends \yii\db\ActiveRecord
      */
     public function confirm()
     {
+        if ($this->confirmed)
+            return false;
+
         $this->confirmed = true;
         return $this->save();
     }
