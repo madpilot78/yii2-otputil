@@ -6,7 +6,7 @@ use chillerlan\Authenticator\Authenticator;
 use chillerlan\Authenticator\Base32;
 use mad\otputil\OTP;
 
-class SecretTest extends TestCase
+class OTPTest extends TestCase
 {
 
 }
