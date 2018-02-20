@@ -122,6 +122,30 @@ class OTPTest extends TestCase
         $this->assertTrue($auth->verify($code));
     }
 
+    public function testInvalidateScratches()
+    {
+        $otp = OTP::newOTP();
+        $this->assertInstanceOf(OTP::class, $otp);
+
+        $this-assertTrue($otp->invalidateScratches());
+        $scratches = $otp->getScratches();
+        $this->assertCount(0, $scratches);
+    }
+
+    public function testRegenrateScratches()
+    {
+        $otp = OTP::newOTP();
+        $this->assertInstanceOf(OTP::class, $otp);
+
+        $oldscratches = $otp->getScratches();
+
+        $this-assertTrue($otp->regenerateScratches());
+        $newscratches = $otp->getScratches();
+        $this->assertCount($otp->scratchnum, $newscratches);
+
+        $this->assertCount($otp->scratchnum, array_diff($oldscratches, $newscratches));
+    }
+
     public function testForget()
     {
         $auth = new Authenticator;
