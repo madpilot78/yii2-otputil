@@ -68,6 +68,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
                     'class' => 'yii\db\Connection',
                     'dsn' => 'sqlite::memory:',
                 ],
+                'otp' => [
+                    'class' => 'mad\otputil\components\OTP',
+                ],
             ]
         ], $config));
     }

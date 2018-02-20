@@ -2,6 +2,7 @@
 
 namespace mad\otputil\tests;
 
+use Yii;
 use chillerlan\Authenticator\Authenticator;
 use chillerlan\Authenticator\Base32;
 use mad\otputil\components\OTP;
@@ -10,12 +11,11 @@ class OTPTest extends TestCase
 {
     // Tests:
 
-    public function testNewOTP()
+    public function testCreate()
     {
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
+        $otp = Yii::$app->otp;
 
-        $sid = $otp->getSID();
+        $sid = $otp->create();
         $this->assertInternalType('int', $sid);
         $this->assertNotEquals(0, $sid);
 
@@ -30,13 +30,26 @@ class OTPTest extends TestCase
         $this->assertInternalType('string', $secret);
     }
 
+    public function testGetSID()
+    {
+        $otp = Yii::$app->otp;
+
+        $sid = $otp->create();
+        $this->assertInternalType('int', $sid);
+        $this->assertNotEquals(0, $sid);
+        $nsid = $otp->getSID();
+        $this->assertInternalType('int', $sid);
+        $this->assertEquals($sid, $nsid);
+    }
+
     public function testConfirm()
     {
+        $otp = Yii::$app->otp;
         $auth = new Authenticator;
 
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
+        $otp->create();
         $secret = $otp->getSecret();
+        $this->assertInternalType('string', $secret);
         $this->assertNotTrue($otp->isConfirmed());
 
         $auth->setSecret($secret);
@@ -49,8 +62,9 @@ class OTPTest extends TestCase
 
     public function textNoConfirmScratch()
     {
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
+        $otp = Yii::$app->otp;
+
+        $otp->create();
         $this->assertNotTrue($otp->isConfirmed());
 
         $scratches = $otp->getScratches();
@@ -60,29 +74,33 @@ class OTPTest extends TestCase
         $this->assertCount($otp->scratchnum, $scratches);
     }
 
-    public function testGetOTP()
+    public function testGet()
     {
+        $otp = Yii::$app->otp;
         $auth = new Authenticator;
 
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
-        $sid = $otp->getSID();
+        $sid = $otp->create();
         $secret = $otp->getSecret();
+        $this->assertInternalType('string', $secret);
 
-        $gototp = OTP::getOTP($sid);
-        $this->assertInstanceOf(OTP::class, $gototp);
+        $nsid = $otp->create();
+        $this->assertNotEquals($nsid, $sid);
+
+        $this->assertTrue($otp->get($sid));
 
         $auth->setSecret($secret);
-        $this->assertTrue($gototp->confirm($auth->code()));        
+        $this->assertTrue($otp->confirm($auth->code()));        
     }
 
-    public function testVerifyOTP()
+    public function testVerify()
     {
+        $otp = Yii::$app->otp;
         $auth = new Authenticator;
 
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
-        $auth->setSecret($otp->getSecret());
+        $sid = $otp->create();
+        $secret = $otp->getSecret();
+        $this->assertInternalType('string', $secret);
+        $auth->setSecret($secret);
         $this->assertTrue($otp->confirm($auth->code()));
 
         $this->assertNotTrue($otp->verify('000000'));
@@ -91,11 +109,13 @@ class OTPTest extends TestCase
 
     public function testVerifyScratch()
     {
+        $otp = Yii::$app->otp;
         $auth = new Authenticator;
 
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
-        $auth->setSecret($otp->getSecret());
+        $otp->create();
+        $secret = $otp->getSecret();
+        $this->assertInternalType('string', $secret);
+        $auth->setSecret($secret);
         $this->assertTrue($otp->confirm($auth->code()));
 
         $scratches = $otp->getScratches();
@@ -110,11 +130,13 @@ class OTPTest extends TestCase
 
     public function testGenerate()
     {
+        $otp = Yii::$app->otp;
         $auth = new Authenticator;
 
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
-        $auth->setSecret($otp->getSecret());
+        $otp->create();
+        $secret = $otp->getSecret();
+        $this->assertInternalType('string', $secret);
+        $auth->setSecret($secret);
         $this->assertTrue($otp->confirm($auth->code()));
         $code = $otp->generate();
         $this->assertInternalType('string', $code);
@@ -124,22 +146,22 @@ class OTPTest extends TestCase
 
     public function testInvalidateScratches()
     {
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
+        $otp = Yii::$app->otp;
+        $otp->create();
 
-        $this-assertTrue($otp->invalidateScratches());
+        $this->assertTrue($otp->invalidateScratches());
         $scratches = $otp->getScratches();
         $this->assertCount(0, $scratches);
     }
 
     public function testRegenrateScratches()
     {
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
+        $otp = Yii::$app->otp;
+        $otp->create();
 
         $oldscratches = $otp->getScratches();
 
-        $this-assertTrue($otp->regenerateScratches());
+        $this->assertTrue($otp->regenerateScrathes());
         $newscratches = $otp->getScratches();
         $this->assertCount($otp->scratchnum, $newscratches);
 
@@ -148,16 +170,18 @@ class OTPTest extends TestCase
 
     public function testForget()
     {
+        $otp = Yii::$app->otp;
         $auth = new Authenticator;
 
-        $otp = OTP::newOTP();
-        $this->assertInstanceOf(OTP::class, $otp);
+        $otp->create();
         $sid = $otp->getSID();
-        $auth->setSecret($otp->getSecret());
+        $secret = $otp->getSecret();
+        $this->assertInternalType('string', $secret);
+        $auth->setSecret($secret);
         $this->assertTrue($otp->confirm($auth->code()));
 
         $otp->forget();
 
-        $this->assertNotTrue(OTP::getOTP($sid));
+        $this->assertNotTrue($otp->getSID($sid));
     }
 }

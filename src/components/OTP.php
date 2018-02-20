@@ -50,6 +50,11 @@ class OTP extends Component
     public $slip = self::DEFAULT_SLIP;
 
     /**
+     * @var Secret The Secret AR object we are using
+     */
+    protected $secret;
+
+    /**
      * Actually perform the check, allows disabling scratch codes usage
      *
      * @param string $code The code to be verified
@@ -64,9 +69,9 @@ class OTP extends Component
      * Factory function to generate a new OTP object populating Secret
      * and Scratch codes
      *
-     * @return OTP object created
+     * @return int ID of the created Secret AR object
      */
-    public static function newOTP()
+    public function create()
     {
     }
 
@@ -74,17 +79,17 @@ class OTP extends Component
      * Factory method returning an OTP object populated with Secret $sid
      * and relates Scratch codes
      *
-     * @param int $sid the Secret ID to be retrived to populate the new OTP object
-     * @return OTP object created
+     * @param int $sid the Secret ID we are going to use
+     * @return bool if the requeste Secret was found
      */
-    public static function getOTP(int $sid)
+    public function get(int $sid)
     {
     }
 
     /**
-     * Returns the Secret ID of the bound Secret AR object
+     * Returns ID os Secret object we are using
      *
-     * @return int Secret ID
+     * @return int ID of Secret AR object
      */
     public function getSID()
     {
