@@ -26,7 +26,7 @@ class m180128_141512_init extends Migration
         ]);
 
         $this->createIndex(
-            'idx-otputil_secrets',
+            'idx-otputil_secrets-created_at',
             '{{%otputil_secrets}}',
             'created_at'
         );
