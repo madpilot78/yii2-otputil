@@ -90,7 +90,7 @@ class OTP extends Component
     }
 
     /**
-     * Decides whether to garbage collect old unconfirmed scratch codes.
+     * Decides whether to garbage collect old unconfirmed Secrets.
      *
      * First simple implementation, 5% chance
      *
