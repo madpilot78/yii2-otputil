@@ -25,9 +25,10 @@ class OTP extends Component
     const DEFAULT_TIMEOUT = 900;
 
     /**
-     * @const GC_CHANCE Chance in percent point of garbage collection to run
+     * @const DEFAULT_GCCHANCE Default chance in percent point of garbage
+     * collection to run
      */
-    const GC_CHANCE = 5;
+    const DEFAULT_GCCHANCE = 5;
 
     /**
      * @var int digits length of OTPs
@@ -65,6 +66,11 @@ class OTP extends Component
     public $unconfirmedTimeout = self::DEFAULT_TIMEOUT;
 
     /**
+     * @var int percent of chance of unconfirmed Secret GC to run
+     */
+    public $gcChance = self::DEFAULT_GCCHANCE;
+
+    /**
      * @var secret The Secret AR object we are using
      */
     protected $secret = null;
@@ -98,7 +104,7 @@ class OTP extends Component
      */
     protected function willGC()
     {
-        return (rand(0, 99) < self::GC_CHANCE);
+        return (rand(0, 99) < $this->gcChance);
     }
 
     /**
