@@ -244,7 +244,7 @@ class OTP extends Component
     public function isConfirmed()
     {
         if (is_null($this->secret))
-            return null;
+            return false;
 
         return $this->secret->isconfimed();
     }
