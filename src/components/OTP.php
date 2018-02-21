@@ -25,6 +25,11 @@ class OTP extends Component
     const DEFAULT_TIMEOUT = 900;
 
     /**
+     * @const GC_CHANCE Chance in percent point of garbage collection to run
+     */
+    const GC_CHANCE = 5;
+
+    /**
      * @var int digits length of OTPs
      */
     public $digits = Secret::DEFAULT_DIGITS;
@@ -82,6 +87,18 @@ class OTP extends Component
         $auth->setSecret($this->secret->secret);
 
         return $auth;
+    }
+
+    /**
+     * Decides whether to garbage collect old unconfirmed scratch codes.
+     *
+     * First simple implementation, 5% chance
+     *
+     * @return
+     */
+    protected function willGC()
+    {
+        return (rand(0, 99) < self::GC_CHANCE);
     }
 
     /**
@@ -144,6 +161,9 @@ class OTP extends Component
 
         $this->secret = $s;
 
+        if ($this->willGC())
+            $this->cleanupUnconfirmed();
+
         return $s->id;
     }
 
@@ -157,6 +177,9 @@ class OTP extends Component
     public function get(int $sid)
     {
         $this->secret = Secret::findOne($sid);
+
+        if ($this->willGC())
+            $this->cleanupUnconfirmed();
 
         return !is_null($this->secret);
     }
