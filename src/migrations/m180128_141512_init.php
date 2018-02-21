@@ -25,6 +25,12 @@ class m180128_141512_init extends Migration
             'updated_at' => $this->integer()->notNull()
         ]);
 
+        $this->createIndex(
+            'idx-otputil_secrets',
+            '{{%otputil_secrets}}',
+            'created_at'
+        );
+
         $this->createTable('{{%otputil_scodes}}', [
             'id' => $this->primaryKey(),
             'code' => $this->string()->notNull(),
