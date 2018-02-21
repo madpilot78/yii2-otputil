@@ -92,7 +92,7 @@ class OTP extends Component
     /**
      * Decides whether to garbage collect old unconfirmed Secrets.
      *
-     * First simple implementation, 5% chance
+     * First simple implementation, just use random chance.
      *
      * @return
      */
