@@ -333,7 +333,7 @@ class OTP extends Component
         try {
             $secrets = Secret::find()
                 ->where(['confirmed' => false])
-                ->andWhere(['<', 'updated_at', time() - $this->unconfirmedTimeout])
+                ->andWhere(['<', 'created_at', time() - $this->unconfirmedTimeout])
                 ->all();
             foreach ($secrets as $s) {
                 if (!Scratch::remove($s->id)) throw new Exception("Failed to remove scratch codes");
