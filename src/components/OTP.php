@@ -332,8 +332,8 @@ class OTP extends Component
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $secrets = Secret::find()
-                ->where(['confirmed' => false])
-                ->andWhere(['<', 'created_at', time() - $this->unconfirmedTimeout])
+                ->where(['<', 'created_at', time() - $this->unconfirmedTimeout])
+                ->andWhere(['confirmed' => false])
                 ->all();
             foreach ($secrets as $s) {
                 if (!Scratch::remove($s->id)) throw new Exception("Failed to remove scratch codes");
