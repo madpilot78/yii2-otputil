@@ -73,11 +73,11 @@ class QRCodeimg extends Widget
         parent::init();
 
         if ($this->sid === null) {
-            throw new ServerErrorHttpException("Missing Secret ID");
+            throw new ServerErrorHttpException('Missing Secret ID');
         }
 
         if (!in_array($this->fmt, ['eps', 'png', 'svg'])) {
-            throw new ServerErrorHttpException("Invalid image format");
+            throw new ServerErrorHttpException('Invalid image format');
         }
 
         switch ($this->ecLevel) {
@@ -98,17 +98,17 @@ class QRCodeimg extends Widget
                 break;
 
             default:
-                throw new ServerErrorHttpException("Invalid error correction level");
+                throw new ServerErrorHttpException('Invalid error correction level');
                 break;
         }
 
         if (strpos($this->label, ':') || strpos($this->username, ':')) {
-            throw new ServerErrorHttpException("QRCode label and username cannot contain ':'");
+            throw new ServerErrorHttpException('QRCode label and username cannot contain ":"');
         }
 
         $this->secret = Secret::findOne($this->sid);
         if (is_null($this->secret)) {
-            throw new ServerErrorHttpException("Secret not found");
+            throw new ServerErrorHttpException('Secret not found');
         }
     }
 
