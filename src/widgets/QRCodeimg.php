@@ -10,7 +10,6 @@ use mad\otputil\models\Secret;
 use BaconQrCode\Common\ErrorCorrectionLevel;
 use BaconQrCode\Encoder\Encoder;
 use BaconQrCode\Writer as QRCWriter;
-use chillerlan\Authenticator\Base32;
 
 class QRCodeimg extends Widget
 {
@@ -103,6 +102,10 @@ class QRCodeimg extends Widget
                 break;
         }
 
+        if (strpos($this->label, ':') || strpos($this->username, ':')) {
+            throw new ServerErrorHttpException("QRCode label and username cannot contain ':'");
+        }
+
         $this->secret = Secret::findOne($this->sid);
         if (is_null($this->secret)) {
             throw new ServerErrorHttpException("Secret not found");
@@ -111,17 +114,50 @@ class QRCodeimg extends Widget
 
     public function run()
     {
-        $base32 = new Base32();
+        $coded = "otpauth://{$this->secret->mode}/";
+
+        if ($this->label) {
+            $coded .= Html::encode($this->label);
+        }
+
+        $coded .= ':';
+
+        if ($this->username) {
+            $coded .= Html::encode($this->username);
+        }
+
+        $data = [
+            'secret' => $this->secret->secret,
+            'algorithm' => $this->secret->algo,
+            'digits' => $this->secret->digits,
+        ];
+
+        if ($this->issuer) {
+            $data['issuer'] = $this->issuer;
+        }
+
+        if ($this->secret->mode == 'totp') {
+            $data['period'] = $this->secret->period;
+        } elseif ($this->secret->mode == 'hotp') {
+            $data['counter'] = $this->secret->counter;
+        }
+
+        $coded .= \http_build_query($data);
+        
         $ufmt = $this->fmt;
         $ufmt[0] = strtoupper($ufmt[0]);
+
         $renderformat = '\\BaconQrCode\\Renderer\\Image\\' . $ufmt;
+
         $renderer = new $renderformat();
         $renderer->setHeight($this->height);
         $renderer->setWidth($this->width);
+
         $writer = new QRCWriter($renderer);
+
         $qrcode = base64_encode(
             $writer->writeString(
-                $base32->toString($this->secret->secret),
+                $coded,
                 Encoder::DEFAULT_BYTE_MODE_ECODING,
                 $this->ecLevel
             )
