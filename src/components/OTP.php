@@ -365,10 +365,12 @@ class OTP extends Component
                 ->where(['<', 'created_at', time() - $this->unconfirmedTimeout])
                 ->andWhere(['confirmed' => false])
                 ->all();
+
             foreach ($secrets as $s) {
                 if (!Scratch::remove($s->id)) throw new Exception("Failed to remove scratch codes");
                 $s->delete();
             }
+
             $transaction->commit();
         } catch(\Exception $e) {
             $transaction->rollBack();

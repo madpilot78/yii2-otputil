@@ -209,8 +209,11 @@ class Scratch extends \yii\db\ActiveRecord
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $codes = self::findBySecretID($sid);
-            foreach ($codes as $c)
+
+            foreach ($codes as $c) {
                 $c->delete();
+            }
+
             $transaction->commit();
         } catch(\Exception $e) {
             $transaction->rollBack();
