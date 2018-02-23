@@ -135,7 +135,7 @@ class QRCodeimg extends Widget
         ];
 
         if ($this->issuer) {
-            $data['issuer'] = $this->issuer;
+            $data['issuer'] = Html::encode($this->issuer);
         }
 
         if ($this->secret->mode == 'totp') {
