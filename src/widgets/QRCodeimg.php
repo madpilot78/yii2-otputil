@@ -143,7 +143,7 @@ class QRCodeimg extends Widget
         }
 
         $coded .= \http_build_query($data);
-        
+
         $ufmt = $this->fmt;
         $ufmt[0] = strtoupper($ufmt[0]);
 
