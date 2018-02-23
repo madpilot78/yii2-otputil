@@ -9,7 +9,6 @@ use yii\web\ServerErrorHttpException;
 use mad\otputil\models\Secret;
 use BaconQrCode\Common\ErrorCorrectionLevel;
 use BaconQrCode\Encoder\Encoder;
-use BaconQrCode\Renderer\Image as ImageRenderer;
 use BaconQrCode\Writer as QRCWriter;
 use chillerlan\Authenticator\Base32;
 
@@ -82,8 +81,26 @@ class QRCodeimg extends Widget
             throw new ServerErrorHttpException("Invalid image format");
         }
 
-        if (!in_array($this->ecLevel, ['L', 'M', 'Q', 'H'])) {
-            throw new ServerErrorHttpException("Invalid error correction level");
+        switch ($this->ecLevel) {
+            case 'L':
+                $this->ecLevel = ErrorCorrectionLevel::L;
+                break;
+
+            case 'M':
+                $this->ecLevel = ErrorCorrectionLevel::M;
+                break;
+
+            case 'Q':
+                $this->ecLevel = ErrorCorrectionLevel::Q;
+                break;
+
+            case 'H':
+                $this->ecLevel = ErrorCorrectionLevel::H;
+                break;
+
+            default:
+                throw new ServerErrorHttpException("Invalid error correction level");
+                break;
         }
 
         $this->secret = Secret::findOne($this->sid);
@@ -95,16 +112,18 @@ class QRCodeimg extends Widget
     public function run()
     {
         $base32 = new Base32();
-        $renderformat = 'ImageRenderer\\' . strtoupper($this->fmt[0]);
+        $ufmt = $this->fmt;
+        $ufmt[0] = strtoupper($ufmt[0]);
+        $renderformat = '\\BaconQrCode\\Renderer\\Image\\' . $ufmt;
         $renderer = new $renderformat();
         $renderer->setHeight($this->height);
         $renderer->setWidth($this->width);
         $writer = new QRCWriter($renderer);
         $qrcode = base64_encode(
             $writer->writeString(
-                $base32->toString($this->secret),
+                $base32->toString($this->secret->secret),
                 Encoder::DEFAULT_BYTE_MODE_ECODING,
-                ErrorCorrectionLevel::$ecLevel
+                $this->ecLevel
             )
         );
 
