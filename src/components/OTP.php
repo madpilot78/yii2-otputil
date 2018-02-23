@@ -71,7 +71,7 @@ class OTP extends Component
     public $gcChance = self::DEFAULT_GCCHANCE;
 
     /**
-     * @var secret The Secret AR object we are using
+     * @var Secret The Secret AR object we are using
      */
     protected $secret = null;
 
