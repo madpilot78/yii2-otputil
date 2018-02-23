@@ -126,6 +126,8 @@ class QRCodeimg extends Widget
             $coded .= Html::encode($this->username);
         }
 
+        $coded .= '?';
+
         $data = [
             'secret' => $this->secret->secret,
             'algorithm' => $this->secret->algo,
