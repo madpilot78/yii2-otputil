@@ -343,6 +343,7 @@ class OTP extends Component
         try {
             if (!Scratch::remove($this->secret->id)) throw new Exception("Failed to remove scratch codes");
             $this->secret->delete();
+            $transaction->commit();
         } catch(\Exception $e) {
             $transaction->rollBack();
             throw $e;
@@ -368,6 +369,7 @@ class OTP extends Component
                 if (!Scratch::remove($s->id)) throw new Exception("Failed to remove scratch codes");
                 $s->delete();
             }
+            $transaction->commit();
         } catch(\Exception $e) {
             $transaction->rollBack();
             throw $e;

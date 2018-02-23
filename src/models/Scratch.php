@@ -211,6 +211,7 @@ class Scratch extends \yii\db\ActiveRecord
             $codes = self::findBySecretID($sid);
             foreach ($codes as $c)
                 $c->delete();
+            $transaction->commit();
         } catch(\Exception $e) {
             $transaction->rollBack();
             throw $e;
