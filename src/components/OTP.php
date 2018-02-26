@@ -76,7 +76,7 @@ class OTP extends Component
     protected $secret = null;
 
     /**
-     * Creates a correctly configured Authenticator object
+     * Creates a correctly configured Authenticator object.
      *
      * @return Authenticator|null The Authenticator object configured as required
      */
@@ -108,7 +108,7 @@ class OTP extends Component
     }
 
     /**
-     * Actually perform the check, allows disabling scratch codes usage
+     * Actually perform the check, allows disabling scratch codes usage.
      *
      * @param string $code The code to be verified
      * @param boolean $acceptScratch if scratch codes should be accepted
@@ -139,7 +139,7 @@ class OTP extends Component
 
     /**
      * Creates a new Secret and sets as active one. Also performs expiration
-     * of unconfirmed Secrets
+     * of unconfirmed Secrets.
      *
      * @return int ID of the created Secret AR object
      */
@@ -191,7 +191,7 @@ class OTP extends Component
     }
 
     /**
-     * Returns ID os Secret object we are using
+     * Returns ID os Secret object we are using.
      *
      * @return int|null ID of Secret AR object, null if not set
      */
@@ -204,7 +204,7 @@ class OTP extends Component
     }
 
     /**
-     * Returns an array of scratch codes
+     * Returns an array of scratch codes.
      *
      * @return Array of strings each a scratch code available for use
      */
@@ -224,7 +224,7 @@ class OTP extends Component
     }
 
     /**
-     * Returns the Base32 encoded secret
+     * Returns the Base32 encoded secret.
      *
      * @return string|null Base32 encoded secret
      */
@@ -237,7 +237,7 @@ class OTP extends Component
     }
 
     /**
-     * Checks if the bound Secret is confirmed
+     * Checks if the bound Secret is confirmed.
      *
      * @return bool if Secret is confirmed
      */
@@ -250,9 +250,9 @@ class OTP extends Component
     }
 
     /**
-     * Cofirms a secret, requires a valid OTP, scratch codes not accepted here
+     * Cofirms a secret, requires a valid OTP, scratch codes not accepted here.
      *
-     * Allows for slip as configured
+     * Allows for slip as configured.
      *
      * @param string $code The code to be checked while confirming
      * @return boolean if confirmation was successful
@@ -269,9 +269,9 @@ class OTP extends Component
     }
 
     /**
-     * Verifies a code, both scratch and OTP, allowing for slip
+     * Verifies a code, both scratch and OTP, allowing for slip.
      *
-     * Scratch codes will be removed from DB once used
+     * Scratch codes will be removed from DB once used.
      *
      * @param string $code The code to be checked while confirming
      * @return boolean if $code was successfully verified
@@ -285,7 +285,7 @@ class OTP extends Component
     }
 
     /**
-     * Generates an OTP for the curent object, based on bound Secret
+     * Generates an OTP for the curent object, based on bound Secret.
      *
      * @return string|null current OTP
      */
@@ -299,7 +299,7 @@ class OTP extends Component
     }
 
     /**
-     * Invalidates Scratch codes
+     * Invalidates Scratch codes.
      *
      * @return boolean if operation was successful
      */
@@ -312,7 +312,7 @@ class OTP extends Component
     }
 
     /**
-     * Forces removing all scratch codes and regenerates them
+     * Forces removing all scratch codes and regenerates them.
      *
      * @return boolean if operation was successful
      */
@@ -330,7 +330,7 @@ class OTP extends Component
     }
 
     /**
-     * Removes the bound Secret and Scratch codes from the DB
+     * Removes the bound Secret and Scratch codes from the DB.
      *
      * @return boolean if operation was successful
      */

@@ -20,7 +20,7 @@ class Scratch extends \yii\db\ActiveRecord
     const DEFAULT_CODES = 5;
 
     /**
-     * @const SCRATCH_LENGTH Digits in a scratch code
+     * @const SCRATCH_LENGTH Digits in a scratch code.
      */
     const SCRATCH_LENGTH = 8;
 
@@ -89,7 +89,7 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
-     * Generates a scratch code
+     * Generates a scratch code.
      *
      * @return string The scratch code generated
      */
@@ -104,7 +104,7 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
-     * Utility function to validate Secret IDs
+     * Utility function to validate Secret IDs.
      *
      * @param int $sid The Secret ID to be validated
      * @return bool if validation succeeded
@@ -119,7 +119,7 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
-     * Return Scratches bound to specified Secret
+     * Return Scratches bound to specified Secret.
      *
      * @param int ID of Secret
      * @return array of Secret AR objects
@@ -134,7 +134,7 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
-     * Creates $num scratch codes
+     * Creates $num scratch codes.
      *
      * @param int $sid ID to assign the codes to
      * @param int $num Number of codes to generate
@@ -158,7 +158,7 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
-     * Verify a scratch code
+     * Verify a scratch code.
      *
      * @param int $sid ID of secret to validate against
      * @param string $code Scratch code to validate
