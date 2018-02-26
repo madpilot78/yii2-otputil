@@ -75,13 +75,11 @@ class QRCodeimg extends Widget
     {
         parent::init();
 
-        if ($this->sid === null) {
+        if ($this->sid === null)
             throw new ServerErrorHttpException('Missing Secret ID');
-        }
 
-        if (!in_array($this->fmt, ['eps', 'png', 'svg'])) {
+        if (!in_array($this->fmt, ['eps', 'png', 'svg']))
             throw new ServerErrorHttpException('Invalid image format');
-        }
 
         switch ($this->ecLevel) {
             case 'L':
@@ -105,14 +103,12 @@ class QRCodeimg extends Widget
                 break;
         }
 
-        if (strpos($this->label, ':') || strpos($this->username, ':')) {
+        if (strpos($this->label, ':') || strpos($this->username, ':'))
             throw new ServerErrorHttpException('QRCode label and username cannot contain ":"');
-        }
 
         $this->secret = Secret::findOne($this->sid);
-        if (is_null($this->secret)) {
+        if (is_null($this->secret))
             throw new ServerErrorHttpException('Secret not found');
-        }
     }
 
     /**
@@ -122,15 +118,13 @@ class QRCodeimg extends Widget
     {
         $coded = "otpauth://{$this->secret->mode}/";
 
-        if ($this->label) {
+        if ($this->label)
             $coded .= Html::encode($this->label);
-        }
 
         $coded .= ':';
 
-        if ($this->username) {
+        if ($this->username)
             $coded .= Html::encode($this->username);
-        }
 
         $coded .= '?';
 
@@ -140,9 +134,8 @@ class QRCodeimg extends Widget
             'digits' => $this->secret->digits,
         ];
 
-        if ($this->issuer) {
+        if ($this->issuer)
             $data['issuer'] = Html::encode($this->issuer);
-        }
 
         if ($this->secret->mode == 'totp') {
             $data['period'] = $this->secret->period;

@@ -103,9 +103,8 @@ class Secret extends \yii\db\ActiveRecord
      */
     public function beforeSave($insert)
     {
-        if (!parent::beforeSave($insert)) {
+        if (!parent::beforeSave($insert))
             return false;
-        }
 
         if (!$insert) {
             $forbidden = ['secret', 'digits', 'mode', 'algo', 'period'];
@@ -116,9 +115,8 @@ class Secret extends \yii\db\ActiveRecord
             }
         }
 
-        if ($insert && $this->confirmed) {
+        if ($insert && $this->confirmed)
             return false;
-        }
 
         return true;
     }
