@@ -68,6 +68,9 @@ class QRCodeimg extends Widget
      */
     public $imgopts = [];
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
@@ -112,6 +115,9 @@ class QRCodeimg extends Widget
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run()
     {
         $coded = "otpauth://{$this->secret->mode}/";
