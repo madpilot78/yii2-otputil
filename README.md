@@ -58,13 +58,13 @@ Unconfirmed secrets may be deleted after ```unconfirmedTimeout``` seconds with `
 The ID of the unconfirmed secret should be saved while a confirmation window with a QRCode and the scratch codes is shown to the user. A simple widget is provided for the QRcode, it's a simple wrapper around <img>:
 
 ```php
-/* @var $model app\models\User */
+/* @var $user app\models\User */
 
 <?= QRCodeimg::widget([
     'sid' => $unconfirmed_secret,
     'height' => 256,
     'width' => 256,
-    'username' => $model->username,
+    'username' => $user->username,
     'label' => 'foo',
     'issuer' => 'bar'
 ]) ?>
