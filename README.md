@@ -55,7 +55,7 @@ This will creates an OTP secret to be used as configured in the app, will also c
 
 Unconfirmed secrets may be deleted after ```unconfirmedTimeout``` seconds with ```gcChance``` percent probability
 
-The ID of the unconfirmed secret should be saved while a confirmation window with a QRCode and the scratch codes is shown to the user. A simple widget is provided for the QRcode, it's a simple wrapper around <img>:
+The ID of the unconfirmed secret should be saved while a confirmation window with a QRCode and the scratch codes is shown to the user. A simple widget is provided for the QRcode, it's a simple wrapper around the img tag:
 
 ```php
 /* @var $user app\models\User */
