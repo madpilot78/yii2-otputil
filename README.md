@@ -21,3 +21,113 @@ or add
 to the require section of your composer.json.
 
 ## Usage
+
+Configure the component:
+
+```php
+return [
+    'components' => [
+        'otp' => [
+            'class' => 'mad\otputil\components\OTP', /* all other lines optional, defaults shown */
+            'digits' => 6,
+            'mode' => 'totp',
+            'algo' => 'SHA1',
+            'period => '30',
+            'scratchnum' => 5,
+            'slip' => 2,
+            'unconfirmedTimeout' => 900,
+            'gcChance' => 5,
+        ],
+    ]
+]
+```
+
+Run the migration in ```src/migrations/m180128_141512_init.php```.
+
+To get a new secret use:
+
+```php
+$otp = Yii::$app->otp;
+$unconfirmed_secret = $otp->create();
+```
+
+This will creates an OTP secret to be used as configured in the app, will also create ```scratchnum``` scratch codes and returns the ID of the created secret
+
+Unconfirmed secrets may be deleted after ```unconfirmedTimeout``` seconds with ```gcChance``` percent probability
+
+The ID of the unconfirmed secret should be saved while a confirmation window with a QRCode and the scratch codes is shown to the user. A simple widget is provided for the QRcode, it's a simple wrapper around <img>:
+
+```php
+/* @var $model app\models\User */
+
+<?= QRCodeimg::widget([
+    'sid' => $unconfirmed_secret,
+    'height' => 256,
+    'width' => 256,
+    'username' => $model->username,
+    'label' => 'foo',
+    'issuer' => 'bar'
+]) ?>
+```
+
+After the user successfully confirms the OTP by inserting a correct code in a confirmation  page the secret should be confirmed:
+
+```php
+$otp = Yii::$app->otp;
+$otp->get($unconfirmed_secret);
+$otp->confirm($otp);
+```
+
+The confirm method will check the provided OTP against the known secret, algorithm and so on, and will return true/false.
+
+I suggest to save the unconfirmed ID in the session to pass around the confirmation page, after confirmation it should be saved in your database, for example in the user table and related model.
+
+To perform the check for the OTP you can simply do:
+
+```php
+/* @var $user app\models\User */
+/* @var $this app\models\LoginForm */
+
+$otp = Yii::$app->otp;
+if (!(
+  $user &&
+  $otp->get($user->otp_secret_id) &&
+  $otp->verify($this->totp)
+)) {
+    $this->addError($attribute, 'Invalid code.');
+}
+```
+
+the verify method will also check for scratch codes and if one is used will delete it from the DB.
+
+When a user disables OTP for his account or gets deleted, or if for any other reason you want to be done with an OTP just remove it:
+
+```php
+/* @var $user app\models\User */
+/* @var $delete are we deleting the user? */
+
+$otp = Yii::$app->otp;
+$otp->get($user->otp_secret_id);
+$otp->forget();
+
+if ($delete) {
+    $user->delete();
+} else {
+    $user->otp_secret_id = null;
+    $user->save();
+}
+```
+
+To get the actual secret as a BASE32 encoded string use the ```getSecret()``` method;
+To get the scratch codes as an array of codes use the ```getScratches()``` method;
+Ti check if a secret has been confirmed use the ```isConfirmed()``` method:
+
+```php
+/* @var $user app\models\User */
+
+$otp = Yii::$app->otp;
+$otp->get($user->otp_secret_id);
+$base32_secret  = $otp->getSecret();
+$scratchcodes_array = $otp->getScratches();
+$confirmed_bool = $otp->isConfirmed();
+```
