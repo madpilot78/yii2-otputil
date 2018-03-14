@@ -1,11 +1,11 @@
 <?php
 
-namespace mad\otputil\tests;
+namespace madpilot78\otputil\tests;
 
 use Yii;
 use chillerlan\Authenticator\Authenticator;
 use chillerlan\Authenticator\Base32;
-use mad\otputil\components\OTP;
+use madpilot78\otputil\components\OTP;
 
 class OTPTest extends TestCase
 {

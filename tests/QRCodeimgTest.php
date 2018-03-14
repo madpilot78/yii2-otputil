@@ -1,10 +1,10 @@
 <?php
 
-namespace mad\otputil\tests;
+namespace madpilot78\otputil\tests;
 
 use chillerlan\Authenticator\Base32;
-use mad\otputil\models\Secret;
-use mad\otputil\widgets\QRCodeimg;
+use madpilot78\otputil\models\Secret;
+use madpilot78\otputil\widgets\QRCodeimg;
 
 class QRCodeimgTest extends TestCase
 {

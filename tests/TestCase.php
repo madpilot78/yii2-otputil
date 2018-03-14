@@ -4,14 +4,14 @@
  * Originally taken from yiisoft/yii2-httpclient
  */
 
-namespace mad\otputil\tests;
+namespace madpilot78\otputil\tests;
 
 use Yii;
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
 use yii\console\controllers\MigrateController;
 use chillerlan\Authenticator\Base32;
-use mad\otputil\models\Secret;
+use madpilot78\otputil\models\Secret;
 
 /**
  * Filter to silence yii2 migration
@@ -69,7 +69,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
                     'dsn' => 'sqlite::memory:',
                 ],
                 'otp' => [
-                    'class' => 'mad\otputil\components\OTP',
+                    'class' => 'madpilot78\otputil\components\OTP',
                 ],
             ]
         ], $config));
@@ -80,7 +80,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function runMigrations()
     {
-        stream_filter_register('discard', '\mad\otputil\tests\discard_filter');
+        stream_filter_register('discard', '\madpilot78\otputil\tests\discard_filter');
         $f = stream_filter_append(\STDOUT, "discard");
 
         $migration = new MigrateController('migrate', Yii::$app);
@@ -191,8 +191,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Asserts that two secret objects are the same
      *
-     * @param mad\otputil\models\Secret expected Secret
-     * @param mad\otputil\models\Secret Secret object to be checked
+     * @param madpilot78\otputil\models\Secret expected Secret
+     * @param madpilot78\otputil\models\Secret Secret object to be checked
      */
     protected function assertEqualSecrets(Secret $exp, Secret $act)
     {
@@ -208,7 +208,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * Asserts that data inside a secret is the same as the provided array
      *
      * @param array $data expected content
-     * @param mad\otputil\models\Secret The Secret object to be checked
+     * @param madpilot78\otputil\models\Secret The Secret object to be checked
      */
     protected function assertSecretEqualsData(Array $data, Secret $act)
     {
