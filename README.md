@@ -1,5 +1,9 @@
 # Yii2 OTP Util
 
+[![Latest Stable Version](https://poser.pugx.org/madpilot78/yii2-otputil/version)](https://packagist.org/packages/madpilot78/yii2-otputil)
+[![Total Downloads](https://poser.pugx.org/madpilot78/yii2-otputil/downloads)](https://packagist.org/packages/madpilot78/yii2-otputil)
+[![License](https://poser.pugx.org/madpilot78/yii2-otputil/license)](https://packagist.org/packages/madpilot78/yii2-otputil)
+
 This is a simple Yii2 extension I wrote mainly as an exercise to learn Yii2.
 
 It's a simple glue module to manage TOTP/HOTP secrets and scratch codes (backup codes) in a Yii 2 extension providing it's own tables and related models. It has a simple and straightforward API.
