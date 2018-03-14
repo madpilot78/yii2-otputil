@@ -1,4 +1,4 @@
-# Yii2 OTP Utils
+# Yii2 OTP Util
 
 This is a simple Yii2 extension I wrote mainly as an exercise to learn Yii2.
 
