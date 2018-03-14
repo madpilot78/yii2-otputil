@@ -119,9 +119,13 @@ if ($delete) {
 ```
 
 To get the actual secret as a BASE32 encoded string use the ```getSecret()``` method;
+
 To get the scratch codes as an array of codes use the ```getScratches()``` method;
+
 Scratch codes can be all invalidated using ```invalidateScratches()```. ```forget()``` will automatically do this;
+
 You can force the scratch codes to be regenerated with ```regenerateScrathes()```, which will call ```invalidateScratches()```;
+
 Ti check if a secret has been confirmed use the ```isConfirmed()``` method:
 
 ```php
