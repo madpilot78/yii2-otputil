@@ -9,13 +9,13 @@ It's a simple glue module to manage TOTP/HOTP secrets and scratch codes (backup 
 ### Composer
 
 ```sh
-php composer.phar require "mad/yii2-otputil"
+php composer.phar require "madpilot78/yii2-otputil"
 ```
 
 or add
 
 ```
-"mad/yii2-otputil": "~0.1.0"
+"madpilot78/yii2-otputil": "~0.1.0"
 ```
 
 to the require section of your composer.json.
@@ -28,7 +28,7 @@ Configure the component:
 return [
     'components' => [
         'otp' => [
-            'class' => 'mad\otputil\components\OTP', /* all other lines optional, defaults shown */
+            'class' => 'madpilot78\otputil\components\OTP', /* all other lines optional, defaults shown */
             'digits' => 6,
             'mode' => 'totp',
             'algo' => 'SHA1',

@@ -1,9 +1,9 @@
 <?php
 
-namespace mad\otputil\models;
+namespace madpilot78\otputil\models;
 
 use Yii;
-use mad\otputil\models\Secret;
+use madpilot78\otputil\models\Secret;
 
 /**
  * Model class for OTP scratch codes.
@@ -60,7 +60,7 @@ class Scratch extends \yii\db\ActiveRecord
     {
         return [
             ['code', 'string', 'length' => self::SCRATCH_LENGTH],
-            ['secret_id', 'exist', 'targetClass' => '\mad\otputil\models\Secret', 'targetAttribute' => 'id']
+            ['secret_id', 'exist', 'targetClass' => '\madpilot78\otputil\models\Secret', 'targetAttribute' => 'id']
         ];
     }
 
@@ -110,7 +110,7 @@ class Scratch extends \yii\db\ActiveRecord
     protected static function validateSID(int $sid)
     {
         $validator = new \yii\validators\ExistValidator();
-        $validator->targetClass = '\mad\otputil\models\Secret';
+        $validator->targetClass = '\madpilot78\otputil\models\Secret';
         $validator->targetAttribute = 'id';
 
         return $validator->validate($sid, $error);

@@ -1,11 +1,11 @@
 <?php
 
-namespace mad\otputil\components;
+namespace madpilot78\otputil\components;
 
 use Yii;
 use yii\base\Component;
-use mad\otputil\models\Secret;
-use mad\otputil\models\Scratch;
+use madpilot78\otputil\models\Secret;
+use madpilot78\otputil\models\Scratch;
 use chillerlan\Authenticator\Authenticator;
 use chillerlan\Authenticator\Base32;
 

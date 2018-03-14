@@ -33,12 +33,12 @@
     },
     "autoload": {
         "psr-4": {
-            "mad\\otputil\\": "src/"
+            "madpilot78\\otputil\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "mad\\otputil\\tests\\": "tests/"
+            "madpilot78\\otputil\\tests\\": "tests/"
         }
     },
     "extra": {

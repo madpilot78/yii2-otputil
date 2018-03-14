@@ -1,6 +1,6 @@
 <?php
 
-namespace mad\otputil\models;
+namespace madpilot78\otputil\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;

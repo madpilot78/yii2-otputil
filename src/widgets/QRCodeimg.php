@@ -1,12 +1,12 @@
 <?php
 
-namespace mad\otputil\widgets;
+namespace madpilot78\otputil\widgets;
 
 use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\web\ServerErrorHttpException;
-use mad\otputil\models\Secret;
+use madpilot78\otputil\models\Secret;
 use BaconQrCode\Common\ErrorCorrectionLevel;
 use BaconQrCode\Encoder\Encoder;
 use BaconQrCode\Writer as QRCWriter;
