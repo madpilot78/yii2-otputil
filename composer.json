@@ -1,5 +1,5 @@
 {
-    "name": "mad/yii2-otputil",
+    "name": "madpilot78/yii2-otputil",
     "description": "TOTP/HOTP Yii2 utility extension",
     "keywords": [
         "security",
