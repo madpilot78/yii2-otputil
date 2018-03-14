@@ -126,7 +126,7 @@ Scratch codes can be all invalidated using ```invalidateScratches()```. ```forge
 
 You can force the scratch codes to be regenerated with ```regenerateScrathes()```, which will call ```invalidateScratches()```;
 
-Ti check if a secret has been confirmed use the ```isConfirmed()``` method:
+To check if a secret has been confirmed use the ```isConfirmed()``` method:
 
 ```php
 /* @var $user app\models\User */
