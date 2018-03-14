@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/madpilot78/yii2-otputil/version)](https://packagist.org/packages/madpilot78/yii2-otputil)
 [![Total Downloads](https://poser.pugx.org/madpilot78/yii2-otputil/downloads)](https://packagist.org/packages/madpilot78/yii2-otputil)
 [![License](https://poser.pugx.org/madpilot78/yii2-otputil/license)](https://packagist.org/packages/madpilot78/yii2-otputil)
+[![Build Status](https://api.travis-ci.org/madpilot78/yii2-otputil.png?branch=master)](http://travis-ci.org/madpilot78/yii2-otputil)
 
 This is a simple Yii2 extension I wrote mainly as an exercise to learn Yii2.
 
