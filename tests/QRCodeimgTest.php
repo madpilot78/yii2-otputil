@@ -13,11 +13,11 @@ class QRCodeimgTest extends TestCase
     public function testGenerateQRCode()
     {
         $base32 = new Base32();
-        $testsecret = 'random';
-        $exp = "otpauth://totp/bar:foo?secret={$base32->fromString($testsecret)}&algorithm=SHA1&digits=6&period=30";
+        $testsecret = $base32->fromString(random_bytes(20));
+        $exp = "otpauth://totp/bar:foo?secret={$testsecret}&algorithm=SHA1&digits=6&period=30";
 
         $s = new Secret();
-        $s->secret = $base32->fromString($testsecret);
+        $s->secret = $testsecret;
         $s->digits = 6;
         $s->mode = 'totp';
         $s->algo = 'SHA1';
