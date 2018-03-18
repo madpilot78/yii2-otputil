@@ -119,7 +119,7 @@ class OTP extends Component
         if (is_null($this->secret))
             return false;
 
-        if (strlen($code) < Secret::ALLOWED_DIGITS[0])
+        if (strlen($code) != $this->secret->digits && strlen($code) != Scratch::SCRATCH_LENGTH)
             return false;
 
         $auth = $this->getAuth();
