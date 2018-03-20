@@ -122,6 +122,9 @@ class OTP extends Component
         if (strlen($code) != $this->secret->digits && strlen($code) != Scratch::SCRATCH_LENGTH)
             return false;
 
+        if (!ctype_digit($code))
+            return false;
+
         $auth = $this->getAuth();
 
         if ($auth->verify($code, $this->mode == 'totp' ? time() : $this->counter, $this->slip)) {
