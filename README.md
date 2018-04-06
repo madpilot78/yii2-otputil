@@ -37,7 +37,7 @@ return [
             'digits' => 6,
             'mode' => 'totp',
             'algo' => 'SHA1',
-            'period => '30',
+            'period' => '30',
             'scratchnum' => 5,
             'slip' => 2,
             'unconfirmedTimeout' => 900,
