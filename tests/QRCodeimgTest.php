@@ -3,6 +3,7 @@
 namespace madpilot78\otputil\tests;
 
 use chillerlan\Authenticator\Base32;
+use Zxing\QrReader;
 use madpilot78\otputil\models\Secret;
 use madpilot78\otputil\widgets\QRCodeimg;
 
@@ -35,7 +36,7 @@ class QRCodeimgTest extends TestCase
         // Extract the image
         $imgdata = base64_decode(substr($img, 31, -15));
 
-        $qrreader = new \QrReader($imgdata, \QrReader::SOURCE_TYPE_BLOB);
+        $qrreader = new QrReader($imgdata, QrReader::SOURCE_TYPE_BLOB);
 
         $this->assertEquals($exp, $qrreader->text());
     }
