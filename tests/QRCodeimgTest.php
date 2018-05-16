@@ -27,10 +27,10 @@ class QRCodeimgTest extends TestCase
 
         ob_start();
         $img = QRCodeimg::widget([
-                    'sid' => $s->id,
-                    'username' => 'foo',
-                    'label' => 'bar'
-                ]);
+            'sid' => $s->id,
+            'username' => 'foo',
+            'label' => 'bar'
+        ]);
         ob_end_clean();
 
         // Extract the image
