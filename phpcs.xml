@@ -14,8 +14,6 @@
 
     <rule ref="PSR2"/>
     <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
-    <rule ref="Generic.PHP.DisallowShortOpenTag"/>
-    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Squiz.WhiteSpace.OperatorSpacing">
         <properties>
             <property name="ignoreNewlines" value="true"/>
