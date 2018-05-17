@@ -7,12 +7,19 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use yii\web\ServerErrorHttpException;
 use madpilot78\otputil\models\Secret;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Common\ErrorCorrectionLevel;
 use BaconQrCode\Encoder\Encoder;
 use BaconQrCode\Writer as QRCWriter;
 
 class QRCodeimg extends Widget
 {
+    /**
+     * @var imagebackend The name of the actual backend rendering plugin to be used
+     */
+    private $imagebackend;
+
     /**
      * @var Secret The secret object to be rendered
      */
@@ -34,14 +41,9 @@ class QRCodeimg extends Widget
     public $fmt = 'png';
 
     /**
-     * @var int height of the resulting image in pixels
+     * @var int size side size of the image in pixels
      */
-    public $height = 384;
-
-    /**
-     * @var int width of the resulting image in pixels
-     */
-    public $width = 384;
+    public $size = 384;
 
     /**
      * @var string username encoded with the secret
@@ -78,24 +80,39 @@ class QRCodeimg extends Widget
         if ($this->sid === null)
             throw new ServerErrorHttpException('Missing Secret ID');
 
-        if (!in_array($this->fmt, ['eps', 'png', 'svg']))
-            throw new ServerErrorHttpException('Invalid image format');
+        switch ($this->fmt) {
+            case 'eps':
+                $this->imagebackend = '\BaconQrCode\Renderer\Image\EpsImageBackEnd';
+                break;
+
+            case 'png':
+                $this->imagebackend = '\BaconQrCode\Renderer\Image\ImagickImageBackEnd';
+                break;
+
+            case 'svg':
+                $this->imagebackend = '\BaconQrCode\Renderer\Image\SvgImageBackEnd';
+                break;
+            
+            default:
+                throw new ServerErrorHttpException('Invalid image format');
+                break;
+        }
 
         switch ($this->ecLevel) {
             case 'L':
-                $this->ecLevel = ErrorCorrectionLevel::L;
+                $this->ecLevel = ErrorCorrectionLevel::forBits(1);
                 break;
 
             case 'M':
-                $this->ecLevel = ErrorCorrectionLevel::M;
+                $this->ecLevel = ErrorCorrectionLevel::forBits(0);
                 break;
 
             case 'Q':
-                $this->ecLevel = ErrorCorrectionLevel::Q;
+                $this->ecLevel = ErrorCorrectionLevel::forBits(3);
                 break;
 
             case 'H':
-                $this->ecLevel = ErrorCorrectionLevel::H;
+                $this->ecLevel = ErrorCorrectionLevel::forBits(2);
                 break;
 
             default:
@@ -148,11 +165,10 @@ class QRCodeimg extends Widget
         $ufmt = $this->fmt;
         $ufmt[0] = strtoupper($ufmt[0]);
 
-        $renderformat = '\\BaconQrCode\\Renderer\\Image\\' . $ufmt;
-
-        $renderer = new $renderformat();
-        $renderer->setHeight($this->height);
-        $renderer->setWidth($this->width);
+        $renderer = new ImageRenderer(
+            new RendererStyle($this->size),
+            new $this->imagebackend()
+        );
 
         $writer = new QRCWriter($renderer);
 
