@@ -103,8 +103,9 @@ class Secret extends \yii\db\ActiveRecord
      */
     public function beforeSave($insert)
     {
-        if (!parent::beforeSave($insert))
+        if (!parent::beforeSave($insert)) {
             return false;
+        }
 
         if (!$insert) {
             $forbidden = ['secret', 'digits', 'mode', 'algo', 'period'];
@@ -115,8 +116,9 @@ class Secret extends \yii\db\ActiveRecord
             }
         }
 
-        if ($insert && $this->confirmed)
+        if ($insert && $this->confirmed) {
             return false;
+        }
 
         return true;
     }
@@ -134,8 +136,9 @@ class Secret extends \yii\db\ActiveRecord
      */
     public function confirm()
     {
-        if ($this->confirmed)
+        if ($this->confirmed) {
             return false;
+        }
 
         $this->confirmed = true;
         return $this->save();
@@ -146,8 +149,9 @@ class Secret extends \yii\db\ActiveRecord
      */
     public function isconfimed()
     {
-        if ($this->confirmed)
+        if ($this->confirmed) {
             return true;
+        }
 
         return false;
     }
@@ -157,11 +161,13 @@ class Secret extends \yii\db\ActiveRecord
      */
     public function incrementCounter()
     {
-        if ($this->mode !== 'hotp')
+        if ($this->mode !== 'hotp') {
             return false;
+        }
 
-        if (!$this->updateCounters(['counter' => 1]))
+        if (!$this->updateCounters(['counter' => 1])) {
             return false;
+        }
 
         return $this->counter;
     }
@@ -171,12 +177,14 @@ class Secret extends \yii\db\ActiveRecord
      */
     public function updateCounter(int $v)
     {
-        if ($this->mode !== 'hotp')
+        if ($this->mode !== 'hotp') {
             return false;
+        }
 
         $this->counter = $v;
-        if (!$this->save())
+        if (!$this->save()) {
             return false;
+        }
 
         return $this->counter;
     }

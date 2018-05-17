@@ -13,11 +13,12 @@ class ScratchTest extends TestCase
      * @param Array $cc array of scratch objects
      * @return Array Array of codes
      */
-    protected function flattenScratchCodes(Array $cc)
+    protected function flattenScratchCodes(array $cc)
     {
         $codes = [];
-        foreach ($cc as $c)
+        foreach ($cc as $c) {
             $codes[] = $c->code;
+        }
 
         return $codes;
     }
@@ -31,8 +32,9 @@ class ScratchTest extends TestCase
     protected function assertValidateScratch(Scratch $c)
     {
         $r = $c->validate();
-        if ($c->HasErrors())
+        if ($c->HasErrors()) {
             var_dump($c->getErrors());
+        }
         $this->assertTrue($r);
     }
 
@@ -130,8 +132,9 @@ class ScratchTest extends TestCase
         $chk = Scratch::findBySecretID($s->id);
         $this->assertCount(Scratch::DEFAULT_CODES - 1, $chk);
 
-        foreach($chk as $c)
+        foreach ($chk as $c) {
             $this->assertNotEquals($codes[$n], $c->code);
+        }
     }
 
     public function testVerifyScratchCodeAndDeleteonInstance()
@@ -148,8 +151,9 @@ class ScratchTest extends TestCase
         $chk = Scratch::findBySecretID($s->id);
         $this->assertCount(Scratch::DEFAULT_CODES - 1, $chk);
 
-        foreach($chk as $c)
+        foreach ($chk as $c) {
             $this->assertNotEquals($codes[$n], $c->code);
+        }
     }
 
     public function testVerifyScratchCodeNotDelete()

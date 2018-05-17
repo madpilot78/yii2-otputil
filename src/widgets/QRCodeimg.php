@@ -54,7 +54,7 @@ class QRCodeimg extends Widget
      * @var string issuer encoded with the secret
      */
     public $issuer = '';
-    
+
     /**
      * @var string label label to the encoded secret
      */
@@ -77,8 +77,9 @@ class QRCodeimg extends Widget
     {
         parent::init();
 
-        if ($this->sid === null)
+        if ($this->sid === null) {
             throw new ServerErrorHttpException('Missing Secret ID');
+        }
 
         switch ($this->fmt) {
             case 'eps':
@@ -92,7 +93,7 @@ class QRCodeimg extends Widget
             case 'svg':
                 $this->imagebackend = '\BaconQrCode\Renderer\Image\SvgImageBackEnd';
                 break;
-            
+
             default:
                 throw new ServerErrorHttpException('Invalid image format');
                 break;
@@ -120,12 +121,14 @@ class QRCodeimg extends Widget
                 break;
         }
 
-        if (strpos($this->label, ':') || strpos($this->username, ':'))
+        if (strpos($this->label, ':') || strpos($this->username, ':')) {
             throw new ServerErrorHttpException('QRCode label and username cannot contain ":"');
+        }
 
         $this->secret = Secret::findOne($this->sid);
-        if (is_null($this->secret))
+        if (is_null($this->secret)) {
             throw new ServerErrorHttpException('Secret not found');
+        }
     }
 
     /**
@@ -133,15 +136,17 @@ class QRCodeimg extends Widget
      */
     public function run()
     {
-        $coded = "otpauth://{$this->secret->mode}/";
+        $coded = 'otpauth://' . $this->secret->mode . '/';
 
-        if ($this->label)
+        if ($this->label) {
             $coded .= Html::encode($this->label);
+        }
 
         $coded .= ':';
 
-        if ($this->username)
+        if ($this->username) {
             $coded .= Html::encode($this->username);
+        }
 
         $coded .= '?';
 
@@ -151,8 +156,9 @@ class QRCodeimg extends Widget
             'digits' => $this->secret->digits,
         ];
 
-        if ($this->issuer)
+        if ($this->issuer) {
             $data['issuer'] = Html::encode($this->issuer);
+        }
 
         if ($this->secret->mode == 'totp') {
             $data['period'] = $this->secret->period;
@@ -180,6 +186,6 @@ class QRCodeimg extends Widget
             )
         );
 
-        return Html::img("data:image/{$this->fmt};base64," . $qrcode, array_merge(['alt' => $this->alt], $this->imgopts));
+        return Html::img('data:image/' . $this->fmt . ';base64,' . $qrcode, array_merge(['alt' => $this->alt], $this->imgopts));
     }
 }
