@@ -67,8 +67,7 @@ The ID of the unconfirmed secret should be saved while a confirmation window wit
 
 <?= QRCodeimg::widget([
     'sid' => $unconfirmed_secret,
-    'height' => 256,
-    'width' => 256,
+    'size' => 256,
     'username' => $user->username,
     'label' => 'foo',
     'issuer' => 'bar'
