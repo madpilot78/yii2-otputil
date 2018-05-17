@@ -186,6 +186,12 @@ class QRCodeimg extends Widget
             )
         );
 
-        return Html::img('data:image/' . $this->fmt . ';base64,' . $qrcode, array_merge(['alt' => $this->alt], $this->imgopts));
+        return Html::img(
+            'data:image/' . $this->fmt . ';base64,' . $qrcode,
+            array_merge(
+                ['alt' => $this->alt],
+                $this->imgopts
+            )
+        );
     }
 }
