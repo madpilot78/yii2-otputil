@@ -13,3 +13,4 @@ matrix:
 before_script:
   - composer self-update
   - composer install --no-interaction
+  - yes | pecl install imagick
