@@ -14,19 +14,6 @@ use chillerlan\Authenticator\Base32;
 use madpilot78\otputil\models\Secret;
 
 /**
- * Filter to silence yii2 migration
- */
-class discard_filter extends \php_user_filter {
-    public function filter($in, $out, &$consumed, $closing)
-    {
-        while ($bucket = stream_bucket_make_writeable($in)) {
-            $consumed += $bucket->datalen;
-        }
-        return PSFS_PASS_ON;
-    }
-}
-
-/**
  * This is the base class for all yii framework unit tests.
  */
 abstract class TestCase extends \PHPUnit\Framework\TestCase
@@ -80,8 +67,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function runMigrations()
     {
-        stream_filter_register('discard', '\madpilot78\otputil\tests\discard_filter');
-        $f = stream_filter_append(\STDOUT, "discard");
+        stream_filter_register('discard', '\madpilot78\otputil\tests\DiscardFilter');
+        $f = stream_filter_append(\STDOUT, 'discard');
 
         $migration = new MigrateController('migrate', Yii::$app);
         $migration->interactive = false;
@@ -124,15 +111,15 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * Populate a new secret AR
      *
      * @param Secret &$s The secret to be populated/overwritten
-     * @param Array $data The array containing the data to populate the Secret 
+     * @param Array $data The array containing the data to populate the Secret
      */
-    protected function populateSecret(Secret &$s, Array $data)
+    protected function populateSecret(Secret &$s, array $data)
     {
-        $s->secret = $data["secret"];
-        $s->digits = $data["digits"];
-        $s->mode = $data["mode"];
-        $s->algo = $data["algo"];
-        $s->period = $data["period"];
+        $s->secret = $data['secret'];
+        $s->digits = $data['digits'];
+        $s->mode = $data['mode'];
+        $s->algo = $data['algo'];
+        $s->period = $data['period'];
     }
 
     /**
@@ -141,14 +128,14 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param Secret $s The secret to be read
      * @param Array &$data The array to contain the data gotten from the secret
      */
-    protected function getSecretData(Secret $s, Array &$data)
+    protected function getSecretData(Secret $s, array &$data)
     {
-        $data["id"] = $s->id;
-        $data["secret"] = $s->secret;
-        $data["digits"] = $s->digits;
-        $data["mode"] = $s->mode;
-        $data["algo"] = $s->algo;
-        $data["period"] = $s->period;
+        $data['id'] = $s->id;
+        $data['secret'] = $s->secret;
+        $data['digits'] = $s->digits;
+        $data['mode'] = $s->mode;
+        $data['algo'] = $s->algo;
+        $data['period'] = $s->period;
     }
 
     /**
@@ -160,8 +147,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function assertValidateSecret(Secret $s)
     {
         $r = $s->validate();
-        if ($s->HasErrors())
+        if ($s->HasErrors()) {
             var_dump($s->getErrors());
+        }
         $this->assertTrue($r);
     }
 
@@ -173,8 +161,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function assertNotValidateSecret(Secret $s)
     {
         $r = $s->validate();
-        if ($s->HasErrors())
+        if ($s->HasErrors()) {
             var_dump($s->getErrors());
+        }
         $this->assertNotTrue($r);
     }
 
@@ -210,7 +199,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param array $data expected content
      * @param madpilot78\otputil\models\Secret The Secret object to be checked
      */
-    protected function assertSecretEqualsData(Array $data, Secret $act)
+    protected function assertSecretEqualsData(array $data, Secret $act)
     {
         $this->assertEquals($data['id'], $act->id);
         $this->assertEquals($data['secret'], $act->secret);

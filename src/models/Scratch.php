@@ -32,8 +32,9 @@ class Scratch extends \yii\db\ActiveRecord
     public function __construct(int $secret_id = null, $config = [])
     {
         parent::__construct($config);
-        if(!is_null($secret_id))
+        if (!is_null($secret_id)) {
             $this->secret_id = $secret_id;
+        }
     }
 
     /**
@@ -69,11 +70,13 @@ class Scratch extends \yii\db\ActiveRecord
      */
     public function beforeSave($insert)
     {
-        if (!parent::beforeSave($insert))
+        if (!parent::beforeSave($insert)) {
             return false;
+        }
 
-        if (!$insert)
+        if (!$insert) {
             return false;
+        }
 
         return true;
     }
@@ -95,8 +98,9 @@ class Scratch extends \yii\db\ActiveRecord
     {
         $code = '';
 
-        for ($i = 1; $i <= self::SCRATCH_LENGTH; $i++)
+        for ($i = 1; $i <= self::SCRATCH_LENGTH; $i++) {
             $code .= (string)random_int(0, 9);
+        }
 
         return $code;
     }
@@ -124,8 +128,9 @@ class Scratch extends \yii\db\ActiveRecord
      */
     public static function findBySecretID(int $sid)
     {
-        if (!self::validateSID($sid))
+        if (!self::validateSID($sid)) {
             return [];
+        }
 
         return self::findAll(['secret_id' => $sid]);
     }
@@ -139,8 +144,9 @@ class Scratch extends \yii\db\ActiveRecord
      */
     public static function createScratches(int $sid, int $num = self::DEFAULT_CODES)
     {
-        if (!self::validateSID($sid))
+        if (!self::validateSID($sid)) {
             return false;
+        }
 
         $ret = [];
         while ($num > 0) {
@@ -167,11 +173,11 @@ class Scratch extends \yii\db\ActiveRecord
         $valid_codes = self::findBySecretID($sid);
 
         foreach ($valid_codes as $c) {
-            if ($c->code === $code)
-            {
+            if ($c->code === $code) {
                 $ret = true;
-                if ($del)
+                if ($del) {
                     $c->delete();
+                }
             }
         }
 
@@ -188,8 +194,9 @@ class Scratch extends \yii\db\ActiveRecord
      */
     public function verify(string $code, bool $del = true)
     {
-        if (!self::validateSID($this->secret_id))
+        if (!self::validateSID($this->secret_id)) {
             return false;
+        }
 
         return self::verifyCode($code, $this->secret_id, $del);
     }
@@ -206,11 +213,12 @@ class Scratch extends \yii\db\ActiveRecord
         try {
             $codes = self::findBySecretID($sid);
 
-            foreach ($codes as $c)
+            foreach ($codes as $c) {
                 $c->delete();
+            }
 
             $transaction->commit();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
         }

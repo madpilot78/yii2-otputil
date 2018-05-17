@@ -15,7 +15,7 @@ class QRCodeimgTest extends TestCase
     {
         $base32 = new Base32();
         $testsecret = $base32->fromString(random_bytes(20));
-        $exp = "otpauth://totp/bar:foo?secret={$testsecret}&algorithm=SHA1&digits=6&period=30";
+        $exp = 'otpauth://totp/bar:foo?secret=' . $testsecret . '&algorithm=SHA1&digits=6&period=30';
 
         $s = new Secret();
         $s->secret = $testsecret;
