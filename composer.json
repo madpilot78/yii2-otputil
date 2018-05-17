@@ -34,7 +34,7 @@
         "khanamiryan/qrcode-detector-decoder": "^1.0.2"
     },
     "suggest": {
-        "ext-imagick": "to generate QR code images"
+        "ext-imagick": "Required by QRCode widget to generate QRCode images"
     },
     "autoload": {
         "psr-4": {
