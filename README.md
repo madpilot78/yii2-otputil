@@ -20,7 +20,7 @@ php composer.phar require "madpilot78/yii2-otputil"
 or add
 
 ```
-"madpilot78/yii2-otputil": "~0.2.0"
+"madpilot78/yii2-otputil": "~0.3.0"
 ```
 
 to the require section of your composer.json.
