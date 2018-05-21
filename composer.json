@@ -51,6 +51,9 @@
             "dev-master": "0.3.x-dev"
         }
     },
+    "scripts": {
+        "sniff": "phpcs"
+    },
     "repositories": [
         {
             "type": "composer",
