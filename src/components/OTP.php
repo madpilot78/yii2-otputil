@@ -76,6 +76,11 @@ class OTP extends Component
     protected $secret = null;
 
     /**
+     * @var counter The counter for HOTPs
+     */
+    protected $counter = 0;
+
+    /**
      * Creates a correctly configured Authenticator object.
      *
      * @return Authenticator|null The Authenticator object configured as required
