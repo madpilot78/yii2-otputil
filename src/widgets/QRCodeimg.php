@@ -82,6 +82,7 @@ class QRCodeimg extends Widget
         }
 
         switch ($this->fmt) {
+            // @codeCoverageIgnoreStart
             case 'eps':
                 $this->imagebackend = '\BaconQrCode\Renderer\Image\EpsImageBackEnd';
                 break;
@@ -93,6 +94,7 @@ class QRCodeimg extends Widget
             case 'svg':
                 $this->imagebackend = '\BaconQrCode\Renderer\Image\SvgImageBackEnd';
                 break;
+            // @codeCoverageIgnoreEnd
 
             default:
                 throw new ServerErrorHttpException('Invalid image format');
@@ -100,6 +102,7 @@ class QRCodeimg extends Widget
         }
 
         switch ($this->ecLevel) {
+            // @codeCoverageIgnoreStart
             case 'L':
                 $this->ecLevel = ErrorCorrectionLevel::forBits(1);
                 break;
@@ -115,12 +118,13 @@ class QRCodeimg extends Widget
             case 'H':
                 $this->ecLevel = ErrorCorrectionLevel::forBits(2);
                 break;
+            // @codeCoverageIgnoreEnd
 
             default:
                 throw new ServerErrorHttpException('Invalid error correction level');
                 break;
         }
-        // @codeCoverageIgnoreEnd
+        
 
         if (strpos($this->label, ':') || strpos($this->username, ':')) {
             throw new ServerErrorHttpException('QRCode label and username cannot contain ":"');
