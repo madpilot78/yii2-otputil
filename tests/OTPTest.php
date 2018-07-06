@@ -116,15 +116,33 @@ class OTPTest extends TestCase
     }
 
     /**
+     * Data provider to test all OTP types
+     *
+     * @return Array
+     */
+    public function OTPTypes()
+    {
+        return [
+            ['totp'],
+            ['hotp']
+        ];
+    }
+
+    /**
      * Test Verifying an OTP works only with correct OTP
      *
+     * @param $mode (totp|hotp)
      * @return void
+     *
+     * @dataProvider OTPTypes
      */
-    public function testVerify()
+    public function testVerify(string $mode)
     {
         $otp = Yii::$app->otp;
         $auth = new Authenticator;
+        $auth->setMode($mode);
 
+        $otp->mode = $mode;
         $sid = $otp->create();
         $secret = $otp->getSecret();
         $this->assertInternalType('string', $secret);
