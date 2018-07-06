@@ -98,7 +98,7 @@ class QRCodeimg extends Widget
 
             default:
                 throw new ServerErrorHttpException('Invalid image format');
-                break;
+                break; // @codeCoverageIgnore
         }
 
         switch ($this->ecLevel) {
@@ -122,7 +122,7 @@ class QRCodeimg extends Widget
 
             default:
                 throw new ServerErrorHttpException('Invalid error correction level');
-                break;
+                break; // @codeCoverageIgnore
         }
         
 
