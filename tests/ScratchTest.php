@@ -187,7 +187,7 @@ class ScratchTest extends TestCase
      *
      * @return void
      */
-    public function testVerifyScratchCodeAndDeleteonInstance()
+    public function testVerifyScratchCodeAndDeleteOnInstance()
     {
         $faker = \Faker\Factory::create();
 
