@@ -7,6 +7,7 @@
 
     <exclude-pattern>*/src/migrations/*</exclude-pattern>
     <exclude-pattern>*/tests/bootstrap.php</exclude-pattern>
+    <exclude-pattern>*/tests/coverage/*</exclude-pattern>
 
     <arg value="p"/>
     <arg name="colors"/>
