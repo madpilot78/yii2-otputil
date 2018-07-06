@@ -318,4 +318,28 @@ class OTPTest extends TestCase
         $this->assertNotTrue($otp->regenerateScrathes());
         $this->assertNotTrue($otp->forget());
     }
+
+    /**
+     * Test OTP validation with invalid OTPs
+     *
+     * @return void
+     */
+    public function testInvalidOTPs()
+    {
+        $otp = Yii::$app->otp;
+
+        $otp->create();
+        $auth = new Authenticator;
+        $secret = $otp->getSecret();
+        $this->assertInternalType('string', $secret);
+        $auth->setSecret($secret);
+
+        $this->assertNotTrue($otp->confirm('00'));
+        $this->assertNotTrue($otp->confirm('foobar'));
+
+        $this->assertTrue($otp->confirm($auth->code()));
+
+        $this->assertNotTrue($otp->verify('00'));
+        $this->assertNotTrue($otp->verify('foobar'));
+    }
 }
