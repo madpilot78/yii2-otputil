@@ -76,11 +76,6 @@ class OTP extends Component
     protected $secret = null;
 
     /**
-     * @var counter The counter for HOTPs
-     */
-    protected $counter = 0;
-
-    /**
      * Creates a correctly configured Authenticator object.
      *
      * @return Authenticator|null The Authenticator object configured as required
@@ -136,7 +131,7 @@ class OTP extends Component
 
         $auth = $this->getAuth();
 
-        if ($auth->verify($code, $this->mode == 'totp' ? time() : $this->counter, $this->slip)) {
+        if ($auth->verify($code, $this->mode == 'totp' ? time() : $this->secret->counter, $this->slip)) {
             if ($this->mode == 'hotp') {
                 $this->secret->incrementCounter();
             }
