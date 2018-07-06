@@ -169,10 +169,12 @@ class OTP extends Component
             Scratch::createScratches($s->id);
 
             $transaction->commit();
+        // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
         }
+        // @codeCoverageIgnoreEnd
 
         $this->secret = $s;
 
@@ -366,14 +368,16 @@ class OTP extends Component
         $transaction = Yii::$app->db->beginTransaction();
         try {
             if (!Scratch::remove($this->secret->id)) {
-                throw new Exception('Failed to remove scratch codes');
+                throw new Exception('Failed to remove scratch codes'); // @codeCoverageIgnore
             }
             $this->secret->delete();
             $transaction->commit();
+        // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
         }
+        // @codeCoverageIgnoreEnd
 
         $this->secret = null;
 
@@ -394,15 +398,17 @@ class OTP extends Component
 
             foreach ($secrets as $s) {
                 if (!Scratch::remove($s->id)) {
-                    throw new Exception('Failed to remove scratch codes');
+                    throw new Exception('Failed to remove scratch codes'); // @codeCoverageIgnore
                 }
                 $s->delete();
             }
 
             $transaction->commit();
+        // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
         }
+        // @codeCoverageIgnoreEnd
     }
 }
