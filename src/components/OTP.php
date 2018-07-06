@@ -346,7 +346,7 @@ class OTP extends Component
         }
 
         if (!$this->invalidateScratches()) {
-            return false;
+            return false; // @codeCoverageIgnore
         }
 
         Scratch::createScratches($this->secret->id);
