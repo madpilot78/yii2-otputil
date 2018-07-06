@@ -53,7 +53,8 @@
     },
     "scripts": {
         "sniff": "phpcs",
-        "test": "phpunit"
+        "test": "phpunit",
+        "cover": "phpunit --coverage-html tests/coverage"
     },
     "repositories": [
         {
