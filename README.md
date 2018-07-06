@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/madpilot78/yii2-otputil.svg)](https://packagist.org/packages/madpilot78/yii2-otputil)
 [![Total Downloads](https://img.shields.io/packagist/dt/madpilot78/yii2-otputil.svg)](https://packagist.org/packages/madpilot78/yii2-otputil)
-![license](https://img.shields.io/github/license/madpilot78/yii2-otputil.svg)(https://github.com/madpilot78/yii2-otputil)
+[![license](https://img.shields.io/github/license/madpilot78/yii2-otputil.svg)](https://github.com/madpilot78/yii2-otputil)
 [![Build Status](https://api.travis-ci.org/madpilot78/yii2-otputil.png?branch=master)](http://travis-ci.org/madpilot78/yii2-otputil)
 [![Coverage Status](https://coveralls.io/repos/github/madpilot78/yii2-otputil/badge.svg?branch=master)](https://coveralls.io/github/madpilot78/yii2-otputil?branch=master)
 
