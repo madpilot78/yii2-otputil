@@ -9,8 +9,11 @@ use madpilot78\otputil\widgets\QRCodeimg;
 
 class QRCodeimgTest extends TestCase
 {
-    // Tests:
-
+    /**
+     * Test generating one QRCode
+     *
+     * @return void
+     */
     public function testGenerateQRCode()
     {
         $base32 = new Base32();

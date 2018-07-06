@@ -9,8 +9,11 @@ use madpilot78\otputil\components\OTP;
 
 class OTPTest extends TestCase
 {
-    // Tests:
-
+    /**
+     * Test creating a new OTP object returns object with all related parts
+     *
+     * @return void
+     */
     public function testCreate()
     {
         $otp = Yii::$app->otp;
@@ -30,6 +33,11 @@ class OTPTest extends TestCase
         $this->assertInternalType('string', $secret);
     }
 
+    /**
+     * Test getSID() works
+     *
+     * @return void
+     */
     public function testGetSID()
     {
         $otp = Yii::$app->otp;
@@ -42,6 +50,11 @@ class OTPTest extends TestCase
         $this->assertEquals($sid, $nsid);
     }
 
+    /**
+     * Test OTP secret can be confirmed only using correct OTP
+     *
+     * @return void
+     */
     public function testConfirm()
     {
         $otp = Yii::$app->otp;
@@ -60,6 +73,11 @@ class OTPTest extends TestCase
         $this->assertNotTrue($otp->confirm($auth->code()));
     }
 
+    /**
+     * Test OTP can't be confirmed using scratch code.
+     *
+     * @return void
+     */
     public function textNoConfirmScratch()
     {
         $otp = Yii::$app->otp;
@@ -74,6 +92,11 @@ class OTPTest extends TestCase
         $this->assertCount($otp->scratchnum, $scratches);
     }
 
+    /**
+     * Test Get allows changing the Secret currently in use
+     *
+     * @return void
+     */
     public function testGet()
     {
         $otp = Yii::$app->otp;
@@ -92,6 +115,11 @@ class OTPTest extends TestCase
         $this->assertTrue($otp->confirm($auth->code()));
     }
 
+    /**
+     * Test Verifying an OTP works only with correct OTP
+     *
+     * @return void
+     */
     public function testVerify()
     {
         $otp = Yii::$app->otp;
@@ -107,6 +135,11 @@ class OTPTest extends TestCase
         $this->assertTrue($otp->verify($auth->code()));
     }
 
+    /**
+     * Test verifying a scrach code works and removes the scratch code
+     *
+     * @return void
+     */
     public function testVerifyScratch()
     {
         $otp = Yii::$app->otp;
@@ -129,6 +162,11 @@ class OTPTest extends TestCase
         }
     }
 
+    /**
+     * Check OTP object is able to generate valid OTPs
+     *
+     * @return void
+     */
     public function testGenerate()
     {
         $otp = Yii::$app->otp;
@@ -145,6 +183,12 @@ class OTPTest extends TestCase
         $this->assertTrue($auth->verify($code));
     }
 
+    /**
+     * Test invalidating all scratch codes relate to an OTP to actually
+     * remove all scratch codes
+     *
+     * @return void
+     */
     public function testInvalidateScratches()
     {
         $otp = Yii::$app->otp;
@@ -155,6 +199,11 @@ class OTPTest extends TestCase
         $this->assertCount(0, $scratches);
     }
 
+    /**
+     * Test regenerating all Scratch codes actually works
+     *
+     * @return void
+     */
     public function testRegenrateScratches()
     {
         $otp = Yii::$app->otp;
@@ -169,6 +218,11 @@ class OTPTest extends TestCase
         $this->assertCount($otp->scratchnum, array_diff($oldscratches, $newscratches));
     }
 
+    /**
+     * Test Forget() removes the secret
+     *
+     * @return void
+     */
     public function testForget()
     {
         $otp = Yii::$app->otp;
@@ -186,6 +240,15 @@ class OTPTest extends TestCase
         $this->assertNotTrue($otp->getSID($sid));
     }
 
+    /**
+     * Test old unconfirmed secrets are cleaned up from the DB, while
+     * confirmed ones are not removed
+     *
+     * To check this condition I modify the timestamps in the DB before
+     * triggering the checks
+     *
+     * @return void
+     */
     public function testCleanupUnconfirmed()
     {
         $otp = Yii::$app->otp;
