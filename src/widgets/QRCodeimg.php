@@ -120,6 +120,7 @@ class QRCodeimg extends Widget
                 throw new ServerErrorHttpException('Invalid error correction level');
                 break;
         }
+        // @codeCoverageIgnoreEnd
 
         if (strpos($this->label, ':') || strpos($this->username, ':')) {
             throw new ServerErrorHttpException('QRCode label and username cannot contain ":"');
