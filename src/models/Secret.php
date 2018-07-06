@@ -166,7 +166,7 @@ class Secret extends \yii\db\ActiveRecord
         }
 
         if (!$this->updateCounters(['counter' => 1])) {
-            return false;
+            return false; // @codeCoverageIgnore
         }
 
         return $this->counter;
