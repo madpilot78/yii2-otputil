@@ -71,7 +71,7 @@ class Scratch extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert) || !$insert) {
-            return false;
+            return false; // @codeCoverageIgnore
         }
 
         return true;

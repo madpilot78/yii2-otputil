@@ -104,7 +104,7 @@ class Secret extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {
-            return false;
+            return false; // @codeCoverageIgnore
         }
 
         if (!$insert) {
@@ -183,7 +183,7 @@ class Secret extends \yii\db\ActiveRecord
 
         $this->counter = $v;
         if (!$this->save()) {
-            return false;
+            return false; // @codeCoverageIgnore
         }
 
         return $this->counter;
