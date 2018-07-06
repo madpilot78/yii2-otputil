@@ -207,6 +207,17 @@ class ScratchTest extends TestCase
     }
 
     /**
+     * Test verifying Scratch with invalid Secret ID
+     *
+     * @return void
+     */
+    public function testVerifyCratchCodeWithInvalidSIDOnInstance()
+    {
+        $c = new Scratch(42);
+        $this->assertNotTrue($c->verify('00000000'));
+    }
+
+    /**
      * Test Verifying a scratch code requesting not to delete it suceeds
      * and does not delete the code
      *
