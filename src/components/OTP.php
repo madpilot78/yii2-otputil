@@ -179,7 +179,7 @@ class OTP extends Component
         $this->secret = $s;
 
         if ($this->willGC()) {
-            $this->cleanupUnconfirmed();
+            $this->cleanupUnconfirmed(); // @codeCoverageIgnore
         }
 
         return $s->id;
@@ -197,7 +197,7 @@ class OTP extends Component
         $this->secret = Secret::findOne($sid);
 
         if ($this->willGC()) {
-            $this->cleanupUnconfirmed();
+            $this->cleanupUnconfirmed(); // @codeCoverageIgnore
         }
 
         return !is_null($this->secret);
