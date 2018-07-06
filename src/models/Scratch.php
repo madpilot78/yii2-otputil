@@ -158,8 +158,8 @@ class Scratch extends \yii\db\ActiveRecord
     /**
      * Verify a scratch code.
      *
-     * @param int $sid ID of secret to validate against
      * @param string $code Scratch code to validate
+     * @param int $sid ID of secret to validate against
      * @param bool $del if the code should be deleted after successful check
      * @return bool if verification was successful
      */
@@ -183,7 +183,6 @@ class Scratch extends \yii\db\ActiveRecord
     /**
      * Validate a scratch code using the static method, just populate the sid from the object.
      *
-     * @param int $sid ID of secret to validate against
      * @param string $code Scratch code to validate
      * @param bool $del if the code should be deleted after successful check
      * @return bool if verification was successful
