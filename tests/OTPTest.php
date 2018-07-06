@@ -295,4 +295,27 @@ class OTPTest extends TestCase
         $chk = $otp->get($sid[2]);
         $this->assertEquals($sid[2], $chk);
     }
+
+    /**
+     * Test that OTP methods fail when not having set a Secret to work on
+     *
+     * This means if either of OTP::create() or OTP::get() is not called
+     * before using the object
+     *
+     * @return void
+     */
+    public function testMethodsWithNullSecretFail()
+    {
+        $otp = Yii::$app->otp;
+
+        $this->assertNotTrue($otp->getScratches());
+        $this->assertNotTrue($otp->getSecret());
+        $this->assertNotTrue($otp->isConfirmed());
+        $this->assertNotTrue($otp->confirm('00000000'));
+        $this->assertNotTrue($otp->verify('00000000'));
+        $this->assertNotTrue($otp->generate());
+        $this->assertNotTrue($otp->invalidateScratches());
+        $this->assertNotTrue($otp->regenerateScrathes());
+        $this->assertNotTrue($otp->forget());
+    }
 }
