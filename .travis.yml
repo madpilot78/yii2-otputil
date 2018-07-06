@@ -17,7 +17,7 @@ branches:
 
 before_script:
   - composer self-update
-  - composer require satooshi/php-coveralls:dev-master
+  - composer require php-coveralls/php-coveralls
   - composer install --dev --no-interaction
   - yes | pecl install imagick
 
