@@ -83,7 +83,7 @@ class OTP extends Component
     protected function getAuth()
     {
         if (is_null($this->secret)) {
-            return null;
+            return null; // @codeCoverageIgnore
         }
 
         $auth = new Authenticator;
@@ -118,7 +118,7 @@ class OTP extends Component
     protected function doverifycode(string $code, $acceptScratch = true)
     {
         if (is_null($this->secret)) {
-            return false;
+            return false; // @codeCoverageIgnore
         }
 
         if (strlen($code) != $this->secret->digits && strlen($code) != Scratch::SCRATCH_LENGTH) {
