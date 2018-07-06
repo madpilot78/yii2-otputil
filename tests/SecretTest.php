@@ -8,8 +8,11 @@ use madpilot78\otputil\models\Scratch;
 
 class SecretTest extends TestCase
 {
-    // Tests:
-
+    /**
+     * Test creating and validating a Secret
+     *
+     * @return void
+     */
     public function testCreatingSecret()
     {
         $s = $this->createRandomSecret();
@@ -19,6 +22,11 @@ class SecretTest extends TestCase
         $this->assertEqualSecrets($s, $ss);
     }
 
+    /**
+     * Assert secret returned without options has default values
+     *
+     * @return void
+     */
     public function testCreateDefaultSecret()
     {
         $s = new Secret();
@@ -32,6 +40,11 @@ class SecretTest extends TestCase
         $this->assertEquals(Secret::DEFAULT_PERIOD, $ss->period);
     }
 
+    /**
+     * Test Secret cannot be modified
+     *
+     * @return void
+     */
     public function testCannotModifySecret()
     {
         $s = $this->createRandomSecret();
@@ -48,6 +61,11 @@ class SecretTest extends TestCase
         $this->assertSecretEqualsData($data, $ss);
     }
 
+    /**
+     * Test that creating a Secret with confirmed == true fails
+     *
+     * @return void
+     */
     public function testCantCreateConfirmedSecret()
     {
         $s = new Secret();
@@ -58,6 +76,11 @@ class SecretTest extends TestCase
         $this->assertNotTrue($s->save());
     }
 
+    /**
+     * Test confirming a Secret
+     *
+     * @return void
+     */
     public function testConfirmSecret()
     {
         $s = $this->createRandomSecret();
@@ -70,6 +93,11 @@ class SecretTest extends TestCase
         $this->assertNotTrue($ss->confirm());
     }
 
+    /**
+     * Test incrementing the counter on a Secret
+     *
+     * @return void
+     */
     public function testSecretIncrementCounter()
     {
         $s = new Secret();
@@ -95,6 +123,11 @@ class SecretTest extends TestCase
         $this->assertEquals($ncnt, $chk);
     }
 
+    /**
+     * Test updating the counter on a Secret
+     *
+     * @return void
+     */
     public function testSecretUpdateCounter()
     {
         $s = new Secret();
@@ -120,6 +153,11 @@ class SecretTest extends TestCase
         $this->assertEquals($ncnt, $chk);
     }
 
+    /**
+     * Test incrementing the counter on a TOTP Secret fails
+     *
+     * @return void
+     */
     public function testCantIncrementCounterTOTP()
     {
         $s = new Secret();
@@ -144,6 +182,11 @@ class SecretTest extends TestCase
         $this->assertEquals($cnt, $chk);
     }
 
+    /**
+     * Test updating the counter on a TOTP Secret fails
+     *
+     * @return void
+     */
     public function testCantUpdateCounterTOTP()
     {
         $s = new Secret();
@@ -168,6 +211,11 @@ class SecretTest extends TestCase
         $this->assertEquals($cnt, $chk);
     }
 
+    /**
+     * Test Secret can be deleted
+     *
+     * @return void
+     */
     public function testDeletingSecret()
     {
         $s = $this->createRandomSecret();
@@ -175,6 +223,11 @@ class SecretTest extends TestCase
         $this->assertNull(Secret::findOne($s->id));
     }
 
+    /**
+     * Test Secret->Scratch relation
+     *
+     * @return void
+     */
     public function testGetScratches()
     {
         $s = $this->createRandomSecret();

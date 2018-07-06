@@ -52,8 +52,11 @@ class ScratchTest extends TestCase
         return $c;
     }
 
-    // Tests:
-
+    /**
+     * Test creating a scratch code
+     *
+     * @return void
+     */
     public function testCreateScrathCode()
     {
         $s = $this->createRandomSecret();
@@ -63,6 +66,11 @@ class ScratchTest extends TestCase
         $this->assertEquals($c->code, $cc->code);
     }
 
+    /**
+     * Test creating a group of scratch codes using the defaults
+     *
+     * @return void
+     */
     public function testCreateScratchesDefault()
     {
         $s = $this->createRandomSecret();
@@ -72,6 +80,12 @@ class ScratchTest extends TestCase
         $this->assertCount(Scratch::DEFAULT_CODES, $codes);
     }
 
+    /**
+     * Test creating a group of scratch codes using random non default
+     * input
+     *
+     * @return void
+     */
     public function testCreateScratchesRandom()
     {
         $faker = \Faker\Factory::create();
@@ -85,6 +99,11 @@ class ScratchTest extends TestCase
         $this->assertCount($n, $codes);
     }
 
+    /**
+     * Test creating a group of scratch codes with invalid input fails
+     *
+     * @return void
+     */
     public function testCreateScratchesWrongFails()
     {
         $codes = Scratch::createScratches(42);
@@ -92,6 +111,11 @@ class ScratchTest extends TestCase
         $this->assertNotTrue($codes);
     }
 
+    /**
+     * Test looking up scratch codes by secret ID
+     *
+     * @return void
+     */
     public function testScratchFindBySecretID()
     {
         $s = $this->createRandomSecret();
@@ -106,11 +130,21 @@ class ScratchTest extends TestCase
         $this->assertCount(0, array_diff($ccodes, $cchk));
     }
 
+    /**
+     * Test Verifying a non existend scratch code fails
+     *
+     * @return void
+     */
     public function testVerifyAbsentScratchCode()
     {
         $this->assertNotTrue(Scratch::verifyCode(99, '12345678'));
     }
 
+    /**
+     * Test Verifying a wrong scratch code fails
+     *
+     * @return void
+     */
     public function testVerifyWrongScratchCode()
     {
         $s = $this->createRandomSecret();
@@ -119,6 +153,14 @@ class ScratchTest extends TestCase
         $this->assertNotTrue(Scratch::verifyCode('12345678', $s->id));
     }
 
+    /**
+     * Test Verifying a correct scratch code succeeds and removes it
+     * from list
+     *
+     * Performed using static methods
+     *
+     * @return void
+     */
     public function testVerifyScratchCodeAndDelete()
     {
         $faker = \Faker\Factory::create();
@@ -137,6 +179,14 @@ class ScratchTest extends TestCase
         }
     }
 
+    /**
+     * Test Verifying a correct scratch code succeeds and removes it
+     * from list
+     *
+     * Performed acting on the single code instance
+     *
+     * @return void
+     */
     public function testVerifyScratchCodeAndDeleteonInstance()
     {
         $faker = \Faker\Factory::create();
@@ -156,6 +206,12 @@ class ScratchTest extends TestCase
         }
     }
 
+    /**
+     * Test Verifying a scratch code requesting not to delete it suceeds
+     * and does not delete the code
+     *
+     * @return void
+     */
     public function testVerifyScratchCodeNotDelete()
     {
         $faker = \Faker\Factory::create();
@@ -175,6 +231,11 @@ class ScratchTest extends TestCase
         $this->assertCount(0, array_diff($ccodes, $cchk));
     }
 
+    /**
+     * Test creating aand removing scratch codes
+     *
+     * @return void
+     */
     public function testCreateAndRemoveScratchCodes()
     {
         $s = $this->createRandomSecret();
@@ -186,6 +247,11 @@ class ScratchTest extends TestCase
         $this->assertCount(0, $chk);
     }
 
+    /**
+     * Test Scratch->Secret relation
+     *
+     * @return void
+     */
     public function testGetSecret()
     {
         $s = $this->createRandomSecret();
