@@ -213,10 +213,12 @@ class Scratch extends \yii\db\ActiveRecord
             }
 
             $transaction->commit();
+        // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
         }
+        // @codeCoverageIgnoreEnd
 
         return true;
     }
