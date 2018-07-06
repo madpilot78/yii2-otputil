@@ -20,6 +20,7 @@ before_script:
   - composer require php-coveralls/php-coveralls
   - composer install --dev --no-interaction
   - yes | pecl install imagick
+  - mkdir -p ./tests/logs
 
 script:
   - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
