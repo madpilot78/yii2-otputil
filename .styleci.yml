@@ -1,0 +1,17 @@
+preset: recommended
+
+risky: true
+
+disabled:
+  - concat_without_spaces
+  - include
+  - trailing_comma_in_multiline_array
+
+finder:
+  name:
+    - "*.php"
+  not-name:
+    - "bootstrap.php"
+  path:
+    - "src"
+    - "tests"
