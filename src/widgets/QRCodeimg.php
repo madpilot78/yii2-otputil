@@ -2,16 +2,15 @@
 
 namespace madpilot78\otputil\widgets;
 
-use Yii;
+use BaconQrCode\Common\ErrorCorrectionLevel;
+use BaconQrCode\Encoder\Encoder;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer as QRCWriter;
+use madpilot78\otputil\models\Secret;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\web\ServerErrorHttpException;
-use madpilot78\otputil\models\Secret;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Common\ErrorCorrectionLevel;
-use BaconQrCode\Encoder\Encoder;
-use BaconQrCode\Writer as QRCWriter;
 
 class QRCodeimg extends Widget
 {
@@ -71,7 +70,7 @@ class QRCodeimg extends Widget
     public $imgopts = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -136,7 +135,7 @@ class QRCodeimg extends Widget
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {
@@ -155,9 +154,9 @@ class QRCodeimg extends Widget
         $coded .= '?';
 
         $data = [
-            'secret' => $this->secret->secret,
+            'secret'    => $this->secret->secret,
             'algorithm' => $this->secret->algo,
-            'digits' => $this->secret->digits,
+            'digits'    => $this->secret->digits,
         ];
 
         if ($this->issuer) {

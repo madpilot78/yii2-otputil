@@ -3,14 +3,13 @@
 namespace madpilot78\otputil\models;
 
 use Yii;
-use madpilot78\otputil\models\Secret;
 
 /**
  * Model class for OTP scratch codes.
  *
- * @property integer $id
+ * @property int $id
  * @property string $code
- * @property integer $secret_id
+ * @property int $secret_id
  */
 class Scratch extends \yii\db\ActiveRecord
 {
@@ -25,7 +24,7 @@ class Scratch extends \yii\db\ActiveRecord
     const SCRATCH_LENGTH = 8;
 
     /**
-     * Requires a Secret id to link Scratch codes to
+     * Requires a Secret id to link Scratch codes to.
      *
      * @param int $secret_id
      */
@@ -47,7 +46,7 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -55,7 +54,7 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -66,7 +65,7 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
-     * Forbid modifying records
+     * Forbid modifying records.
      */
     public function beforeSave($insert)
     {
@@ -78,7 +77,7 @@ class Scratch extends \yii\db\ActiveRecord
     }
 
     /**
-     * Relation method to Secret model
+     * Relation method to Secret model.
      */
     public function getSecret()
     {
@@ -95,7 +94,7 @@ class Scratch extends \yii\db\ActiveRecord
         $code = '';
 
         for ($i = 1; $i <= self::SCRATCH_LENGTH; $i++) {
-            $code .= (string)random_int(0, 9);
+            $code .= (string) random_int(0, 9);
         }
 
         return $code;
@@ -105,6 +104,7 @@ class Scratch extends \yii\db\ActiveRecord
      * Utility function to validate Secret IDs.
      *
      * @param int $sid The Secret ID to be validated
+     *
      * @return bool if validation succeeded
      */
     protected static function validateSID(int $sid)
@@ -120,6 +120,7 @@ class Scratch extends \yii\db\ActiveRecord
      * Return Scratches bound to specified Secret.
      *
      * @param int ID of Secret
+     *
      * @return array of Secret AR objects
      */
     public static function findBySecretID(int $sid)
@@ -136,6 +137,7 @@ class Scratch extends \yii\db\ActiveRecord
      *
      * @param int $sid ID to assign the codes to
      * @param int $num Number of codes to generate
+     *
      * @return array of created AR objects
      */
     public static function createScratches(int $sid, int $num = self::DEFAULT_CODES)
@@ -159,8 +161,9 @@ class Scratch extends \yii\db\ActiveRecord
      * Verify a scratch code.
      *
      * @param string $code Scratch code to validate
-     * @param int $sid ID of secret to validate against
-     * @param bool $del if the code should be deleted after successful check
+     * @param int    $sid  ID of secret to validate against
+     * @param bool   $del  if the code should be deleted after successful check
+     *
      * @return bool if verification was successful
      */
     public static function verifyCode(string $code, int $sid, bool $del = true)
@@ -184,7 +187,8 @@ class Scratch extends \yii\db\ActiveRecord
      * Validate a scratch code using the static method, just populate the sid from the object.
      *
      * @param string $code Scratch code to validate
-     * @param bool $del if the code should be deleted after successful check
+     * @param bool   $del  if the code should be deleted after successful check
+     *
      * @return bool if verification was successful
      */
     public function verify(string $code, bool $del = true)
@@ -200,11 +204,13 @@ class Scratch extends \yii\db\ActiveRecord
      * Remove all codes assigned to a secret.
      *
      * @param int $sid pass to remove all codes bound to this secret ID
+     *
      * @return bool success/failure
      */
     public static function remove(int $sid)
     {
         $transaction = Yii::$app->db->beginTransaction();
+
         try {
             $codes = self::findBySecretID($sid);
 
@@ -213,9 +219,10 @@ class Scratch extends \yii\db\ActiveRecord
             }
 
             $transaction->commit();
-        // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             $transaction->rollBack();
+
             throw $e;
         }
         // @codeCoverageIgnoreEnd

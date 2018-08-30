@@ -6,12 +6,12 @@
 
 namespace madpilot78\otputil\tests;
 
-use Yii;
-use yii\di\Container;
-use yii\helpers\ArrayHelper;
-use yii\console\controllers\MigrateController;
 use chillerlan\Authenticator\Base32;
 use madpilot78\otputil\models\Secret;
+use Yii;
+use yii\console\controllers\MigrateController;
+use yii\di\Container;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the base class for all yii framework unit tests.
@@ -19,7 +19,7 @@ use madpilot78\otputil\models\Secret;
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
-     * Common setup code
+     * Common setup code.
      */
     protected function setUp()
     {
@@ -41,19 +41,20 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Populates Yii::$app with a new application
      * The application will be destroyed on tearDown() automatically.
-     * @param array $config The application configuration, if needed
+     *
+     * @param array  $config   The application configuration, if needed
      * @param string $appClass name of the application class to create
      */
     protected function mockApplication($config = [], $appClass = '\yii\console\Application')
     {
         new $appClass(ArrayHelper::merge([
-            'id' => 'testapp',
-            'basePath' => dirname(__DIR__),
+            'id'         => 'testapp',
+            'basePath'   => dirname(__DIR__),
             'vendorPath' => dirname(__DIR__) . '/vendor',
             'components' => [
                 'db' => [
                     'class' => 'yii\db\Connection',
-                    'dsn' => 'sqlite::memory:',
+                    'dsn'   => 'sqlite::memory:',
                 ],
                 'otp' => [
                     'class' => 'madpilot78\otputil\components\OTP',
@@ -63,7 +64,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Setup database for tests
+     * Setup database for tests.
      */
     protected function runMigrations()
     {
@@ -89,7 +90,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Use faker to create a secret for testing
+     * Use faker to create a secret for testing.
      *
      * @return array Random data to be put in a Secret object
      */
@@ -101,17 +102,17 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return [
             'secret' => $base32->fromString(random_bytes(20)),
             'digits' => $faker->randomElement(Secret::ALLOWED_DIGITS),
-            'mode' => $faker->randomElement(Secret::ALLOWED_MODES),
-            'algo' => $faker->randomElement(Secret::ALLOWED_ALGOS),
+            'mode'   => $faker->randomElement(Secret::ALLOWED_MODES),
+            'algo'   => $faker->randomElement(Secret::ALLOWED_ALGOS),
             'period' => $faker->numberBetween($min = Secret::ALLOWED_PERIODS[0], $max = Secret::ALLOWED_PERIODS[1])
         ];
     }
 
     /**
-     * Populate a new secret AR
+     * Populate a new secret AR.
      *
-     * @param Secret &$s The secret to be populated/overwritten
-     * @param Array $data The array containing the data to populate the Secret
+     * @param Secret &$s   The secret to be populated/overwritten
+     * @param array  $data The array containing the data to populate the Secret
      */
     protected function populateSecret(Secret &$s, array $data)
     {
@@ -123,10 +124,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Extract $data array froma retrived or created secret
+     * Extract $data array froma retrived or created secret.
      *
-     * @param Secret $s The secret to be read
-     * @param Array &$data The array to contain the data gotten from the secret
+     * @param Secret $s     The secret to be read
+     * @param array  &$data The array to contain the data gotten from the secret
      */
     protected function getSecretData(Secret $s, array &$data)
     {
@@ -140,7 +141,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * Assert that data validation on a secret suceeds reporting errors,
-     * if any, for analysis
+     * if any, for analysis.
      *
      * @param Secret $s The secret to be validated
      */
@@ -154,7 +155,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Assert validation on secret failed and report errors
+     * Assert validation on secret failed and report errors.
      *
      * @param Secret $s The secret to be validated
      */
@@ -174,11 +175,12 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->populateSecret($s, $data);
         $this->assertValidateSecret($s);
         $this->assertTrue($s->save());
+
         return $s;
     }
 
     /**
-     * Asserts that two secret objects are the same
+     * Asserts that two secret objects are the same.
      *
      * @param madpilot78\otputil\models\Secret expected Secret
      * @param madpilot78\otputil\models\Secret Secret object to be checked
@@ -194,7 +196,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Asserts that data inside a secret is the same as the provided array
+     * Asserts that data inside a secret is the same as the provided array.
      *
      * @param array $data expected content
      * @param madpilot78\otputil\models\Secret The Secret object to be checked
@@ -210,7 +212,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Asserting two strings equality ignoring line endings
+     * Asserting two strings equality ignoring line endings.
      *
      * @param string $expected
      * @param string $actual
@@ -227,7 +229,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @param object $object object.
      * @param string $method method name.
-     * @param array $args method arguments
+     * @param array  $args   method arguments
+     *
      * @return mixed method result
      */
     protected function invoke($object, $method, array $args = [])
@@ -237,6 +240,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $methodReflection->setAccessible(true);
         $result = $methodReflection->invokeArgs($object, $args);
         $methodReflection->setAccessible(false);
+
         return $result;
     }
 }

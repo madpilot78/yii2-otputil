@@ -2,23 +2,22 @@
 
 namespace madpilot78\otputil\models;
 
-use Yii;
-use yii\behaviors\TimestampBehavior;
 use chillerlan\Authenticator\Base32;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * Model class for OTP secrets.
  *
- * @property integer $id
+ * @property int $id
  * @property string $secret
- * @property integer $digits
+ * @property int $digits
  * @property string $mode
  * @property string $algo
- * @property integer $period
- * @property integer $counter
- * @property boolean $confirmed
- * @property integer created_at
- * @property integer updated_at
+ * @property int $period
+ * @property int $counter
+ * @property bool $confirmed
+ * @property int created_at
+ * @property int updated_at
  */
 class Secret extends \yii\db\ActiveRecord
 {
@@ -56,7 +55,7 @@ class Secret extends \yii\db\ActiveRecord
     const ALLOWED_PERIODS = [15, 60];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -64,7 +63,7 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -74,7 +73,7 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -99,7 +98,7 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
-     * Forbid modifying records
+     * Forbid modifying records.
      */
     public function beforeSave($insert)
     {
@@ -124,7 +123,7 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
-     * Relation method to Scratch model
+     * Relation method to Scratch model.
      */
     public function getScratches()
     {
@@ -132,7 +131,7 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
-     * Marks a secret as confirmed
+     * Marks a secret as confirmed.
      */
     public function confirm()
     {
@@ -141,11 +140,12 @@ class Secret extends \yii\db\ActiveRecord
         }
 
         $this->confirmed = true;
+
         return $this->save();
     }
 
     /**
-     * Returns confirmation status
+     * Returns confirmation status.
      */
     public function isconfimed()
     {
@@ -157,7 +157,7 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
-     * Increments counter for HOTPs
+     * Increments counter for HOTPs.
      */
     public function incrementCounter()
     {
@@ -173,7 +173,7 @@ class Secret extends \yii\db\ActiveRecord
     }
 
     /**
-     * Updates counter for HOTPs
+     * Updates counter for HOTPs.
      */
     public function updateCounter(int $v)
     {

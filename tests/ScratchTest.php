@@ -2,16 +2,17 @@
 
 namespace madpilot78\otputil\tests;
 
-use madpilot78\otputil\models\Secret;
 use madpilot78\otputil\models\Scratch;
+use madpilot78\otputil\models\Secret;
 
 class ScratchTest extends TestCase
 {
     /**
-     * Extracts code from an array of Scratch objects
+     * Extracts code from an array of Scratch objects.
      *
-     * @param Array $cc array of scratch objects
-     * @return Array Array of codes
+     * @param array $cc array of scratch objects
+     *
+     * @return array Array of codes
      */
     protected function flattenScratchCodes(array $cc)
     {
@@ -25,7 +26,7 @@ class ScratchTest extends TestCase
 
     /**
      * Assert validation succeeds for a scratch code and report errors,
-     * if any, for debugging
+     * if any, for debugging.
      *
      * @param Scratch $c Scratch code to be validated
      */
@@ -39,9 +40,10 @@ class ScratchTest extends TestCase
     }
 
     /**
-     * Create a single scratch code for an ID using native AR methods
+     * Create a single scratch code for an ID using native AR methods.
      *
      * @param int $id Secret ID to which to bind the generated Scratch code
+     *
      * @return Scratch Generated AR object
      */
     protected function createScratchForID(int $id)
@@ -49,11 +51,12 @@ class ScratchTest extends TestCase
         $c = new Scratch($id);
         $this->assertValidateScratch($c);
         $this->assertTrue($c->save());
+
         return $c;
     }
 
     /**
-     * Test creating a scratch code
+     * Test creating a scratch code.
      *
      * @return void
      */
@@ -67,7 +70,7 @@ class ScratchTest extends TestCase
     }
 
     /**
-     * Test creating a group of scratch codes using the defaults
+     * Test creating a group of scratch codes using the defaults.
      *
      * @return void
      */
@@ -82,7 +85,7 @@ class ScratchTest extends TestCase
 
     /**
      * Test creating a group of scratch codes using random non default
-     * input
+     * input.
      *
      * @return void
      */
@@ -100,7 +103,7 @@ class ScratchTest extends TestCase
     }
 
     /**
-     * Test creating a group of scratch codes with invalid input fails
+     * Test creating a group of scratch codes with invalid input fails.
      *
      * @return void
      */
@@ -112,7 +115,7 @@ class ScratchTest extends TestCase
     }
 
     /**
-     * Test looking up scratch codes by secret ID
+     * Test looking up scratch codes by secret ID.
      *
      * @return void
      */
@@ -131,7 +134,7 @@ class ScratchTest extends TestCase
     }
 
     /**
-     * Test Verifying a non existend scratch code fails
+     * Test Verifying a non existend scratch code fails.
      *
      * @return void
      */
@@ -141,7 +144,7 @@ class ScratchTest extends TestCase
     }
 
     /**
-     * Test Verifying a wrong scratch code fails
+     * Test Verifying a wrong scratch code fails.
      *
      * @return void
      */
@@ -155,7 +158,7 @@ class ScratchTest extends TestCase
 
     /**
      * Test Verifying a correct scratch code succeeds and removes it
-     * from list
+     * from list.
      *
      * Performed using static methods
      *
@@ -181,7 +184,7 @@ class ScratchTest extends TestCase
 
     /**
      * Test Verifying a correct scratch code succeeds and removes it
-     * from list
+     * from list.
      *
      * Performed acting on the single code instance
      *
@@ -207,7 +210,7 @@ class ScratchTest extends TestCase
     }
 
     /**
-     * Test verifying Scratch with invalid Secret ID
+     * Test verifying Scratch with invalid Secret ID.
      *
      * @return void
      */
@@ -219,7 +222,7 @@ class ScratchTest extends TestCase
 
     /**
      * Test Verifying a scratch code requesting not to delete it suceeds
-     * and does not delete the code
+     * and does not delete the code.
      *
      * @return void
      */
@@ -243,7 +246,7 @@ class ScratchTest extends TestCase
     }
 
     /**
-     * Test creating aand removing scratch codes
+     * Test creating aand removing scratch codes.
      *
      * @return void
      */
@@ -259,7 +262,7 @@ class ScratchTest extends TestCase
     }
 
     /**
-     * Test Scratch->Secret relation
+     * Test Scratch->Secret relation.
      *
      * @return void
      */

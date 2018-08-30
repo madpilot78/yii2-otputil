@@ -2,14 +2,13 @@
 
 namespace madpilot78\otputil\tests;
 
-use chillerlan\Authenticator\Base32;
-use madpilot78\otputil\models\Secret;
 use madpilot78\otputil\models\Scratch;
+use madpilot78\otputil\models\Secret;
 
 class SecretTest extends TestCase
 {
     /**
-     * Test creating and validating a Secret
+     * Test creating and validating a Secret.
      *
      * @return void
      */
@@ -23,7 +22,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Assert secret returned without options has default values
+     * Assert secret returned without options has default values.
      *
      * @return void
      */
@@ -41,7 +40,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Test Secret cannot be modified
+     * Test Secret cannot be modified.
      *
      * @return void
      */
@@ -62,7 +61,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Test that creating a Secret with confirmed == true fails
+     * Test that creating a Secret with confirmed == true fails.
      *
      * @return void
      */
@@ -77,7 +76,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Test confirming a Secret
+     * Test confirming a Secret.
      *
      * @return void
      */
@@ -94,7 +93,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Test incrementing the counter on a Secret
+     * Test incrementing the counter on a Secret.
      *
      * @return void
      */
@@ -124,7 +123,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Test updating the counter on a Secret
+     * Test updating the counter on a Secret.
      *
      * @return void
      */
@@ -154,7 +153,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Test incrementing the counter on a TOTP Secret fails
+     * Test incrementing the counter on a TOTP Secret fails.
      *
      * @return void
      */
@@ -183,7 +182,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Test updating the counter on a TOTP Secret fails
+     * Test updating the counter on a TOTP Secret fails.
      *
      * @return void
      */
@@ -212,7 +211,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Test Secret can be deleted
+     * Test Secret can be deleted.
      *
      * @return void
      */
@@ -224,7 +223,7 @@ class SecretTest extends TestCase
     }
 
     /**
-     * Test Secret->Scratch relation
+     * Test Secret->Scratch relation.
      *
      * @return void
      */
