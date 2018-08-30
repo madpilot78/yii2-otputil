@@ -5,6 +5,7 @@
 [![license](https://img.shields.io/github/license/madpilot78/yii2-otputil.svg)](https://github.com/madpilot78/yii2-otputil)
 [![Build Status](https://api.travis-ci.org/madpilot78/yii2-otputil.png?branch=master)](http://travis-ci.org/madpilot78/yii2-otputil)
 [![Coverage Status](https://coveralls.io/repos/github/madpilot78/yii2-otputil/badge.svg?branch=master)](https://coveralls.io/github/madpilot78/yii2-otputil?branch=master)
+[![StyleCI Status](https://github.styleci.io/repos/125235434/shield?branch=master&style=plastic)](https://github.styleci.io/repos/125235434)
 
 Yii2 extension to manage TOTP/HOTP secrets and scratch codes (backup codes) providing it's own tables and related models.
 
