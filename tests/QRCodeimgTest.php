@@ -3,17 +3,17 @@
 namespace madpilot78\otputil\tests;
 
 use chillerlan\Authenticator\Base32;
-use Zxing\QrReader;
 use madpilot78\otputil\models\Secret;
 use madpilot78\otputil\widgets\QRCodeimg;
 use yii\web\ServerErrorHttpException;
+use Zxing\QrReader;
 
 class QRCodeimgTest extends TestCase
 {
     /**
-     * Data provider to test all options
+     * Data provider to test all options.
      *
-     * @return Array
+     * @return array
      */
     public function optionProvider()
     {
@@ -29,10 +29,11 @@ class QRCodeimgTest extends TestCase
     }
 
     /**
-     * Test generating one QRCode
+     * Test generating one QRCode.
      *
      * @param string $type
      * @param string $issuer
+     *
      * @return void
      *
      * @dataProvider optionProvider
@@ -60,9 +61,9 @@ class QRCodeimgTest extends TestCase
         $s->save();
 
         $opts = [
-            'sid' => $s->id,
+            'sid'      => $s->id,
             'username' => 'foo',
-            'label' => 'bar'
+            'label'    => 'bar'
         ];
 
         if ($issuer) {
@@ -82,7 +83,7 @@ class QRCodeimgTest extends TestCase
     }
 
     /**
-     * Test wrong image format causes exception
+     * Test wrong image format causes exception.
      *
      * @return void
      */
@@ -102,15 +103,15 @@ class QRCodeimgTest extends TestCase
         $s->save();
 
         $img = QRCodeimg::widget([
-            'sid' => $s->id,
-            'fmt' => 'unkn',
+            'sid'      => $s->id,
+            'fmt'      => 'unkn',
             'username' => 'foo',
-            'label' => 'bar'
+            'label'    => 'bar'
         ]);
     }
 
     /**
-     * Test wrong error correction level causes exception
+     * Test wrong error correction level causes exception.
      *
      * @return void
      */
@@ -130,15 +131,15 @@ class QRCodeimgTest extends TestCase
         $s->save();
 
         $img = QRCodeimg::widget([
-            'sid' => $s->id,
-            'ecLevel' => 'X',
+            'sid'      => $s->id,
+            'ecLevel'  => 'X',
             'username' => 'foo',
-            'label' => 'bar'
+            'label'    => 'bar'
         ]);
     }
 
     /**
-     * Test username with colon causes exception
+     * Test username with colon causes exception.
      *
      * @return void
      */
@@ -158,14 +159,14 @@ class QRCodeimgTest extends TestCase
         $s->save();
 
         $img = QRCodeimg::widget([
-            'sid' => $s->id,
+            'sid'      => $s->id,
             'username' => 'f:oo',
-            'label' => 'bar'
+            'label'    => 'bar'
         ]);
     }
 
     /**
-     * Test label with colon causes exception
+     * Test label with colon causes exception.
      *
      * @return void
      */
@@ -185,14 +186,14 @@ class QRCodeimgTest extends TestCase
         $s->save();
 
         $img = QRCodeimg::widget([
-            'sid' => $s->id,
+            'sid'      => $s->id,
             'username' => 'foo',
-            'label' => 'ba:r'
+            'label'    => 'ba:r'
         ]);
     }
 
     /**
-     * Test wrong sid causes exception
+     * Test wrong sid causes exception.
      *
      * @return void
      */
@@ -201,14 +202,14 @@ class QRCodeimgTest extends TestCase
         $this->expectException(ServerErrorHttpException::class);
 
         $img = QRCodeimg::widget([
-            'sid' => 42,
+            'sid'      => 42,
             'username' => 'foo',
-            'label' => 'bar'
+            'label'    => 'bar'
         ]);
     }
 
     /**
-     * Test null sid causes exception
+     * Test null sid causes exception.
      *
      * @return void
      */
@@ -218,7 +219,7 @@ class QRCodeimgTest extends TestCase
 
         $img = QRCodeimg::widget([
             'username' => 'foo',
-            'label' => 'bar'
+            'label'    => 'bar'
         ]);
     }
 }

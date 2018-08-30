@@ -2,15 +2,14 @@
 
 namespace madpilot78\otputil\tests;
 
-use Yii;
 use chillerlan\Authenticator\Authenticator;
-use chillerlan\Authenticator\Base32;
 use madpilot78\otputil\components\OTP;
+use Yii;
 
 class OTPTest extends TestCase
 {
     /**
-     * Test creating a new OTP object returns object with all related parts
+     * Test creating a new OTP object returns object with all related parts.
      *
      * @return void
      */
@@ -34,7 +33,7 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Test getSID() works
+     * Test getSID() works.
      *
      * @return void
      */
@@ -51,14 +50,14 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Test OTP secret can be confirmed only using correct OTP
+     * Test OTP secret can be confirmed only using correct OTP.
      *
      * @return void
      */
     public function testConfirm()
     {
         $otp = Yii::$app->otp;
-        $auth = new Authenticator;
+        $auth = new Authenticator();
 
         $otp->create();
         $secret = $otp->getSecret();
@@ -93,14 +92,14 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Test Get allows changing the Secret currently in use
+     * Test Get allows changing the Secret currently in use.
      *
      * @return void
      */
     public function testGet()
     {
         $otp = Yii::$app->otp;
-        $auth = new Authenticator;
+        $auth = new Authenticator();
 
         $sid = $otp->create();
         $secret = $otp->getSecret();
@@ -116,9 +115,9 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Data provider to test all OTP types
+     * Data provider to test all OTP types.
      *
-     * @return Array
+     * @return array
      */
     public function OTPTypes()
     {
@@ -129,9 +128,10 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Test Verifying an OTP works only with correct OTP
+     * Test Verifying an OTP works only with correct OTP.
      *
      * @param $mode (totp|hotp)
+     *
      * @return void
      *
      * @dataProvider OTPTypes
@@ -139,7 +139,7 @@ class OTPTest extends TestCase
     public function testVerify(string $mode)
     {
         $otp = Yii::$app->otp;
-        $auth = new Authenticator;
+        $auth = new Authenticator();
         $auth->setMode($mode);
 
         $otp->mode = $mode;
@@ -154,14 +154,14 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Test verifying a scrach code works and removes the scratch code
+     * Test verifying a scrach code works and removes the scratch code.
      *
      * @return void
      */
     public function testVerifyScratch()
     {
         $otp = Yii::$app->otp;
-        $auth = new Authenticator;
+        $auth = new Authenticator();
 
         $otp->create();
         $secret = $otp->getSecret();
@@ -181,14 +181,14 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Check OTP object is able to generate valid OTPs
+     * Check OTP object is able to generate valid OTPs.
      *
      * @return void
      */
     public function testGenerate()
     {
         $otp = Yii::$app->otp;
-        $auth = new Authenticator;
+        $auth = new Authenticator();
 
         $otp->create();
         $secret = $otp->getSecret();
@@ -203,7 +203,7 @@ class OTPTest extends TestCase
 
     /**
      * Test invalidating all scratch codes relate to an OTP to actually
-     * remove all scratch codes
+     * remove all scratch codes.
      *
      * @return void
      */
@@ -218,7 +218,7 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Test regenerating all Scratch codes actually works
+     * Test regenerating all Scratch codes actually works.
      *
      * @return void
      */
@@ -237,14 +237,14 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Test Forget() removes the secret
+     * Test Forget() removes the secret.
      *
      * @return void
      */
     public function testForget()
     {
         $otp = Yii::$app->otp;
-        $auth = new Authenticator;
+        $auth = new Authenticator();
 
         $otp->create();
         $sid = $otp->getSID();
@@ -260,7 +260,7 @@ class OTPTest extends TestCase
 
     /**
      * Test old unconfirmed secrets are cleaned up from the DB, while
-     * confirmed ones are not removed
+     * confirmed ones are not removed.
      *
      * To check this condition I modify the timestamps in the DB before
      * triggering the checks
@@ -270,7 +270,7 @@ class OTPTest extends TestCase
     public function testCleanupUnconfirmed()
     {
         $otp = Yii::$app->otp;
-        $auth = new Authenticator;
+        $auth = new Authenticator();
         $sid = [];
 
         $ts = time() - (60 * 30);
@@ -315,7 +315,7 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Test that OTP methods fail when not having set a Secret to work on
+     * Test that OTP methods fail when not having set a Secret to work on.
      *
      * This means if either of OTP::create() or OTP::get() is not called
      * before using the object
@@ -338,7 +338,7 @@ class OTPTest extends TestCase
     }
 
     /**
-     * Test OTP validation with invalid OTPs
+     * Test OTP validation with invalid OTPs.
      *
      * @return void
      */
@@ -347,7 +347,7 @@ class OTPTest extends TestCase
         $otp = Yii::$app->otp;
 
         $otp->create();
-        $auth = new Authenticator;
+        $auth = new Authenticator();
         $secret = $otp->getSecret();
         $this->assertInternalType('string', $secret);
         $auth->setSecret($secret);

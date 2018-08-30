@@ -2,15 +2,15 @@
 
 namespace madpilot78\otputil\components;
 
-use Yii;
-use yii\base\Component;
-use madpilot78\otputil\models\Secret;
-use madpilot78\otputil\models\Scratch;
 use chillerlan\Authenticator\Authenticator;
 use chillerlan\Authenticator\Base32;
+use madpilot78\otputil\models\Scratch;
+use madpilot78\otputil\models\Secret;
+use Yii;
+use yii\base\Component;
 
 /**
- * OTP Component class
+ * OTP Component class.
  */
 class OTP extends Component
 {
@@ -83,10 +83,10 @@ class OTP extends Component
     protected function getAuth()
     {
         if (is_null($this->secret)) {
-            return null; // @codeCoverageIgnore
+            return; // @codeCoverageIgnore
         }
 
-        $auth = new Authenticator;
+        $auth = new Authenticator();
         $auth->setDigits($this->digits);
         $auth->setMode($this->mode);
         $auth->setAlgorithm($this->algo);
@@ -105,15 +105,16 @@ class OTP extends Component
      */
     protected function willGC()
     {
-        return (rand(0, 99) < $this->gcChance);
+        return rand(0, 99) < $this->gcChance;
     }
 
     /**
      * Actually perform the check, allows disabling scratch codes usage.
      *
-     * @param string $code The code to be verified
-     * @param boolean $acceptScratch if scratch codes should be accepted
-     * @return boolean if verification succeeded
+     * @param string $code          The code to be verified
+     * @param bool   $acceptScratch if scratch codes should be accepted
+     *
+     * @return bool if verification succeeded
      */
     protected function doverifycode(string $code, $acceptScratch = true)
     {
@@ -157,6 +158,7 @@ class OTP extends Component
         $base32 = new Base32();
 
         $transaction = Yii::$app->db->beginTransaction();
+
         try {
             $s = new Secret();
             $s->secret = $base32->fromString(random_bytes(20));
@@ -169,9 +171,10 @@ class OTP extends Component
             Scratch::createScratches($s->id);
 
             $transaction->commit();
-        // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             $transaction->rollBack();
+
             throw $e;
         }
         // @codeCoverageIgnoreEnd
@@ -190,6 +193,7 @@ class OTP extends Component
      * expiration of unconfirmed Secrets.
      *
      * @param int $sid the Secret ID we are going to use
+     *
      * @return bool if the requested Secret was found
      */
     public function get(int $sid)
@@ -211,7 +215,7 @@ class OTP extends Component
     public function getSID()
     {
         if (is_null($this->secret)) {
-            return null;
+            return;
         }
 
         return $this->secret->id;
@@ -220,12 +224,12 @@ class OTP extends Component
     /**
      * Returns an array of scratch codes.
      *
-     * @return Array of strings each a scratch code available for use
+     * @return array of strings each a scratch code available for use
      */
     public function getScratches()
     {
         if (is_null($this->secret)) {
-            return null;
+            return;
         }
 
         $q = $this->secret->getScratches();
@@ -247,7 +251,7 @@ class OTP extends Component
     public function getSecret()
     {
         if (is_null($this->secret)) {
-            return null;
+            return;
         }
 
         return $this->secret->secret;
@@ -273,7 +277,8 @@ class OTP extends Component
      * Allows for slip as configured.
      *
      * @param string $code The code to be checked while confirming
-     * @return boolean if confirmation was successful
+     *
+     * @return bool if confirmation was successful
      */
     public function confirm(string $code)
     {
@@ -294,7 +299,8 @@ class OTP extends Component
      * Scratch codes will be removed from DB once used.
      *
      * @param string $code The code to be checked while confirming
-     * @return boolean if $code was successfully verified
+     *
+     * @return bool if $code was successfully verified
      */
     public function verify(string $code)
     {
@@ -313,17 +319,18 @@ class OTP extends Component
     public function generate()
     {
         if (is_null($this->secret)) {
-            return null;
+            return;
         }
 
         $auth = $this->getAuth();
+
         return $auth->code();
     }
 
     /**
      * Invalidates Scratch codes.
      *
-     * @return boolean if operation was successful
+     * @return bool if operation was successful
      */
     public function invalidateScratches()
     {
@@ -337,7 +344,7 @@ class OTP extends Component
     /**
      * Forces removing all scratch codes and regenerates them.
      *
-     * @return boolean if operation was successful
+     * @return bool if operation was successful
      */
     public function regenerateScrathes()
     {
@@ -357,7 +364,7 @@ class OTP extends Component
     /**
      * Removes the bound Secret and Scratch codes from the DB.
      *
-     * @return boolean if operation was successful
+     * @return bool if operation was successful
      */
     public function forget()
     {
@@ -366,15 +373,17 @@ class OTP extends Component
         }
 
         $transaction = Yii::$app->db->beginTransaction();
+
         try {
             if (!Scratch::remove($this->secret->id)) {
                 throw new Exception('Failed to remove scratch codes'); // @codeCoverageIgnore
             }
             $this->secret->delete();
             $transaction->commit();
-        // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             $transaction->rollBack();
+
             throw $e;
         }
         // @codeCoverageIgnoreEnd
@@ -385,11 +394,12 @@ class OTP extends Component
     }
 
     /**
-     * Remove unconfirmed secrets older than $unconfirmedTimeout
+     * Remove unconfirmed secrets older than $unconfirmedTimeout.
      */
     public function cleanupUnconfirmed()
     {
         $transaction = Yii::$app->db->beginTransaction();
+
         try {
             $secrets = Secret::find()
                 ->where(['<', 'created_at', time() - $this->unconfirmedTimeout])
@@ -404,9 +414,10 @@ class OTP extends Component
             }
 
             $transaction->commit();
-        // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             $transaction->rollBack();
+
             throw $e;
         }
         // @codeCoverageIgnoreEnd

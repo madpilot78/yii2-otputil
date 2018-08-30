@@ -3,24 +3,24 @@
 use yii\db\Migration;
 
 /**
- * Class m180128_141512_init
+ * Class m180128_141512_init.
  */
 class m180128_141512_init extends Migration
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function safeUp()
     {
         $this->createTable('{{%otputil_secrets}}', [
-            'id' => $this->primaryKey(),
-            'secret' => $this->string()->null(),
-            'digits' => $this->integer()->notNull(),
-            'mode' => $this->string()->notNull(),
-            'algo' => $this->string()->notNull(),
-            'period' => $this->integer()->notNull(),
-            'counter' => $this->integer()->notNull()->defaultValue(1),
-            'confirmed' => $this->boolean()->defaultValue(false),
+            'id'         => $this->primaryKey(),
+            'secret'     => $this->string()->null(),
+            'digits'     => $this->integer()->notNull(),
+            'mode'       => $this->string()->notNull(),
+            'algo'       => $this->string()->notNull(),
+            'period'     => $this->integer()->notNull(),
+            'counter'    => $this->integer()->notNull()->defaultValue(1),
+            'confirmed'  => $this->boolean()->defaultValue(false),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull()
         ]);
@@ -32,8 +32,8 @@ class m180128_141512_init extends Migration
         );
 
         $this->createTable('{{%otputil_scodes}}', [
-            'id' => $this->primaryKey(),
-            'code' => $this->string()->notNull(),
+            'id'        => $this->primaryKey(),
+            'code'      => $this->string()->notNull(),
             'secret_id' => $this->integer()->notNull()
         ]);
 
@@ -56,7 +56,7 @@ class m180128_141512_init extends Migration
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function safeDown()
     {
