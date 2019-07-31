@@ -58,7 +58,7 @@ $otp = Yii::$app->otp;
 $unconfirmed_secret = $otp->create();
 ```
 
-This will creates an OTP secret to be used as configured in the app, will also create ```scratchnum``` scratch codes and returns the ID of the created secret
+This creates an OTP secret to be used as configured in the app, will also create ```scratchnum``` scratch codes and returns the ID of the created secret
 
 Unconfirmed secrets may be deleted after ```unconfirmedTimeout``` seconds with ```gcChance``` percent probability
 
