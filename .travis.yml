@@ -20,7 +20,7 @@ branches:
 before_script:
   - composer self-update
   - composer require php-coveralls/php-coveralls
-  - composer install --dev --no-interaction
+  - composer install --no-interaction --no-ansi --no-progress --no-suggest
   - yes | pecl install imagick
   - mkdir -p ./tests/logs
 
