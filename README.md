@@ -11,6 +11,8 @@ Yii2 extension to manage TOTP/HOTP secrets and scratch codes (backup codes) prov
 
 It has a simple and straightforward API.
 
+NOTE: I'm not using Yii2 anymore, so I'm archiving this repo.
+
 ## Installation
 
 ### Composer
